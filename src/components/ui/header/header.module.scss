@@ -1,0 +1,14 @@
+.headerWrapper {
+  width: 1280px;
+  height: 60px;
+  padding: 0 136px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-dark-700);
+
+  .logo {
+    width: 156px;
+    height: 36px;
+  }
+}
