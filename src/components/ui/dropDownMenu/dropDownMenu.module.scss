@@ -57,7 +57,14 @@
 
             .name {
               font-size: var(--font-size-s);
+              cursor: auto;
             }
+          }
+
+          & img {
+            max-width: 36px;
+            max-height: 36px;
+            border-radius: 50%;
           }
         }
 
