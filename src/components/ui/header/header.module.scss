@@ -11,4 +11,33 @@
     width: 156px;
     height: 36px;
   }
+
+  .withAvatar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+
+    .avatar {
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .name {
+      border-bottom: 1px dashed var(--color-light-100);
+    }
+    .headerMenu {
+      position: absolute;
+      top: 50px;
+      left: -100px;
+
+      /*& img {
+        max-width: 36px;
+        max-height: 36px;
+        border-radius: 50%;
+      }*/
+    }
+  }
 }
