@@ -1,6 +1,6 @@
 import s from './dropDownMenu.module.scss'
 
-type Option = {
+export type Option = {
   id: string
   icon: string
   value: string
