@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { TabSwitcher } from './'
+import { TabSwitcher, TabContent } from './'
 
 const meta = {
   title: 'Components/TabSwitcher',
@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>
 
 export const Tabs: Story = {
   args: {
-    defaultValue: 'Switcher',
+    defaultValue: 'tab1',
     tabs: [
       {
         value: 'tab1',
@@ -27,16 +27,47 @@ export const Tabs: Story = {
       {
         value: 'tab2',
         title: 'Switcher2',
-        disabled: true,
+        disabled: false,
       },
       {
         value: 'tab3',
         title: 'Switcher3',
       },
     ],
-    children: 'Make changes to your Switcher1 here. Click save when you are done.',
   },
-  render: (args) => (
-      <TabSwitcher tabs={args.tabs}></TabSwitcher>
-  )
+  render: args => (
+    <TabSwitcher defaultValue={args.defaultValue} tabs={args.tabs}>
+      <TabContent value={args.tabs[0].value}>Content for Switcher.</TabContent>
+      <TabContent value={args.tabs[1].value}>Content for Switcher2.</TabContent>
+      <TabContent value={args.tabs[2].value}>Content for Switcher3.</TabContent>
+    </TabSwitcher>
+  ),
+}
+
+export const TabsWithDisabled: Story = {
+  args: {
+    defaultValue: 'tab1',
+    tabs: [
+      {
+        value: 'tab1',
+        title: 'SwitcherA',
+      },
+      {
+        value: 'tab2',
+        title: 'SwitcherB',
+        disabled: true,
+      },
+      {
+        value: 'tab3',
+        title: 'SwitcherC',
+      },
+    ],
+  },
+  render: args => (
+    <TabSwitcher defaultValue={args.defaultValue} tabs={args.tabs}>
+      <TabContent value={args.tabs[0].value}>Content for SwitcherA.</TabContent>
+      <TabContent value={args.tabs[1].value}>Content for SwitcherB.</TabContent>
+      <TabContent value={args.tabs[2].value}>Content for SwitcherC.</TabContent>
+    </TabSwitcher>
+  ),
 }
