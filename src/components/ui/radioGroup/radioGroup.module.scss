@@ -2,12 +2,12 @@ button {
   all: unset;
 }
 
-.RadioGroupRoot {
+.radioGroupRoot {
   display: flex;
   flex-direction: column;
   gap: 20px;
 
-  .RadioGroupItem {
+  .radioGroupItem {
     position: relative;
 
     width: 16px;
@@ -18,22 +18,22 @@ button {
     border-radius: 100%;
 
     &:active {
-      box-shadow: 0 0 0 16px var(--color-accent-900);
+      box-shadow: 0 0 0 10px var(--color-accent-900);
     }
 
     &:hover {
-      box-shadow: 0 0 0 16px var(--color-dark-500);
+      box-shadow: 0 0 0 10px var(--color-dark-500);
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 16px var(--color-dark-700);
+      box-shadow: 0 0 0 10px var(--color-dark-700);
     }
 
     &:disabled {
       border: 2px solid var(--color-accent-900);
     }
 
-    .RadioGroupIndicator {
+    .radioGroupIndicator {
       position: relative;
 
       display: flex;
@@ -56,12 +56,12 @@ button {
       }
     }
 
-    .RadioGroupIndicator[data-disabled] {
+    .radioGroupIndicator[data-disabled] {
       background-color: var(--color-accent-700);
     }
   }
 
-  .Label {
+  .label {
     padding-left: 20px;
     font-size: 15px;
     line-height: 1;
