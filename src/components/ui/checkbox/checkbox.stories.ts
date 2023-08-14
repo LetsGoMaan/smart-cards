@@ -12,14 +12,10 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const CheckboxStory: Story = {
+export const CheckboxStory: Story = {}
+
+export const CheckboxStoryDisabled: Story = {
   args: {
-    focus: true,
+    disabled: true,
   },
 }
-
-// export const CheckboxStory: Story = {
-//   args: {
-//     disabled: true,
-//   },
-// }
