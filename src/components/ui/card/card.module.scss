@@ -1,5 +1,6 @@
 .card {
-  width: 420px;
-  height: 552px;
+  display: inline-block;
+  min-width: 532px;
+  min-height: 60px;
   background-color: var(--color-dark-700);
 }
