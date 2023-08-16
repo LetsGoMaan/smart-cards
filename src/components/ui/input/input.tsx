@@ -39,7 +39,7 @@ export const Input = (props: InputProps) => {
           <img src={searchIcon} className={s.searchIcon} alt={'searchIcon'} />
         ) : null}
         <button className={s.inputIcon} onClick={cleanTextHandler}>
-          <img src={inputIcon} alt={'InputIcon'} />
+          {inputIcon && <img src={inputIcon} alt={'InputIcon'} />}
         </button>
         <input
           value={text}
