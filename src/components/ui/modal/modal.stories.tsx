@@ -1,8 +1,10 @@
+import { useState } from 'react'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from './'
 
-import { Input, Select } from '@/components/ui'
+import { Button, Input, Select } from '@/components/ui'
 
 const meta = {
   title: 'Components/Modal',
@@ -17,22 +19,48 @@ type Story = StoryObj<typeof meta>
 export const ModalStory: Story = {
   args: {
     isOpen: true,
-    isCloseMark: true,
+    showCloseButton: true,
     children: '',
+    /*children: (
+          <>
+            <Input type={'search'} />
+            <Input type={'search'} />
+          </>
+        ),*/
     title: 'Title',
   },
-  render: args => (
-    <Modal isOpen={args.isOpen} isCloseMark={args.isCloseMark} title={args.title}>
-      <Select
-        selectOptions={[
-          { value: 'Select-box 1' },
-          { value: 'Select-box 2' },
-          { value: 'Select-box 3' },
-        ]}
-        titleValue={'Select-box'}
-      />
-      <Input type={'search'} />
-      <Input type={'search'} />
-    </Modal>
-  ),
+  render: args => {
+    const [open, setOpen] = useState(false)
+
+    function handleModalOpened() {
+      setOpen(true)
+    }
+
+    function handleModalClosed(value: boolean) {
+      setOpen(value)
+    }
+
+    return (
+      <div>
+        <Button onClick={handleModalOpened}>Open modal</Button>
+        <Modal
+          isOpen={open}
+          onClose={handleModalClosed}
+          showCloseButton={args.showCloseButton}
+          title={args.title}
+        >
+          <Select
+            selectOptions={[
+              { value: 'Select-box 1' },
+              { value: 'Select-box 2' },
+              { value: 'Select-box 3' },
+            ]}
+            titleValue={'Select-box'}
+          />
+          <Input type={'search'} />
+          <Input type={'search'} />
+        </Modal>
+      </div>
+    )
+  },
 }
