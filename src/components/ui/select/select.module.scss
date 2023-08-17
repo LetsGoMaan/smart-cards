@@ -11,8 +11,9 @@ button {
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   height: 36px;
-  width: 210px;
-  border: 1px solid var(--color-dark-100);
+  /*width: 210px;*/
+  width: 100%;
+  border: 1px solid var(--color-dark-300);
   border-radius: 2px;
   background-color: transparent;
   color: var(--color-light-100);
@@ -38,7 +39,8 @@ button {
 
 .selectContent {
   overflow: hidden;
-  background-color: transparent;
+  /*background-color: transparent;*/
+  background-color: var(--color-dark-700);
   margin-top: 36px;
 
   .viewport {
