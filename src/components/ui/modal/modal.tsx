@@ -1,4 +1,3 @@
-//import { ReactNode, useState } from 'react'
 import { ReactNode } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -42,20 +41,17 @@ const dropIn = {
 }
 
 export const Modal = ({ children, isOpen, showCloseButton, title, onClose }: ModalProps) => {
-  //const [isModalOpen, setIsModalOpen] = useState(isOpen)
-  /*const closeModal = () => {
-    setIsModalOpen(false)
-    console.log(isModalOpen)
-  }*/
-  const handleModalClosed = () => {
+  const handleModalClosedWithButton = () => {
+    onClose?.(false)
+  }
+
+  const handleModalClosedWithoutButton = () => {
     onClose?.(false)
   }
 
   return (
-    /*<div className={s.wrapper} onClick={closeModal}>*/
-    <div className={s.wrapper} onClick={handleModalClosed}>
+    <div className={s.wrapper}>
       <AnimatePresence>
-        {/*{isModalOpen && (*/}
         {isOpen && (
           <>
             <motion.div
@@ -63,17 +59,17 @@ export const Modal = ({ children, isOpen, showCloseButton, title, onClose }: Mod
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              onClick={handleModalClosedWithoutButton}
             />
             <motion.div variants={dropIn} initial="hidden" animate="visible" exit="exit">
-              <Card variant={'card'} className={s.modal}>
+              <Card className={s.modal}>
                 {showCloseButton && (
                   <div className={s.titleWrapper}>
                     <Typography className={s.title} variant={'h2'}>
                       {title}
                     </Typography>
                     <img
-                      /*onClick={closeModal}*/
-                      onClick={handleModalClosed}
+                      onClick={handleModalClosedWithButton}
                       className={s.closeMark}
                       src={closeMark}
                       alt={'close'}
