@@ -24,7 +24,7 @@ button {
 
   &:focus {
     border-radius: 4px;
-    border: 2px solid var(--color-info-900);
+    outline: 2px solid var(--color-info-900);
   }
 
   &[data-placeholder] {
