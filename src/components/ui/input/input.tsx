@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react'
 
 import eyeIcon from './../../../assets/eye.svg'
 import searchIcon from './../../../assets/search.svg'
@@ -11,7 +11,8 @@ export type InputProps = {
   inputIcon?: string
   type: 'text' | 'password' | 'search'
   disabled?: boolean
-}
+  label?: string
+} & ComponentPropsWithoutRef<'input'>
 
 export const Input = (props: InputProps) => {
   const { className = s.default, errorMessage, type = 'text', disabled } = props
