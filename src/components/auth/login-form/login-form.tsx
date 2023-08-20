@@ -1,3 +1,4 @@
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -24,6 +25,9 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* rhf dev tool*/}
+      <DevTool control={control} />
+      {/* rhf dev tool*/}
       <input type={'text'} style={{ background: 'black' }} {...register('email')} />{' '}
       {/*должен быть наш инпут*/}
       <input type={'password'} style={{ background: 'black' }} {...register('password')} />
