@@ -4,6 +4,8 @@ import * as TabsRadixUI from '@radix-ui/react-tabs'
 
 import s from './tabSwitcher.module.scss'
 
+import { Typography } from '@/components/ui'
+
 export type TabType = {
   /** A unique value that associates the trigger with a content. */
   value: string
@@ -16,6 +18,7 @@ type TabSwitcherProps = {
   onValueChange?: (value: string) => void
   tabs: TabType[]
   children?: ReactNode
+  generalTitle?: string
 }
 export const TabSwitcher = ({
   tabs,
@@ -23,30 +26,36 @@ export const TabSwitcher = ({
   defaultValue,
   value,
   onValueChange,
+  generalTitle,
 }: TabSwitcherProps) => {
   return (
-    <TabsRadixUI.Root
-      className={s.root}
-      defaultValue={defaultValue}
-      value={value}
-      onValueChange={onValueChange}
-    >
-      <TabsRadixUI.List className={s.list}>
-        {tabs.map(tab => {
-          return (
-            <TabsRadixUI.Trigger
-              key={tab.value}
-              className={s.trigger}
-              value={tab.value}
-              disabled={tab.disabled}
-            >
-              {tab.title}
-            </TabsRadixUI.Trigger>
-          )
-        })}
-      </TabsRadixUI.List>
-      {children}
-    </TabsRadixUI.Root>
+    <div>
+      <Typography className={s.title} variant={'body2'}>
+        {generalTitle}
+      </Typography>
+      <TabsRadixUI.Root
+        className={s.root}
+        defaultValue={defaultValue}
+        value={value}
+        onValueChange={onValueChange}
+      >
+        <TabsRadixUI.List className={s.list}>
+          {tabs.map(tab => {
+            return (
+              <TabsRadixUI.Trigger
+                key={tab.value}
+                className={s.trigger}
+                value={tab.value}
+                disabled={tab.disabled}
+              >
+                {tab.title}
+              </TabsRadixUI.Trigger>
+            )
+          })}
+        </TabsRadixUI.List>
+        {children}
+      </TabsRadixUI.Root>
+    </div>
   )
 }
 

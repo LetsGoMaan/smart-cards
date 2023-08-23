@@ -1,74 +1,75 @@
-import { useState } from 'react'
+import { ReactNode } from 'react'
 
+import { ChevronDownIcon } from '@radix-ui/react-icons'
+import * as Label from '@radix-ui/react-label'
 import * as SelectRadixUI from '@radix-ui/react-select'
 
-import arrowDown from './../../../assets/arrow-down.svg'
-import arrowUp from './../../../assets/arrow-up.svg'
 import s from './select.module.scss'
+
+import { Typography } from '@/components/ui'
 
 export type Options = {
   value: string
   disabled?: boolean
 }
 type SelectProps = {
-  titleValue: string
+  defaultValue: string
+  value?: string
+  placeholder?: ReactNode
   selectOptions: Options[]
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
+  disabled?: boolean
+  label?: string
 }
-export const Select = ({ titleValue, selectOptions, onChange }: SelectProps) => {
-  const [selectedValue, setSelectedValue] = useState<string>(titleValue)
-  const [isOpen, setIsOpen] = useState(false)
-  const changeArrow = () => {
-    setIsOpen(!isOpen)
-  }
-
-  const handleSelectChange = (value: string) => {
-    onChange && onChange(value)
-    setSelectedValue(value)
-  }
-
-  const filteredOptions = selectOptions.filter(option => option.value !== selectedValue)
-
+export const Select = ({
+  defaultValue,
+  value,
+  placeholder,
+  selectOptions,
+  onValueChange,
+  disabled,
+  label,
+}: SelectProps) => {
   return (
-    <div onClick={changeArrow}>
-      <SelectRadixUI.Root
-        value={selectedValue}
-        onValueChange={handleSelectChange}
-        open={isOpen}
-        onOpenChange={() => {
-          setIsOpen(!isOpen)
-        }}
+    <Label.Root>
+      <Typography
+        variant={'body2'}
+        as={'label'}
+        className={`${s.label} ${disabled && s.labelDisabled}`}
       >
-        <SelectRadixUI.Trigger className={s.trigger}>
-          <SelectRadixUI.Value>{selectedValue}</SelectRadixUI.Value>
-          <SelectRadixUI.Icon className={s.icon}>
-            <span>
-              <img src={isOpen ? arrowUp : arrowDown} alt={'arrow'} />
-            </span>
-          </SelectRadixUI.Icon>
+        {label}
+      </Typography>
+      <SelectRadixUI.Root
+        defaultValue={defaultValue}
+        value={value}
+        required
+        disabled={disabled}
+        onValueChange={onValueChange}
+      >
+        <SelectRadixUI.Trigger className={s.trigger} tabIndex={1}>
+          <SelectRadixUI.Value placeholder={placeholder} />
+          <ChevronDownIcon className={s.icon} />
         </SelectRadixUI.Trigger>
 
         <SelectRadixUI.Portal>
-          <SelectRadixUI.Content className={s.selectContent}>
-            <SelectRadixUI.Viewport className={s.viewport}>
-              <SelectRadixUI.Group className={s.group}>
-                {filteredOptions.map(option => {
-                  return (
-                    <SelectRadixUI.Item
-                      key={option.value}
-                      className={s.selectItem}
-                      value={option.value}
-                      disabled={option.disabled}
-                    >
-                      <SelectRadixUI.ItemText>{option.value}</SelectRadixUI.ItemText>
-                    </SelectRadixUI.Item>
-                  )
-                })}
-              </SelectRadixUI.Group>
+          <SelectRadixUI.Content position={'popper'} sideOffset={-1} className={s.content}>
+            <SelectRadixUI.Viewport>
+              {selectOptions.map(option => {
+                return (
+                  <SelectRadixUI.Item
+                    key={option.value}
+                    className={s.item}
+                    value={option.value}
+                    disabled={option.disabled}
+                  >
+                    <SelectRadixUI.ItemText>{option.value}</SelectRadixUI.ItemText>
+                  </SelectRadixUI.Item>
+                )
+              })}
             </SelectRadixUI.Viewport>
           </SelectRadixUI.Content>
         </SelectRadixUI.Portal>
       </SelectRadixUI.Root>
-    </div>
+    </Label.Root>
   )
 }
