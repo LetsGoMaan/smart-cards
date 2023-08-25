@@ -1,17 +1,18 @@
 import { ReactNode } from 'react'
 
+import * as DialogRadixUI from '@radix-ui/react-dialog'
+import { Cross2Icon } from '@radix-ui/react-icons'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import closeMark from './../../../assets/xMark.svg'
 import s from './modal.module.scss'
 
-import { Card, Typography } from '@/components/ui'
+import { Typography } from '@/components/ui'
 
 type ModalProps = {
   children: ReactNode
   isOpen: boolean
   onClose?: (value: boolean) => void
-  showCloseButton: boolean
+  showCloseButton?: boolean
   title?: string
 }
 
@@ -22,9 +23,7 @@ const dropIn = {
     opacity: 0,
   },
   visible: {
-    //y: '-50%',
-    y: '250px',
-    //x: '-50%',
+    y: '-50%',
     x: '0%',
     opacity: 1,
     transition: {
@@ -41,47 +40,48 @@ const dropIn = {
 }
 
 export const Modal = ({ children, isOpen, showCloseButton, title, onClose }: ModalProps) => {
-  const handleModalClosedWithButton = () => {
-    onClose?.(false)
-  }
-
-  const handleModalClosedWithoutButton = () => {
+  const handleModalClose = () => {
     onClose?.(false)
   }
 
   return (
-    <div className={s.wrapper}>
+    <DialogRadixUI.Root open={isOpen} onOpenChange={handleModalClose}>
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              className={s.overlay}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={handleModalClosedWithoutButton}
-            />
-            <motion.div variants={dropIn} initial="hidden" animate="visible" exit="exit">
-              <Card className={s.modal}>
-                {showCloseButton && (
-                  <div className={s.titleWrapper}>
-                    <Typography className={s.title} variant={'h2'}>
-                      {title}
-                    </Typography>
-                    <img
-                      onClick={handleModalClosedWithButton}
-                      className={s.closeMark}
-                      src={closeMark}
-                      alt={'close'}
-                    />
-                  </div>
-                )}
-                <div className={s.modalContent}>{children}</div>
-              </Card>
-            </motion.div>
-          </>
+          <DialogRadixUI.Portal>
+            <DialogRadixUI.Overlay className={s.dialogOverlay} asChild>
+              <motion.div
+                className={s.overlay}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={handleModalClose}
+              />
+            </DialogRadixUI.Overlay>
+            <DialogRadixUI.Content className={s.dialogContent}>
+              <motion.div variants={dropIn} initial="hidden" animate="visible" exit="exit">
+                <div className={s.modal}>
+                  {showCloseButton && (
+                    <div className={s.titleWrapper}>
+                      <DialogRadixUI.Title className={s.dialogTitle}>
+                        <Typography className={s.title} variant={'h2'}>
+                          {title}
+                        </Typography>
+                      </DialogRadixUI.Title>
+                      <DialogRadixUI.Close asChild>
+                        <button aria-label={'Close'}>
+                          <Cross2Icon className={s.closeMark} />
+                        </button>
+                      </DialogRadixUI.Close>
+                    </div>
+                  )}
+                  <div className={s.modalContent}>{children}</div>
+                </div>
+              </motion.div>
+            </DialogRadixUI.Content>
+          </DialogRadixUI.Portal>
         )}
       </AnimatePresence>
-    </div>
+    </DialogRadixUI.Root>
   )
 }

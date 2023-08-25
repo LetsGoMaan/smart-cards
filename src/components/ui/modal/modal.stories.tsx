@@ -21,12 +21,6 @@ export const ModalStory: Story = {
     isOpen: true,
     showCloseButton: true,
     children: '',
-    /*children: (
-          <>
-            <Input type={'search'} />
-            <Input type={'search'} />
-          </>
-        ),*/
     title: 'Title',
   },
   render: args => {
@@ -55,7 +49,7 @@ export const ModalStory: Story = {
               { value: 'Select-box 2' },
               { value: 'Select-box 3' },
             ]}
-            titleValue={'Select-box'}
+            defaultValue={'Select-box'}
           />
           <Input type={'search'} />
           <Input type={'search'} />
