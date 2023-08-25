@@ -1,4 +1,4 @@
-.label {
+label.label {
   color: var(--color-dark-100);
 }
 
@@ -8,6 +8,8 @@
 
   .inputIcon {
     all: unset;
+
+    cursor: pointer;
 
     position: absolute;
     top: 9px;

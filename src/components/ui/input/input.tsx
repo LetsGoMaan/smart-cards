@@ -1,4 +1,6 @@
-import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, KeyboardEvent, useState } from 'react'
+
+import { EyeNoneIcon } from '@radix-ui/react-icons'
 
 import eyeIcon from './../../../assets/eye.svg'
 import searchIcon from './../../../assets/search.svg'
@@ -21,6 +23,14 @@ export type InputProps = {
   onClearClick?: () => void
 } & ComponentPropsWithoutRef<'input'>
 
+function getType(type: string, showPassword: boolean) {
+  if (type === 'password' && showPassword) {
+    return 'text'
+  }
+
+  return type
+}
+
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({
     className = s.default,
@@ -36,20 +46,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ...restProps
   }) => {
     const isError = errorMessage ? s.error : ''
-    const [isXmark, setIsXmark] = useState(false)
-    const [text, setText] = useState('')
-    // eslint-disable-next-line no-nested-ternary
-    const inputIcon = type === 'password' ? eyeIcon : type === 'search' && isXmark ? xMarkIcon : ''
-    const xMarkAppearance = (e: ChangeEvent<HTMLInputElement>) => {
-      if (type === 'search') {
-        setIsXmark(true)
-      }
-      setText(e.currentTarget.value)
-    }
+
+    const [showPassword, setShowPassword] = useState(false)
 
     const cleanTextHandler = () => {
-      setIsXmark(false)
-      setText('')
+      onClearClick && onClearClick()
+    }
+
+    const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      onChangeValue?.(e.currentTarget.value)
+    }
+
+    const onPressEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+      onEnter && e.key === 'Enter' && onEnter()
     }
 
     return (
@@ -61,17 +70,28 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {type === 'search' ? (
             <img src={searchIcon} className={s.searchIcon} alt={'searchIcon'} />
           ) : null}
-          <button className={s.inputIcon} onClick={cleanTextHandler}>
-            {inputIcon && <img src={inputIcon} alt={'InputIcon'} />}
-          </button>
+
+          {type === 'password' && (
+            <button className={s.inputIcon} onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <img src={eyeIcon} alt={'InputIcon'} /> : <EyeNoneIcon />}
+            </button>
+          )}
+
+          {type === 'search' && value && (
+            <button className={s.inputIcon} onClick={cleanTextHandler}>
+              <img src={xMarkIcon} alt={'InputIcon'} />
+            </button>
+          )}
+
           <input
-            //value={text}
             value={value}
             placeholder={placeholder}
-            onChange={xMarkAppearance}
+            onChange={onChangeValueHandler}
             disabled={disabled}
             className={`${isError ? isError : className}`}
-            type={type}
+            type={getType(type, showPassword)}
+            {...restProps}
+            onKeyDown={onPressEnterHandler}
           />
           {errorMessage ? <div className={s.errorMessage}>Error!</div> : null}
         </div>

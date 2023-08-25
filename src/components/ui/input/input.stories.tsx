@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import eyeIcon from './../../../assets/eye.svg'
@@ -46,6 +48,7 @@ export const InputStoryWithSearchIcon: Story = {
     placeholder: 'Input with search',
     inputIcon: `${searchIcon}`,
     type: 'search',
+    value: 'asdasdasd',
   },
 }
 
@@ -56,5 +59,28 @@ export const InputStoryDisabled: Story = {
     inputIcon: `${searchIcon}`,
     type: 'text',
     disabled: true,
+  },
+}
+
+export const InputStoryWithSearchIconWithUseState: Story = {
+  render: args => {
+    const [text, setText] = useState('')
+
+    return (
+      <>
+        <Input
+          value={text}
+          onChange={e => setText(e.currentTarget.value)}
+          onClick={() => setText('')}
+          {...args}
+        />
+      </>
+    )
+  },
+  args: {
+    label: 'Input',
+    placeholder: 'Input with search',
+    inputIcon: `${searchIcon}`,
+    type: 'search',
   },
 }
