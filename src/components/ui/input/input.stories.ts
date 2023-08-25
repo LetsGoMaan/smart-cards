@@ -17,12 +17,15 @@ type Story = StoryObj<typeof meta>
 
 export const InputStory: Story = {
   args: {
+    placeholder: 'Input',
     type: 'text',
   },
 }
 
 export const InputStoryWithError: Story = {
   args: {
+    label: 'Input',
+    placeholder: 'Input with error',
     errorMessage: 'Error',
     type: 'text',
   },
@@ -30,6 +33,8 @@ export const InputStoryWithError: Story = {
 
 export const InputStoryWithEyeIcon: Story = {
   args: {
+    label: 'Input',
+    placeholder: 'Input with password',
     inputIcon: `${eyeIcon}`,
     type: 'password',
   },
@@ -37,6 +42,8 @@ export const InputStoryWithEyeIcon: Story = {
 
 export const InputStoryWithSearchIcon: Story = {
   args: {
+    label: 'Input',
+    placeholder: 'Input with search',
     inputIcon: `${searchIcon}`,
     type: 'search',
   },
@@ -44,6 +51,8 @@ export const InputStoryWithSearchIcon: Story = {
 
 export const InputStoryDisabled: Story = {
   args: {
+    label: 'Input',
+    placeholder: 'Just Input',
     inputIcon: `${searchIcon}`,
     type: 'text',
     disabled: true,
