@@ -16,36 +16,40 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const tabs = [
+  {
+    value: 'tab1',
+    title: 'Switcher',
+  },
+  {
+    value: 'tab2',
+    title: 'Switcher2',
+    disabled: false,
+  },
+  {
+    value: 'tab3',
+    title: 'Switcher3',
+  },
+]
+
 export const Tabs: Story = {
   args: {
+    generalTitle: 'Title',
     defaultValue: 'tab1',
-    tabs: [
-      {
-        value: 'tab1',
-        title: 'Switcher',
-      },
-      {
-        value: 'tab2',
-        title: 'Switcher2',
-        disabled: false,
-      },
-      {
-        value: 'tab3',
-        title: 'Switcher3',
-      },
-    ],
+    tabs: tabs,
+    children: (
+      <>
+        <TabContent value={tabs[0].value}>Content for Switcher.</TabContent>
+        <TabContent value={tabs[1].value}>Content for Switcher2.</TabContent>
+        <TabContent value={tabs[2].value}>Content for Switcher3.</TabContent>
+      </>
+    ),
   },
-  render: args => (
-    <TabSwitcher defaultValue={args.defaultValue} tabs={args.tabs}>
-      <TabContent value={args.tabs[0].value}>Content for Switcher.</TabContent>
-      <TabContent value={args.tabs[1].value}>Content for Switcher2.</TabContent>
-      <TabContent value={args.tabs[2].value}>Content for Switcher3.</TabContent>
-    </TabSwitcher>
-  ),
 }
 
 export const TabsWithDisabled: Story = {
   args: {
+    generalTitle: 'Title',
     defaultValue: 'tab1',
     tabs: [
       {
@@ -62,12 +66,12 @@ export const TabsWithDisabled: Story = {
         title: 'SwitcherC',
       },
     ],
+    children: (
+      <>
+        <TabContent value={tabs[0].value}>Content for Switcher.</TabContent>
+        <TabContent value={tabs[1].value}>Content for Switcher2.</TabContent>
+        <TabContent value={tabs[2].value}>Content for Switcher3.</TabContent>
+      </>
+    ),
   },
-  render: args => (
-    <TabSwitcher defaultValue={args.defaultValue} tabs={args.tabs}>
-      <TabContent value={args.tabs[0].value}>Content for SwitcherA.</TabContent>
-      <TabContent value={args.tabs[1].value}>Content for SwitcherB.</TabContent>
-      <TabContent value={args.tabs[2].value}>Content for SwitcherC.</TabContent>
-    </TabSwitcher>
-  ),
 }

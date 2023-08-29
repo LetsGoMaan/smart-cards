@@ -4,12 +4,11 @@ import s from './card.module.scss'
 
 export type CardProps = {
   children: ReactNode
-  variant: 'card'
   className?: string
 }
 
 export const Card = (props: CardProps) => {
-  const { className, variant, ...rest } = props
+  const { className, ...rest } = props
 
-  return <div className={`${s[variant]} ${className}`} {...rest}></div>
+  return <div className={`${s.card} ${className}`} {...rest}></div>
 }

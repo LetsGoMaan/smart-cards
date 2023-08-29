@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import img from './../../../assets/enter.svg'
+
 import { Button } from './'
 
 const meta = {
@@ -61,5 +63,19 @@ export const AsLink: Story = {
     variant: 'primary',
     children: 'Link that looks like a button',
     as: 'a',
+  },
+}
+
+export const ButtonWithImage: Story = {
+  args: {
+    variant: 'primary',
+    children: (
+      <>
+        <img src={img} alt={'enter'} />
+        Button With Image
+      </>
+    ),
+    disabled: false,
+    fullWidth: false,
   },
 }

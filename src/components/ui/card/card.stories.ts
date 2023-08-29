@@ -6,11 +6,7 @@ const meta = {
   title: 'Components/Card',
   component: Card,
   tags: ['autodocs'],
-  argTypes: {
-    variant: {
-      options: ['card'],
-    },
-  },
+  argTypes: {},
 } satisfies Meta<typeof Card>
 
 export default meta
@@ -18,7 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const CardStory: Story = {
   args: {
-    variant: 'card',
     children: '',
   },
 }

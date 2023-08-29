@@ -1,0 +1,10 @@
+.nameWithAvatarWrapper {
+  cursor: pointer;
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+
+  .name {
+    border-bottom: 1px dashed var(--color-light-100);
+  }
+}
