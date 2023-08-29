@@ -1,60 +1,72 @@
-import { useState } from 'react'
-
 import * as RadioGroup from '@radix-ui/react-radio-group'
 
 import s from './radioGroup.module.scss'
 
+import { Typography } from '@/components/ui'
+
 type RadioProps = {
-  disabled?: boolean
-  labelText?: string
-  value: string
-  onValueChange?: (value: string) => void
+  classname?: string
+  options?: any[]
+  onChangeOption?: (option: any) => void
+  isDisabled?: boolean
 }
 
-export const Radio = ({ disabled, labelText, value, onValueChange }: RadioProps) => {
-  const disableIndicator = disabled ? s.RadioGroupIndicatorDisabled : s.RadioGroupIndicator
-
-  const [radioValue, setRadioValue] = useState(value)
-
-  const radioHandler = (value: string) => {
-    setRadioValue(value)
-    onValueChange && onValueChange(value)
-  }
-
+export const Radio = ({ isDisabled = false, options, classname, onChangeOption }: RadioProps) => {
   return (
     <form>
       <RadioGroup.Root
-        className={s.radioGroupRoot}
-        defaultValue="default"
-        aria-label="View density"
-        value={radioValue}
-        onValueChange={radioHandler}
+        className={`${s.radioGroupRoot} ${classname}`}
+        onValueChange={onChangeOption}
       >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <RadioGroup.Item disabled={disabled} className={s.radioGroupItem} value="default" id="r1">
-            <RadioGroup.Indicator className={disableIndicator} />
-          </RadioGroup.Item>
-          <label className={s.Label} htmlFor="r1">
-            {labelText}
-          </label>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <RadioGroup.Item className={s.radioGroupItem} value="comfortable" id="r2">
-            <RadioGroup.Indicator className={s.radioGroupIndicator} />
-          </RadioGroup.Item>
-          <label className={s.Label} htmlFor="r2">
-            Comfortable
-          </label>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <RadioGroup.Item className={s.radioGroupItem} value="compact" id="r3">
-            <RadioGroup.Indicator className={s.radioGroupIndicator} />
-          </RadioGroup.Item>
-          <label className={s.label} htmlFor="r3">
-            Compact
-          </label>
-        </div>
+        {options?.map(o => {
+          return (
+            <div className={s.itemGroup} key={o.id}>
+              <RadioGroup.Item
+                className={s.radioGroupItem}
+                disabled={isDisabled}
+                value={o.id}
+                id={o.id}
+              >
+                <RadioGroup.Indicator className={s.radioGroupIndicator} />
+              </RadioGroup.Item>
+              <label className={`${s.label} ${isDisabled ? s.labelDisabled : ''}`} htmlFor={o.id}>
+                <Typography variant={'body2'}>{o.value}</Typography>
+              </label>
+            </div>
+          )
+        })}
       </RadioGroup.Root>
     </form>
+    //     <div style={{ display: 'flex', alignItems: 'center' }}>
+    //       <RadioGroup.Item
+    //         disabled={isDisabled}
+    //         className={s.radioGroupItem}
+    //         value="default"
+    //         id="r1"
+    //       >
+    //         <RadioGroup.Indicator className={disableIndicator} />
+    //       </RadioGroup.Item>
+    //       <label className={s.label} htmlFor="r1">
+    //         {labelText}
+    //       </label>
+    //     </div>
+    //     <div style={{ display: 'flex', alignItems: 'center' }}>
+    //       <RadioGroup.Item className={s.radioGroupItem} value="comfortable" id="r2">
+    //         <RadioGroup.Indicator className={s.radioGroupIndicator} />
+    //       </RadioGroup.Item>
+    //       <label className={s.label} htmlFor="r2">
+    //         Comfortable
+    //       </label>
+    //     </div>
+    //     <div style={{ display: 'flex', alignItems: 'center' }}>
+    //       <RadioGroup.Item className={s.radioGroupItem} value="compact" id="r3">
+    //         <RadioGroup.Indicator className={s.radioGroupIndicator} />
+    //       </RadioGroup.Item>
+    //       <label className={s.label} htmlFor="r3">
+    //         Compact
+    //       </label>
+    //     </div>
+    //   </RadioGroup.Root>
+    // </form>
   )
 }
