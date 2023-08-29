@@ -91,6 +91,10 @@
     .label {
       cursor: pointer;
       user-select: none;
+
+      .labelText {
+        color: var(--color-light-100);
+      }
     }
 
     .labelDisabled {
