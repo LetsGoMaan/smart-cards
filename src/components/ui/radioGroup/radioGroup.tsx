@@ -5,38 +5,34 @@ import s from './radioGroup.module.scss'
 import { Typography } from '@/components/ui'
 
 type RadioProps = {
-  classname?: string
+  className?: string
   options?: any[]
   onChangeOption?: (option: any) => void
   isDisabled?: boolean
 }
 
-export const Radio = ({ isDisabled = false, options, classname, onChangeOption }: RadioProps) => {
+export const Radio = ({ isDisabled = false, options, className, onChangeOption }: RadioProps) => {
   return (
-    <form>
-      <RadioGroup.Root
-        className={`${s.radioGroupRoot} ${classname}`}
-        onValueChange={onChangeOption}
-      >
+    <>
+      <RadioGroup.Root className={`${s.root} ${className}`} onValueChange={onChangeOption}>
         {options?.map(o => {
           return (
             <div className={s.itemGroup} key={o.id}>
-              <RadioGroup.Item
-                className={s.radioGroupItem}
-                disabled={isDisabled}
-                value={o.id}
-                id={o.id}
-              >
-                <RadioGroup.Indicator className={s.radioGroupIndicator} />
-              </RadioGroup.Item>
+              <div className={`${s.itemWrapper} ${isDisabled ? s.disabled : ''}`}>
+                <RadioGroup.Item className={s.item} disabled={isDisabled} value={o.id} id={o.id}>
+                  <RadioGroup.Indicator className={s.indicator} />
+                </RadioGroup.Item>
+              </div>
               <label className={`${s.label} ${isDisabled ? s.labelDisabled : ''}`} htmlFor={o.id}>
-                <Typography variant={'body2'}>{o.value}</Typography>
+                <Typography className={s.labelText} as={'h4'} variant={'body2'}>
+                  {o.value}
+                </Typography>
               </label>
             </div>
           )
         })}
       </RadioGroup.Root>
-    </form>
+    </>
     //     <div style={{ display: 'flex', alignItems: 'center' }}>
     //       <RadioGroup.Item
     //         disabled={isDisabled}
