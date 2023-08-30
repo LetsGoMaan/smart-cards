@@ -1,36 +1,44 @@
+import { ReactNode } from 'react'
+
+import * as DropdownRadix from '@radix-ui/react-dropdown-menu'
+
 import s from './dropDownMenu.module.scss'
 
-export type Option = {
-  id: string
-  icon: string
-  value: string
-  email?: string
-}
 export type DropDownMenuProps = {
-  options: Option[]
-  isMenuOpen: boolean
+  isMenuOpen?: boolean
+  onChange?: (open: boolean) => void
+  trigger?: ReactNode
+  children?: ReactNode
+  align?: 'start' | 'center' | 'end'
 }
-export const DropDownMenu = ({ options, isMenuOpen }: DropDownMenuProps) => {
-  const isOpen = isMenuOpen ? 'openMenu' : ''
-
+export const DropDownMenu = ({ trigger, children, align }: DropDownMenuProps) => {
   return (
-    <div className={`${s.menuWrapper} ${s[isOpen]}`}>
-      <div className={s.menuContent}>
-        {options.map(o => {
-          return (
-            <div className={s.menuIconWrapper} key={o.id}>
-              <a href={'#'} className={s.menuIcon}>
-                <img src={o.icon} alt={'icon'} />
-                <span className={s.value}>
-                  <span className={o.email ? s.name : ''}>{o.value}</span>
-                  <span className={s.email}>{o.email}</span>
-                </span>
-              </a>
-              <div className={s.line}></div>
-            </div>
-          )
-        })}
-      </div>
-    </div>
+    <DropdownRadix.Root>
+      <DropdownRadix.Trigger asChild>
+        <button className={s.buttonTrigger} aria-label="Customise options">
+          {trigger}
+        </button>
+      </DropdownRadix.Trigger>
+      <DropdownRadix.Portal>
+        <DropdownRadix.Content className={s.content} sideOffset={6} align={align}>
+          {children}
+          <DropdownRadix.Arrow className={s.arrowWrapper} asChild>
+            <div className={s.arrow} />
+          </DropdownRadix.Arrow>
+        </DropdownRadix.Content>
+      </DropdownRadix.Portal>
+    </DropdownRadix.Root>
+  )
+}
+
+type ItemProps = {
+  children?: ReactNode
+}
+export const DropDownItem = ({ children }: ItemProps) => {
+  return (
+    <>
+      <DropdownRadix.Item className={s.item}>{children}</DropdownRadix.Item>
+      <DropdownRadix.Separator className={s.separator} />
+    </>
   )
 }
