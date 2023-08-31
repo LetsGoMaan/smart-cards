@@ -15,7 +15,6 @@ export type InputProps = {
   className?: string
   errorMessage?: string
   inputIcon?: string
-  type: 'text' | 'password' | 'search'
   disabled?: boolean
   value?: string
   onChangeValue?: (value: string) => void
@@ -32,19 +31,22 @@ function getType(type: string, showPassword: boolean) {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({
-    className = s.default,
-    label,
-    placeholder,
-    errorMessage,
-    type = 'text',
-    disabled,
-    value,
-    onEnter,
-    onChangeValue,
-    onClearClick,
-    ...restProps
-  }) => {
+  (
+    {
+      className = s.default,
+      label,
+      placeholder,
+      errorMessage,
+      type = 'text',
+      disabled,
+      value,
+      onEnter,
+      onChangeValue,
+      onClearClick,
+      ...restProps
+    },
+    ref
+  ) => {
     const isError = errorMessage ? s.error : ''
 
     const [showPassword, setShowPassword] = useState(false)
@@ -90,11 +92,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             className={`${isError ? isError : className}`}
             type={getType(type, showPassword)}
+            ref={ref}
             {...restProps}
             onKeyDown={onPressEnterHandler}
           />
-          {errorMessage ? <div className={s.errorMessage}>Error!</div> : null}
         </div>
+        {errorMessage ? <div className={s.errorMessage}>{errorMessage}</div> : null}
       </>
     )
   }
