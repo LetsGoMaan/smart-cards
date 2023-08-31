@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useController, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button, CheckboxComponent, Input } from '@/components/ui'
+import { Button, Input } from '@/components/ui'
+import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
 
-type LoginFormSchema = z.infer<typeof loginSchema>
+export type LoginFormSchema = z.infer<typeof loginSchema>
 
 const MIN_PASSWORD_LENGTH = 3
 
@@ -21,10 +22,6 @@ export const LoginForm = () => {
     control,
     formState: { errors },
   } = useForm<LoginFormSchema>({ resolver: zodResolver(loginSchema) })
-
-  const {
-    field: { value, onChange },
-  } = useController({ name: 'rememberMe', control, defaultValue: false })
 
   const onSubmit: SubmitHandler<LoginFormSchema> = data => console.log(data)
 
@@ -44,7 +41,7 @@ export const LoginForm = () => {
         errorMessage={errors.password?.message}
       />
 
-      <CheckboxComponent checked={value} onCheckedHandler={onChange} label={'remember me'} />
+      <ControlledCheckbox name={'rememberMe'} control={control} label={'remember me'} />
 
       <Button type="submit">Submit</Button>
     </form>
