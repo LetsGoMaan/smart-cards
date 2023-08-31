@@ -8,7 +8,7 @@ import s from './checkbox.module.scss'
 export type CheckboxProps = {
   disabled?: boolean
   checked?: boolean
-  onCheckedHandler?: () => void
+  onCheckedHandler?: (checked: boolean) => void
   label?: string
 } & ComponentPropsWithoutRef<typeof Checkbox.Root>
 
@@ -23,7 +23,7 @@ export const CheckboxComponent = ({
       <div className={`${s.checkboxWrapper} ${disabled ? s.disabled : ''}`}>
         <Checkbox.Root
           checked={checked}
-          onClick={onCheckedHandler}
+          onCheckedChange={onCheckedHandler}
           disabled={disabled}
           className={s.checkbox}
           id="c1"
