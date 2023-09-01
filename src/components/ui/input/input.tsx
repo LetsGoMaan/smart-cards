@@ -15,9 +15,11 @@ export type InputProps = {
   className?: string
   errorMessage?: string
   inputIcon?: string
+  //type?: 'text' | 'password' | 'search'
   disabled?: boolean
   value?: string
   onChangeValue?: (value: string) => void
+  onChangeValue?: (value: ChangeEvent<HTMLInputElement>) => void
   onEnter?: () => void
   onClearClick?: () => void
 } & ComponentPropsWithoutRef<'input'>
@@ -52,7 +54,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [showPassword, setShowPassword] = useState(false)
 
     const cleanTextHandler = () => {
+      console.log('input x click')
       onClearClick && onClearClick()
+      console.log('after x')
     }
 
     const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
