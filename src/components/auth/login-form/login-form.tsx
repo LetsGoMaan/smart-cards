@@ -3,8 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button, Input } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
+import { ControlledInput } from '@/components/ui/controlled/controlled-input/controlled-input.tsx'
 
 export type LoginFormSchema = z.infer<typeof loginSchema>
 
@@ -18,7 +19,7 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
   const {
-    register,
+    //register,
     handleSubmit,
     control,
     formState: { errors },
@@ -29,17 +30,33 @@ export const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <DevTool control={control} />
-      <Input
+      {/*<Input
         type={'email'}
         label={'email'}
         {...register('email')}
         errorMessage={errors.email?.message}
+      />*/}
+
+      <ControlledInput
+        type={'email'}
+        name={'email'}
+        control={control}
+        label={'email'}
+        errorMessage={errors.email?.message}
       />
 
-      <Input
+      {/*<Input
         type={'password'}
         label={'password'}
         {...register('password')}
+        errorMessage={errors.password?.message}
+      />*/}
+
+      <ControlledInput
+        type={'password'}
+        name={'password'}
+        control={control}
+        label={'password'}
         errorMessage={errors.password?.message}
       />
 
