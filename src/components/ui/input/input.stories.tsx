@@ -75,6 +75,7 @@ export const InputStoryWithSearchIconWithUseState: Story = {
           type={'search'}
           inputIcon={searchIcon}
           placeholder={'Input with search'}
+          {...args}
         />
       </>
     )
