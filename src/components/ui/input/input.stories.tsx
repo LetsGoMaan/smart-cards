@@ -71,16 +71,13 @@ export const InputStoryWithSearchIconWithUseState: Story = {
         <Input
           value={text}
           onChange={e => setText(e.currentTarget.value)}
-          onClick={() => setText('')}
-          {...args}
+          onClearClick={() => setText('')}
+          type={'search'}
+          inputIcon={searchIcon}
+          placeholder={'Input with search'}
         />
       </>
     )
   },
-  args: {
-    label: 'Input',
-    placeholder: 'Input with search',
-    inputIcon: `${searchIcon}`,
-    type: 'search',
-  },
+  args: {},
 }

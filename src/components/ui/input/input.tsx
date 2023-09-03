@@ -15,7 +15,6 @@ export type InputProps = {
   className?: string
   errorMessage?: string
   inputIcon?: string
-  type: 'text' | 'password' | 'search'
   disabled?: boolean
   value?: string
   onChangeValue?: (value: string) => void
@@ -32,25 +31,28 @@ function getType(type: string, showPassword: boolean) {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({
-    className = s.default,
-    label,
-    placeholder,
-    errorMessage,
-    type = 'text',
-    disabled,
-    value,
-    onEnter,
-    onChangeValue,
-    onClearClick,
-    ...restProps
-  }) => {
+  (
+    {
+      className = s.default,
+      label,
+      placeholder,
+      errorMessage,
+      type = 'text',
+      disabled,
+      value,
+      onEnter,
+      onChangeValue,
+      onClearClick,
+      ...restProps
+    },
+    ref
+  ) => {
     const isError = errorMessage ? s.error : ''
 
     const [showPassword, setShowPassword] = useState(false)
 
     const cleanTextHandler = () => {
-      onClearClick && onClearClick()
+      onClearClick?.()
     }
 
     const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -72,13 +74,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ) : null}
 
           {type === 'password' && (
-            <button className={s.inputIcon} onClick={() => setShowPassword(!showPassword)}>
+            <button
+              type={'button'}
+              className={s.inputIcon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <img src={eyeIcon} alt={'InputIcon'} /> : <EyeNoneIcon />}
             </button>
           )}
 
           {type === 'search' && value && (
-            <button className={s.inputIcon} onClick={cleanTextHandler}>
+            <button type={'button'} className={s.inputIcon} onClick={cleanTextHandler}>
               <img src={xMarkIcon} alt={'InputIcon'} />
             </button>
           )}
@@ -90,11 +96,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             className={`${isError ? isError : className}`}
             type={getType(type, showPassword)}
+            ref={ref}
             {...restProps}
             onKeyDown={onPressEnterHandler}
           />
-          {errorMessage ? <div className={s.errorMessage}>Error!</div> : null}
         </div>
+        {errorMessage ? <div className={s.errorMessage}>{errorMessage}</div> : null}
       </>
     )
   }
