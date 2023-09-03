@@ -52,7 +52,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [showPassword, setShowPassword] = useState(false)
 
     const cleanTextHandler = () => {
-      onClearClick && onClearClick()
+      onClearClick?.()
     }
 
     const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,13 +74,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ) : null}
 
           {type === 'password' && (
-            <button className={s.inputIcon} onClick={() => setShowPassword(!showPassword)}>
+            <button
+              type={'button'}
+              className={s.inputIcon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <img src={eyeIcon} alt={'InputIcon'} /> : <EyeNoneIcon />}
             </button>
           )}
 
           {type === 'search' && value && (
-            <button className={s.inputIcon} onClick={cleanTextHandler}>
+            <button type={'button'} className={s.inputIcon} onClick={cleanTextHandler}>
               <img src={xMarkIcon} alt={'InputIcon'} />
             </button>
           )}

@@ -15,6 +15,7 @@ const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(MIN_PASSWORD_LENGTH),
   rememberMe: z.boolean().default(false),
+  yolo: z.string().min(3),
 })
 
 export const LoginForm = () => {
