@@ -6,6 +6,7 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import s from './checkbox.module.scss'
 
 export type CheckboxProps = {
+  className?: string
   disabled?: boolean
   checked?: boolean
   onCheckedHandler?: (checked: boolean) => void
@@ -13,13 +14,14 @@ export type CheckboxProps = {
 } & ComponentPropsWithoutRef<typeof Checkbox.Root>
 
 export const CheckboxComponent = ({
+  className,
   disabled,
   checked = false,
   onCheckedHandler,
   label,
 }: CheckboxProps) => {
   return (
-    <div className={s.wrapper}>
+    <div className={`${s.wrapper} ${className}`}>
       <div className={`${s.checkboxWrapper} ${disabled ? s.disabled : ''}`}>
         <Checkbox.Root
           checked={checked}
