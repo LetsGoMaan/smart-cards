@@ -63,7 +63,7 @@ export const InputStoryDisabled: Story = {
 }
 
 export const InputStoryWithSearchIconWithUseState: Story = {
-  render: args => {
+  render: () => {
     const [text, setText] = useState('')
 
     return (
@@ -75,7 +75,6 @@ export const InputStoryWithSearchIconWithUseState: Story = {
           type={'search'}
           inputIcon={searchIcon}
           placeholder={'Input with search'}
-          {...args}
         />
       </>
     )
