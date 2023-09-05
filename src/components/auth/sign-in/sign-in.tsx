@@ -1,6 +1,7 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './sign-in.module.scss'
@@ -9,7 +10,6 @@ import { Button, Card, ControlledCheckbox, ControlledInput, Typography } from '@
 
 type SignInProps = {
   onSubmit: (data: SignInFormSchema) => void
-  //onSubmit: SubmitHandler<SignInFormSchema>
 }
 export type SignInFormSchema = z.infer<typeof signInSchema>
 
@@ -55,7 +55,12 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
           control={control}
           label={'Remember me'}
         />
-        <Typography as={'a'} className={s.forgotPassword} variant={'body2'}>
+        <Typography
+          as={Link}
+          to={'/forgot-password'}
+          className={s.forgotPassword}
+          variant={'body2'}
+        >
           Forgot Password?
         </Typography>
         <Button type={'submit'} className={s.buttonSubmit} fullWidth={true}>
@@ -64,7 +69,7 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
         <Typography as={'h4'} className={s.haveAccount} variant={'body2'}>
           Don`t have an account?
         </Typography>
-        <Typography className={s.signUp} variant={'link1'}>
+        <Typography as={Link} to={'/sign-up'} className={s.signUp} variant={'link1'}>
           Sign Up
         </Typography>
       </form>
