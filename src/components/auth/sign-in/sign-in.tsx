@@ -35,7 +35,6 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
         <DevTool control={control} />
         <ControlledInput
           className={s.email}
-          type={'email'}
           name={'email'}
           control={control}
           label={'Email'}
