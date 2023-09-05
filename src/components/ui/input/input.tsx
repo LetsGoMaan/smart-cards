@@ -33,7 +33,7 @@ function getType(type: string, showPassword: boolean) {
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
-      className = s.default,
+      className,
       label,
       placeholder,
       errorMessage,
@@ -68,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <Typography className={s.label} variant={'body2'} as={'label'}>
           {label}
         </Typography>
-        <div className={s.inputWrapper}>
+        <div className={`${s.inputWrapper} ${className}`}>
           {type === 'search' ? (
             <img src={searchIcon} className={s.searchIcon} alt={'searchIcon'} />
           ) : null}
@@ -94,7 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             placeholder={placeholder}
             onChange={onChangeValueHandler}
             disabled={disabled}
-            className={`${isError ? isError : className}`}
+            className={`${isError ? isError : s.default}`}
             type={getType(type, showPassword)}
             ref={ref}
             {...restProps}
