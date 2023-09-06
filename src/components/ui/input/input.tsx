@@ -1,9 +1,8 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, KeyboardEvent, useState } from 'react'
 
-import { EyeNoneIcon } from '@radix-ui/react-icons'
+import { EyeNoneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
 import eyeIcon from './../../../assets/eye.svg'
-import searchIcon from './../../../assets/search.svg'
 import xMarkIcon from './../../../assets/xMark.svg'
 import s from './input.module.scss'
 
@@ -69,9 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {label}
         </Typography>
         <div className={s.inputWrapper}>
-          {type === 'search' ? (
-            <img src={searchIcon} className={s.searchIcon} alt={'searchIcon'} />
-          ) : null}
+          {type === 'search' ? <MagnifyingGlassIcon className={s.searchIcon} /> : null}
 
           {type === 'password' && (
             <button

@@ -26,6 +26,10 @@ label.label {
     left: 10px;
 
     display: block;
+
+    width: 1.25rem;
+
+    color: var(--color-dark-100);
   }
 
   input {
@@ -49,6 +53,7 @@ label.label {
 
   .default {
     color: var(--color-dark-100);
+
     appearance: none;
     background: transparent;
     border: 1px solid var(--color-dark-300);
@@ -84,6 +89,10 @@ label.label {
   }
 }
 
+.searchIcon:has(~ .default:active) {
+  color: var(--color-light-100);
+}
+
 .errorMessage {
   margin-top: 5px;
   font-size: 12px;
@@ -99,15 +108,17 @@ textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: 0;
-  -webkit-text-fill-color: var(--color-dark-100);
-  -webkit-box-shadow: 0 0 0 1000px transparent inset;
-  transition: background-color 5000s ease-in-out 0s;
-  background: -webkit-linear-gradient(
+  background: linear-gradient(
     top,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(0, 174, 255, 0.04) 50%,
-    rgba(255, 255, 255, 0) 51%,
-    rgba(0, 174, 255, 0.03) 100%
+    rgb(255 255 255 / 0%) 0%,
+    rgb(0 174 255 / 4%) 50%,
+    rgb(255 255 255 / 0%) 51%,
+    rgb(0 174 255 / 3%) 100%
   );
+  border: 0;
+  box-shadow: 0 0 0 1000px transparent inset;
+
+  transition: background-color 5000s ease-in-out 0s;
+
+  -webkit-text-fill-color: var(--color-dark-100);
 }
