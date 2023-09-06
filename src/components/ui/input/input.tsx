@@ -64,11 +64,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      <>
+      <div className={className}>
         <Typography className={s.label} variant={'body2'} as={'label'}>
           {label}
         </Typography>
-        <div className={`${s.inputWrapper} ${className}`}>
+        <div className={s.inputWrapper}>
           {type === 'search' ? (
             <img src={searchIcon} className={s.searchIcon} alt={'searchIcon'} />
           ) : null}
@@ -102,7 +102,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           />
         </div>
         {errorMessage ? <div className={s.errorMessage}>{errorMessage}</div> : null}
-      </>
+      </div>
     )
   }
 )
