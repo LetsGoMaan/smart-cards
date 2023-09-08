@@ -1,14 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import avatar from './../../../assets/avatar.png'
-//import deleteIcon from './../../../assets/delete-outline.svg'
-//import edit from './../../../assets/edit-outline.svg'
-import logOut from './../../../assets/log-out.svg'
-import profile from './../../../assets/person-outline.svg'
-//import learn from './../../../assets/play-circle-outline.svg'
-
 import { DropDownItem, DropDownMenu } from './'
 
+import { avatar, logOut, personOutline } from '@/assets'
 import { Avatar } from '@/components/ui'
 
 const meta = {
@@ -20,28 +14,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/*export const LessDropDownMenuStory: Story = {
-  args: {
-    options: [
-      { id: '00', icon: learn, value: 'Learn' },
-      { id: '11', icon: edit, value: 'Edit' },
-      { id: '22', icon: deleteIcon, value: 'Delete' },
-    ],
-    isMenuOpen: true,
-  },
-}
-
-export const DropDownMenuWithAvatar: Story = {
-  args: {
-    options: [
-      { id: '001', icon: avatar, value: 'Ivan', email: 'j&johnson@gmail.com' },
-      { id: '111', icon: profile, value: 'My Profile' },
-      { id: '221', icon: logOut, value: 'Sign Out' },
-    ],
-    isMenuOpen: true,
-  },
-}*/
 
 export const DropDown: Story = {
   render: args => {
@@ -59,7 +31,7 @@ export const DropDown: Story = {
           </div>
         </DropDownItem>
         <DropDownItem>
-          <img src={profile} alt={'icon'} />
+          <img src={personOutline} alt={'icon'} />
           <div>My profile</div>
         </DropDownItem>
         <DropDownItem>

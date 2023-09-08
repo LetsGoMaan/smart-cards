@@ -48,7 +48,7 @@ export const ForgotPassword = ({ onSubmit }: ForgotPasswordProps) => {
         <Typography as={'p'} className={s.rememberPassword} variant={'body2'}>
           Did you remember your password?
         </Typography>
-        <Typography as={Link} to={'/sign-ip'} className={s.trySignIn} variant={'link1'}>
+        <Typography as={Link} to={'/sign-in'} className={s.trySignIn} variant={'link1'}>
           Try logging in
         </Typography>
       </form>

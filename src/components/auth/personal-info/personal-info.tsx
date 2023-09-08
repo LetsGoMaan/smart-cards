@@ -5,11 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import defaultAvatar from './../../../assets/avatarIcon.png'
-import editButton from './../../../assets/editButton.svg'
-import logOut from './../../../assets/LogOut.svg'
 import s from './personal-info.module.scss'
 
+import { defaultAvatar, editButton, logOut } from '@/assets'
 import { Avatar, Button, Card, ControlledInput, Typography } from '@/components'
 
 type PersonalInfoProps = {
@@ -43,7 +41,7 @@ export const PersonalInfo = ({
     formState: { errors },
   } = useForm<PersonalInfoFormSchema>({ resolver: zodResolver(PersonalInfoSchema) })
 
-  const onSumbitHandler = (data: PersonalInfoFormSchema) => {
+  const onSubmitHandler = (data: PersonalInfoFormSchema) => {
     onSubmit && onSubmit(data)
     setEditMode(false)
   }
@@ -72,7 +70,7 @@ export const PersonalInfo = ({
         </label>
       </div>
       {editMode ? (
-        <form onSubmit={handleSubmit(onSumbitHandler)} className={s.formWrapper}>
+        <form onSubmit={handleSubmit(onSubmitHandler)} className={s.formWrapper}>
           <DevTool control={control} />
           <ControlledInput
             className={s.nickname}
