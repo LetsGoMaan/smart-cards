@@ -1,5 +1,11 @@
 // import { App } from '@/App'
 
+import { Router } from '@/router.tsx'
+
 export function App() {
-  return <div>Hello</div>
+  return (
+    <div>
+      <Router />
+    </div>
+  )
 }
