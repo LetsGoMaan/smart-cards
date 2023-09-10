@@ -2,10 +2,9 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import eyeIcon from './../../../assets/eye.svg'
-import searchIcon from './../../../assets/search.svg'
-
 import { Input } from './'
+
+import { eyeIcon, searchIcon } from '@/assets'
 
 const meta = {
   title: 'Components/Input',

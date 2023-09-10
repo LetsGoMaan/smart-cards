@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import img from './../../../assets/enter.svg'
-
 import { Button } from './'
+
+import { enterImg } from '@/assets'
 
 const meta = {
   title: 'Components/Button',
@@ -71,7 +71,7 @@ export const ButtonWithImage: Story = {
     variant: 'primary',
     children: (
       <>
-        <img src={img} alt={'enter'} />
+        <img src={enterImg} alt={'enter'} />
         Button With Image
       </>
     ),
