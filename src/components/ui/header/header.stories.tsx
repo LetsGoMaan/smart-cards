@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import avatar from './../../../assets/avatar.png'
-import logo from './../../../assets/logo.svg'
-
 import { Header } from './'
 
+import { avatar, logo } from '@/assets'
 import { Button } from '@/components/ui'
 import { NameWithAvatar } from '@/components/ui/nameWithAvatar/nameWithAvatar.tsx'
 

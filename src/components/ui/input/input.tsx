@@ -2,10 +2,9 @@ import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, KeyboardEvent, useSt
 
 import { EyeNoneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
-import eyeIcon from './../../../assets/eye.svg'
-import xMarkIcon from './../../../assets/xMark.svg'
 import s from './input.module.scss'
 
+import { eyeIcon, xMarkIcon } from '@/assets'
 import { Typography } from '@/components/ui'
 
 export type InputProps = {
