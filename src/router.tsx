@@ -6,6 +6,8 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { Decks } from '@/pages/decks/decks'
+
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
@@ -16,7 +18,7 @@ const publicRoutes: RouteObject[] = [
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <div>hello</div>,
+    element: <Decks />,
   },
 ]
 
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
 ])
 
 function PrivateRoutes() {
-  const isLoggedIn = false
+  const isLoggedIn = true
 
   return isLoggedIn ? <Outlet /> : <Navigate to={'/login'} />
 }
