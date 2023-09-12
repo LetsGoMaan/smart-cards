@@ -7,12 +7,19 @@ const decksApi = baseApi.injectEndpoints({
         query: args => {
           return { url: `v1/decks`, method: 'GET', params: args }
         },
+        providesTags: ['Decks'],
+      }),
+      createDeck: builder.mutation<Deck, { name: string }>({
+        query: ({ name }) => {
+          return { url: `v1/decks`, method: 'POST', body: { name } }
+        },
+        invalidatesTags: ['Decks'],
       }),
     }
   },
 })
 
-export const { useGetDecksQuery } = decksApi
+export const { useGetDecksQuery, useCreateDeckMutation } = decksApi
 
 type GetDecksArgs = {
   minCardsCount?: number
