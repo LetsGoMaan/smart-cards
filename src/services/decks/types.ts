@@ -1,13 +1,15 @@
-import { Pagination } from '@/services/types.ts'
+import { PaginatedEntity, PaginatedRequest } from '@/services/types'
 
 export type GetDecksArgs = {
   minCardsCount?: number
   maxCardsCount?: number
   name?: string
-  authorId?: string
+  authorId?: Author['id']
   orderBy?: string
-  currentPage?: number
-  itemsPerPage?: number
+} & PaginatedRequest
+
+export type CreateDeckArgs = {
+  name: string
 }
 
 export interface Author {
@@ -31,8 +33,6 @@ export interface Deck {
   author: Author
 }
 
-export interface DecksResponse {
+export type DecksResponse = {
   maxCardsCount: number
-  pagination: Pagination
-  items: Deck[]
-}
+} & PaginatedEntity<Deck>
