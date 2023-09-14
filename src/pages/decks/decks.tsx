@@ -1,6 +1,18 @@
 //import { useState } from 'react'
+import s from './decks.module.scss'
 
-import { Button, Input } from '@/components'
+import { playIcon, editButton, deleteOutline } from '@/assets'
+import {
+  Button,
+  Input,
+  Table,
+  TableBody,
+  TableData,
+  TableHead,
+  TableHeaderData,
+  TableRow,
+} from '@/components'
+import { DecksMenu } from '@/pages/decks/DecksMenu.tsx'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { decksSlice } from '@/services/decks/decks.slice.ts'
 import { useAppDispatch, useAppSelector } from '@/services/store'
@@ -25,7 +37,7 @@ export const Decks = () => {
   if (isLoading) return <div>loading</div>
 
   return (
-    <div>
+    <div className={s.generalBlock}>
       isLoading - {new String(isLoading)}
       <div>
         <Button onClick={() => setItemsPerPage(10)}>itemsPerPage: 10</Button>
@@ -47,28 +59,37 @@ export const Decks = () => {
         <Button onClick={createDeckHandler}>Add new deck</Button>
         isCreateDeckLoading - {new String(isCreateDeckLoading)}
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Cards</th>
-            <th>Last updated</th>
-            <th>Created by</th>
-          </tr>
-        </thead>
-        <tbody>
+      <DecksMenu />
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeaderData>Name</TableHeaderData>
+            <TableHeaderData>Cards</TableHeaderData>
+            <TableHeaderData>Last updated</TableHeaderData>
+            <TableHeaderData>Created by</TableHeaderData>
+            <TableHeaderData></TableHeaderData>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {data?.items.map(deck => {
             return (
-              <tr key={deck.id}>
-                <td>{deck.name}</td>
-                <td>{deck.cardsCount}</td>
-                <td>{new Date(deck.updated).toLocaleDateString('en-GB')}</td>
-                <td>{deck.author.name}</td>
-              </tr>
+              <TableRow key={deck.id}>
+                <TableData>{deck.name}</TableData>
+                <TableData>{deck.cardsCount}</TableData>
+                <TableData>{new Date(deck.updated).toLocaleDateString('en-GB')}</TableData>
+                <TableData>{deck.author.name}</TableData>
+                <TableData>
+                  <div>
+                    <img src={playIcon} alt={'play'} />
+                    <img src={editButton} alt={'edit'} />
+                    <img src={deleteOutline} alt={'delete'} />
+                  </div>
+                </TableData>
+              </TableRow>
             )
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   )
 }
