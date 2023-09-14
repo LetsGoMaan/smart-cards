@@ -5,6 +5,9 @@ const initialState = {
   currentPage: 1,
   searchByName: '',
   cardName: '',
+  authorId: '',
+  minCardsCount: '0',
+  maxCardsCount: '100',
 }
 
 export const decksSlice = createSlice({
@@ -22,6 +25,21 @@ export const decksSlice = createSlice({
     },
     setCardName: (state, action: PayloadAction<string>) => {
       state.cardName = action.payload
+    },
+    setCardsByAuthor: (state, action: PayloadAction<string>) => {
+      state.authorId = action.payload
+    },
+    setMinMaxCardsCount: (state, action: PayloadAction<number[]>) => {
+      state.minCardsCount = action.payload[0].toString()
+      state.maxCardsCount = action.payload[1].toString()
+    },
+    setClearSearch: state => {
+      state.searchByName = ''
+    },
+    setDefaultValues: () => {
+      return {
+        ...initialState,
+      }
     },
   },
 })

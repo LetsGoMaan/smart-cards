@@ -1,23 +1,8 @@
 .generalBlock {
   margin: 2.062rem 8.562rem;
 
-  .menuWrapper {
+  .controlButtons {
     display: flex;
-    flex-direction: column;
-    gap: 2.437rem;
-
-    .titleAndButton {
-      display: flex;
-      justify-content: space-between;
-
-      .title {
-        color: var(--color-light-100);
-      }
-    }
-
-    .menuItems {
-      display: flex;
-      justify-content: space-between;
-    }
+    gap: 0.625rem;
   }
 }

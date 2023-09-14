@@ -1,8 +1,8 @@
 import { PaginatedEntity, PaginatedRequest } from '@/services/types'
 
 export type GetDecksArgs = {
-  minCardsCount?: number
-  maxCardsCount?: number
+  minCardsCount?: string
+  maxCardsCount?: string
   name?: string
   authorId?: Author['id']
   orderBy?: string
