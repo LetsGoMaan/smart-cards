@@ -1,5 +1,7 @@
 import { Link, Outlet } from 'react-router-dom'
 
+import s from './layout.module.scss'
+
 import { defaultAvatar, logo, logOut, personOutline } from '@/assets'
 import { Avatar, Button, DropDownItem, DropDownMenu, Header, NameWithAvatar } from '@/components'
 
@@ -23,25 +25,21 @@ export const Layout = () => {
               <Avatar avatar={authData.avatar || defaultAvatar} />
               <div>
                 <div>{authData.name || 'Yolo'}</div>
-                <div>{authData.email || 'ilikekovrizku@gmail.com'}</div>
+                <div className={s.email}>{authData.email || 'ilikekovrizku@gmail.com'}</div>
               </div>
             </DropDownItem>
-            <Link to={'/my-profile'}>
-              <DropDownItem>
+            <DropDownItem>
+              <Link className={s.link} to={'/my-profile'}>
                 <img src={personOutline} alt={'icon'} />
-                <div>My profile</div>
-              </DropDownItem>
-            </Link>
-            <Link to={'/sign-in'}>
-              <DropDownItem>
+                <span>My profile</span>
+              </Link>
+            </DropDownItem>
+            <DropDownItem>
+              <Link className={s.link} to={'/sign-in'}>
                 <img src={logOut} alt={'icon'} />
-                <div>SignOut</div>
-              </DropDownItem>
-            </Link>
-            {/*<NameWithAvatar
-            name={authData.name || 'Yolo'}
-            avatar={authData.avatar || defaultAvatar}
-          />*/}
+                <span>SignOut</span>
+              </Link>
+            </DropDownItem>
           </DropDownMenu>
         ) : (
           <Button variant={'primary'}>Sign In</Button>
