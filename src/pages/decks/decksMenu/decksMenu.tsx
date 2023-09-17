@@ -1,14 +1,15 @@
+import { useState } from 'react'
+
 import s from './decksMenu.module.scss'
 
 import { deleteOutline } from '@/assets'
-import { Button, Input, TabSwitcher, Typography } from '@/components'
-import { Slider } from '@/components/ui/slider'
-import { decksSlice } from '@/services/decks/decks.slice.ts'
-import { useAppDispatch, useAppSelector } from '@/services/store.ts'
+import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
+import { decksSlice, useAppDispatch, useAppSelector } from '@/services'
 
 export const DecksMenu = () => {
   const dispatch = useAppDispatch()
   const { searchByName, minCardsCount, maxCardsCount } = useAppSelector(state => state.decks)
+
   const tabs = [
     {
       value: 'myCards',
@@ -19,12 +20,18 @@ export const DecksMenu = () => {
       title: 'All Cards',
     },
   ]
+  const authorId = 'f2be95b9-4d07-4751-a775-bd612fc9553a' //from response
+  const [tabValue, setTabValue] = useState(tabs[1].value)
+
   const setSearchByName = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
+
   const setCardsByAuthor = (tabValue: string) => {
     if (tabValue === 'myCards') {
-      dispatch(decksSlice.actions.setCardsByAuthor('f2be95b9-4d07-4751-a775-bd612fc9553a'))
+      dispatch(decksSlice.actions.setCardsByAuthor(authorId))
+      setTabValue(tabs[0].value)
     } else {
       dispatch(decksSlice.actions.setCardsByAuthor(''))
+      setTabValue(tabs[1].value)
     }
   }
   const setMinMaxValue = (value: number[]) => {
@@ -33,11 +40,7 @@ export const DecksMenu = () => {
 
   const setDefaultValues = () => {
     dispatch(decksSlice.actions.setDefaultValues())
-    //setText('')
-  }
-
-  const onClearClickHandler = () => {
-    dispatch(decksSlice.actions.setClearSearch())
+    setTabValue(tabs[1].value)
   }
 
   return (
@@ -52,13 +55,18 @@ export const DecksMenu = () => {
       </div>
       <div className={s.menuItems}>
         <Input
-          onClearClick={onClearClickHandler}
+          onClearClick={() => setSearchByName('')}
           value={searchByName}
           type={'search'}
           placeholder={'Input search'}
-          onChange={e => setSearchByName(e.currentTarget.value)}
+          onChangeValue={value => setSearchByName(value)}
         />
-        <TabSwitcher onValueChange={setCardsByAuthor} label={'Show packs cards'} tabs={tabs} />
+        <TabSwitcher
+          value={tabValue}
+          onValueChange={setCardsByAuthor}
+          label={'Show packs cards'}
+          tabs={tabs}
+        />
         <Slider
           min={0}
           max={100}
