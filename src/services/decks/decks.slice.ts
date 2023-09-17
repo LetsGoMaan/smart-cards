@@ -8,6 +8,7 @@ const initialState = {
   authorId: '',
   minCardsCount: '0',
   maxCardsCount: '100',
+  orderBy: 'updated-desc',
 }
 
 export const decksSlice = createSlice({
@@ -33,8 +34,8 @@ export const decksSlice = createSlice({
       state.minCardsCount = action.payload[0].toString()
       state.maxCardsCount = action.payload[1].toString()
     },
-    setClearSearch: state => {
-      state.searchByName = ''
+    setOrderBy: (state, action: PayloadAction<string>) => {
+      state.orderBy = action.payload
     },
     setDefaultValues: () => {
       return {
