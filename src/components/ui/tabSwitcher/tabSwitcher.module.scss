@@ -1,5 +1,6 @@
 .title {
-  color: var(--color-light-900);
+  margin-bottom: 0.312rem;
+  color: var(--color-light-100);
 }
 
 .root {
@@ -12,60 +13,65 @@
 
     .trigger {
       all: unset;
+
       cursor: pointer;
-      line-height: var(--line-height-m);
-      min-width: 3.056rem;
+      user-select: none;
+
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
+      min-width: 3.056rem;
       padding: 6px 24px;
+
+      line-height: var(--line-height-m);
+      color: var(--color-light-100);
+
+      background: transparent;
       border-top: 1px solid var(--color-dark-300);
       border-right: 1px solid var(--color-dark-300);
       border-bottom: 1px solid var(--color-dark-300);
-      color: var(--color-light-100);
-      background: transparent;
-      user-select: none;
 
       &:first-child {
-        border-radius: 2px 0 0 2px;
         border-left: 1px solid var(--color-dark-300);
+        border-radius: 2px 0 0 2px;
       }
 
       &:last-child {
         border-radius: 0 2px 2px 0;
       }
 
-      /*&:active {
+      /* &:active {
         border: 1px solid var(--color-accent-500);
         background: var(--color-accent-500);
-      }*/
+      } */
 
       &[data-state='active'] {
-        border: 1px solid var(--color-accent-500);
         background: var(--color-accent-500);
+        border: 1px solid var(--color-accent-500);
       }
 
       &:hover {
         color: var(--color-dark-100);
-        border: 1px solid var(--color-dark-100);
         background: var(--color-dark-300);
+        border: 1px solid var(--color-dark-100);
       }
 
-      /*&:focus {
+      /* &:focus {
         border: 2px solid var(--color-info-900);
         background: var(--color-dark-700);
-      }*/
+      } */
 
       &:focus-visible {
-        outline: 2px solid var(--color-info-900);
         background: var(--color-dark-700);
+        outline: 2px solid var(--color-info-900);
       }
 
       &:disabled {
-        color: var(--color-dark-300);
-        border: 1px solid var(--color-dark-300);
-        background: var(--color-dark-700);
         cursor: initial;
+        color: var(--color-dark-300);
+        background: var(--color-dark-700);
+        border: 1px solid var(--color-dark-300);
       }
     }
   }

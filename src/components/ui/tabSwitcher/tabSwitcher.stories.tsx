@@ -34,7 +34,7 @@ const tabs = [
 
 export const Tabs: Story = {
   args: {
-    generalTitle: 'Title',
+    label: 'Title',
     defaultValue: 'tab1',
     tabs: tabs,
     children: (
@@ -49,7 +49,7 @@ export const Tabs: Story = {
 
 export const TabsWithDisabled: Story = {
   args: {
-    generalTitle: 'Title',
+    label: 'Title',
     defaultValue: 'tab1',
     tabs: [
       {

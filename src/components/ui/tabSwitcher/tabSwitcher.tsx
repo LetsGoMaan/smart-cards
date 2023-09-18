@@ -18,7 +18,7 @@ type TabSwitcherProps = {
   onValueChange?: (value: string) => void
   tabs: TabType[]
   children?: ReactNode
-  generalTitle?: string
+  label?: string
 }
 export const TabSwitcher = ({
   tabs,
@@ -26,12 +26,12 @@ export const TabSwitcher = ({
   defaultValue,
   value,
   onValueChange,
-  generalTitle,
+  label,
 }: TabSwitcherProps) => {
   return (
     <div>
       <Typography className={s.title} variant={'body2'}>
-        {generalTitle}
+        {label}
       </Typography>
       <TabsRadixUI.Root
         className={s.root}
@@ -62,7 +62,7 @@ export const TabSwitcher = ({
 export type TabContentProps = {
   /** A unique value that associates the trigger with a content. */
   value: string
-  children: ReactNode
+  children?: ReactNode
 }
 
 export const TabContent = ({ value, children }: TabContentProps) => {
