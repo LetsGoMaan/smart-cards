@@ -1,12 +1,13 @@
 import { defaultAvatar } from '@/assets'
 import { PersonalInfo, PersonalInfoFormSchema } from '@/components'
+import { useLogoutMutation } from '@/services'
 
 export const Profile = () => {
   //change all data
   const name = '' || 'Yolo'
   const email = '' || 'yolo@superyolo.com'
   const avatar = '' || defaultAvatar
-  const logOut = () => {}
+  const [logOut] = useLogoutMutation()
   const changeAvatar = (avatar: File) => {
     avatar
   }
