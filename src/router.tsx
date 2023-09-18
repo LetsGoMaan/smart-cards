@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { Layout } from '@/components'
 import { Decks } from '@/pages/decks/decks'
 
 const publicRoutes: RouteObject[] = [
@@ -23,8 +24,10 @@ const privateRoutes: RouteObject[] = [
 ]
 
 const router = createBrowserRouter([
-  ...publicRoutes,
-  { element: <PrivateRoutes />, children: privateRoutes },
+  {
+    element: <Layout />,
+    children: [...publicRoutes, { element: <PrivateRoutes />, children: privateRoutes }],
+  },
 ])
 
 function PrivateRoutes() {
