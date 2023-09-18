@@ -16,27 +16,16 @@ import {
   Typography,
 } from '@/components'
 import { DecksMenu } from '@/pages/decks/decksMenu'
-//import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { decksSlice, useGetDecksQuery, useAppDispatch, useAppSelector } from '@/services'
-//import { decksSlice, useGetDecksQuery } from '@/services/decks'
 
 export const Decks = () => {
   const dispatch = useAppDispatch()
-  const {
-    //itemsPerPage,
-    //currentPage,
-    searchByName,
-    //cardName,
-    authorId,
-    minCardsCount,
-    maxCardsCount,
-    orderBy,
-  } = useAppSelector(state => state.decks)
+  const { searchByName, authorId, minCardsCount, maxCardsCount, orderBy } = useAppSelector(
+    state => state.decks
+  )
   const debouncedSearchValue = useDebounce(searchByName, 500)
   const { isLoading, data } = useGetDecksQuery(
     {
-      //itemsPerPage,
-      //currentPage,
       name: debouncedSearchValue,
       orderBy,
       authorId,
@@ -46,9 +35,6 @@ export const Decks = () => {
     { skip: false }
   )
 
-  //const [createDeck, { isLoading: isCreateDeckLoading }] = useCreateDeckMutation()
-  //const setCardName = (cardName: string) => dispatch(decksSlice.actions.setCardName(cardName))
-  //const createDeckHandler = () => createDeck({ name: cardName })
   const columns: Column[] = [
     {
       key: 'name',
@@ -99,22 +85,13 @@ export const Decks = () => {
 
   return (
     <div className={s.generalBlock}>
-      {/*<div>*/}
-      {/*  <Input*/}
-      {/*    value={cardName}*/}
-      {/*    onChange={e => setCardName(e.currentTarget.value)}*/}
-      {/*    label={'new card name'}*/}
-      {/*  />*/}
-      {/*  <Button onClick={createDeckHandler}>Add new deck</Button>*/}
-      {/*  isCreateDeckLoading - {new String(isCreateDeckLoading)}*/}
-      {/*</div>*/}
       <DecksMenu />
       <Table>
         <TableHead>
           <TableRow>
             {columns.map(column => (
               <TableHeaderData onClick={() => handleSort(column.key)} key={column.key}>
-                <Typography as={'h3'} variant={'subtitle2'} style={{ color: '#fff' }}>
+                <Typography as={'h3'} variant={'subtitle2'}>
                   {column.title}
                   {sort && sort.key === column.key && (
                     <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>
@@ -129,22 +106,22 @@ export const Decks = () => {
             return (
               <TableRow key={deck.id}>
                 <TableData style={{ width: '21%' }}>
-                  <Typography as={'p'} variant={'body2'} style={{ color: '#fff' }}>
+                  <Typography as={'p'} variant={'body2'}>
                     {deck.name}
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '21%' }}>
-                  <Typography as={'p'} variant={'body2'} style={{ color: '#fff' }}>
+                  <Typography as={'p'} variant={'body2'}>
                     {deck.cardsCount}
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '21%' }}>
-                  <Typography as={'p'} variant={'body2'} style={{ color: '#fff' }}>
+                  <Typography as={'p'} variant={'body2'}>
                     {new Date(deck.updated).toLocaleDateString('en-GB')}
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '28%' }}>
-                  <Typography as={'p'} variant={'body2'} style={{ color: '#fff' }}>
+                  <Typography as={'p'} variant={'body2'}>
                     {deck.author.name}
                   </Typography>
                 </TableData>
