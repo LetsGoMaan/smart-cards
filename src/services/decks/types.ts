@@ -33,6 +33,24 @@ export interface Deck {
   author: Author
 }
 
+export type Card = {
+  id: string
+  deckId: string
+  userId: string
+  question: string
+  answer: string
+  shots: number
+  answerImg: string
+  questionImg: string
+  questionVideo: string
+  answerVideo: string
+  rating: number
+  created: string
+  updated: string
+}
+
 export type DecksResponse = {
   maxCardsCount: number
 } & PaginatedEntity<Deck>
+
+export type DecksCardsByIdResponse = PaginatedEntity<Card>

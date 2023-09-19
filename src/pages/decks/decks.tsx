@@ -34,6 +34,10 @@ export const Decks = () => {
     },
     { skip: false }
   )
+  //const {} = useGetDecksCardsByIdQuery({id})
+  const getDeckIdHandler = (id: string) => {
+    return id
+  }
 
   const columns: Column[] = [
     {
@@ -105,7 +109,7 @@ export const Decks = () => {
           {data?.items.map(deck => {
             return (
               <TableRow key={deck.id}>
-                <TableData style={{ width: '21%' }}>
+                <TableData onClick={() => getDeckIdHandler(deck.id)} style={{ width: '21%' }}>
                   <Typography as={'p'} variant={'body2'}>
                     {deck.name}
                   </Typography>
