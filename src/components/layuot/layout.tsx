@@ -4,9 +4,11 @@ import s from './layout.module.scss'
 
 import { defaultAvatar, logo, logOut, personOutline } from '@/assets'
 import { Avatar, Button, DropDownItem, DropDownMenu, Header, NameWithAvatar } from '@/components'
+import { useLogoutMutation } from '@/services'
 
 export const Layout = () => {
   const authData = { isSignedIn: true, name: '', avatar: '', email: '' } //server-data
+  const [logout] = useLogoutMutation()
 
   return (
     <>
@@ -14,6 +16,7 @@ export const Layout = () => {
         <img src={logo} alt={'logo'} />
         {authData.isSignedIn ? (
           <DropDownMenu
+            align={'end'}
             trigger={
               <NameWithAvatar
                 name={authData.name || 'Yolo'}
@@ -30,14 +33,15 @@ export const Layout = () => {
             </DropDownItem>
             <DropDownItem>
               <Link className={s.link} to={'/my-profile'}>
+                {/* Из-за линка не закрывается дропдаун при переходе на новую страницу   */}
                 <img src={personOutline} alt={'icon'} />
                 <span>My profile</span>
               </Link>
             </DropDownItem>
             <DropDownItem>
-              <Link className={s.link} to={'/sign-in'}>
+              <Link onClick={() => logout()} className={s.link} to={'/sign-in'}>
                 <img src={logOut} alt={'icon'} />
-                <span>SignOut</span>
+                <span>Sign Out</span>
               </Link>
             </DropDownItem>
           </DropDownMenu>

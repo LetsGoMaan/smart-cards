@@ -52,7 +52,7 @@ label.label {
   }
 
   .default {
-    color: var(--color-dark-100);
+    color: var(--color-light-100);
 
     appearance: none;
     background: transparent;
@@ -65,14 +65,12 @@ label.label {
     }
 
     &:hover {
-      color: var(--color-dark-100);
       appearance: none;
       background: var(--color-dark-700) no-repeat right 12px center;
       border: 1px solid var(--color-dark-100);
     }
 
     &:focus {
-      color: var(--color-light-100);
       outline: 2px solid var(--color-info-700);
     }
 
@@ -80,6 +78,10 @@ label.label {
       color: var(--color-dark-300);
       background: transparent;
       border: 1px solid var(--color-dark-300);
+
+      &::placeholder {
+        color: var(--color-dark-300);
+      }
     }
   }
 

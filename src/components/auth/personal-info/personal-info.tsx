@@ -19,7 +19,7 @@ type PersonalInfoProps = {
   email: string
 }
 
-type PersonalInfoFormSchema = z.infer<typeof PersonalInfoSchema>
+export type PersonalInfoFormSchema = z.infer<typeof PersonalInfoSchema>
 
 const PersonalInfoSchema = z.object({
   nickname: z.string().nonempty(),
