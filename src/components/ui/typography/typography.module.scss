@@ -1,109 +1,133 @@
 .large {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-xxl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-l);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .h1 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-l);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .h2 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-l);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .h3 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .body1 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .subtitle1 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .body2 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .subtitle2 {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .caption {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-s);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .overline {
-  color: var(--color-dark-900);
+  margin: 0;
+
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-s);
+  color: var(--color-light-100);
+
   background-color: transparent;
-  margin: 0;
 }
 
 .link1 {
-  color: var(--color-info-500);
+  margin: 0;
+
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);
-  background-color: transparent;
-  margin: 0;
+  color: var(--color-accent-500);
   text-decoration: underline;
+
+  background-color: transparent;
 }
 
 .link2 {
-  color: var(--color-info-500);
+  margin: 0;
+
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-s);
-  background-color: transparent;
-  margin: 0;
+  color: var(--color-accent-500);
   text-decoration: underline;
+
+  background-color: transparent;
 }
