@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { StarIcon } from '@radix-ui/react-icons'
 import { useParams } from 'react-router-dom'
@@ -22,7 +22,16 @@ import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 
 export const FriendsDeckPage = () => {
   const { id } = useParams()
-  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({ id })
+  const [sort, setSort] = useState<Sort>(null)
+  const sortedString = useMemo(() => {
+    if (!sort) return null
+
+    return `${sort.key}-${sort.direction}`
+  }, [sort])
+  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
+    id,
+    orderBy: sortedString,
+  })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
 
   const columns: Column[] = [
@@ -43,7 +52,6 @@ export const FriendsDeckPage = () => {
       title: 'Grade',
     },
   ]
-  const [sort, setSort] = useState<Sort>(null)
 
   if (data?.items.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={false} />
   if (isLoading || gettingCardsLoading) return <div>loading...</div>

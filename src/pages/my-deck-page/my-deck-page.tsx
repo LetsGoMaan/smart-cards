@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
@@ -11,8 +11,16 @@ import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 
 export const MyDeckPage = () => {
   const [sort, setSort] = useState<Sort>(null)
+  const sortedString = useMemo(() => {
+    if (!sort) return null
+
+    return `${sort.key}-${sort.direction}`
+  }, [sort])
   const { id } = useParams()
-  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({ id })
+  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
+    id,
+    orderBy: sortedString,
+  })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
 
   if (data?.items.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={true} />

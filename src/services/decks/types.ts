@@ -19,7 +19,7 @@ export type GetDeckCardsByIdArgs = {
   id?: string
   question?: string
   answer?: string
-  orderBy?: string
+  orderBy?: string | null
 } & PaginatedRequest
 
 export type CreateDeckArgs = {

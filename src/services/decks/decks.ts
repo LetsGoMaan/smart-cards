@@ -26,14 +26,14 @@ const decksApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       getDeckCardsById: builder.query<DeckCardsByIdResponse, GetDeckCardsByIdArgs>({
-        query: args => {
-          return { url: `v1/decks/${args.id}/cards`, method: 'GET' }
+        query: ({ id, ...args }) => {
+          return { url: `v1/decks/${id}/cards`, method: 'GET', params: { ...args } }
         },
         providesTags: ['Decks'],
       }),
       getDeckById: builder.query<GetDeckByIdResponse, GetDeckByIdArgs>({
-        query: args => {
-          return { url: `v1/decks/${args.id}`, method: 'GET' }
+        query: ({ id, ...args }) => {
+          return { url: `v1/decks/${id}`, method: 'GET', params: { ...args } }
         },
         providesTags: ['Decks'],
       }),
