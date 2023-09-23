@@ -3,16 +3,18 @@ import s from './empty-deck.module.scss'
 import { Button, Typography } from '@/components'
 import { BackButton } from '@/pages'
 
-export const EmptyDeck = () => {
-  const myDeck = true //need to change
-
+type EmptyDeckProps = {
+  deckName: string | undefined
+  isMyDeck: boolean
+}
+export const EmptyDeck = ({ deckName, isMyDeck }: EmptyDeckProps) => {
   return (
     <div className={s.emptyDeckWrapper}>
       <BackButton />
       <Typography className={s.namePack} variant={'large'}>
-        Name Pack //need to change
+        {deckName}
       </Typography>
-      {myDeck ? (
+      {isMyDeck ? (
         <div className={s.textWrapper}>
           <Typography className={s.textWarning} variant={'body1'} as={'p'}>
             This pack is empty. Click add new card to fill this pack
