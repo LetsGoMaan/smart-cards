@@ -1,0 +1,14 @@
+.deckWrapper {
+  width: 100%;
+  padding: 0 8.5rem;
+
+  .titleAndButton {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .searchInput {
+    margin-bottom: 1.5rem;
+  }
+}

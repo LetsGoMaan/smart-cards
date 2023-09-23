@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import s from './decksMenu.module.scss'
+import s from './decks-menu.module.scss'
 
 import { deleteOutline } from '@/assets'
 import {

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from '@/components'
-import { Decks, Profile } from '@/pages'
+import { Decks, FriendsDeckPage, MyDeckPage, Profile } from '@/pages'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -24,6 +24,14 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/my-profile',
     element: <Profile />,
+  },
+  {
+    path: '/my-pack/:id',
+    element: <MyDeckPage />,
+  },
+  {
+    path: '/friends-pack/:id',
+    element: <FriendsDeckPage />,
   },
 ]
 

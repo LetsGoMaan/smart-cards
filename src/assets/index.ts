@@ -1,4 +1,6 @@
 export { default as avatar } from './avatar.png'
+export { default as arrowBack } from './arrowBack.svg'
+export { default as buttonForDrop } from './buttonForDrop.svg'
 export { default as defaultAvatar } from './avatarIcon.png'
 export { default as checkEmail } from './checkEmail.svg'
 export { default as deleteOutline } from './delete-outline.svg'
