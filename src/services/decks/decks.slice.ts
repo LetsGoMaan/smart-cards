@@ -8,7 +8,9 @@ const initialState = {
   authorId: '',
   minCardsCount: '0',
   maxCardsCount: '100',
-  orderBy: 'updated-desc',
+  //orderBy: 'updated-desc',
+  orderBy: '',
+  //orderBy: null,
 }
 
 export const decksSlice = createSlice({
@@ -42,5 +44,9 @@ export const decksSlice = createSlice({
         ...initialState,
       }
     },
+    /*
+    setCardsOrderBy: (state, action: PayloadAction<string>) => {
+      state.orderBy = action.payload
+    },*/
   },
 })

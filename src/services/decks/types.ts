@@ -5,6 +5,20 @@ export type GetDecksArgs = {
   maxCardsCount?: string
   name?: string
   authorId?: Author['id']
+  orderBy?: string | null
+} & PaginatedRequest
+
+export type GetDeckByIdArgs = {
+  id?: string
+  cover?: string
+  name?: string
+  isPrivate?: boolean
+}
+
+export type GetDeckCardsByIdArgs = {
+  id?: string
+  question?: string
+  answer?: string
   orderBy?: string
 } & PaginatedRequest
 
@@ -53,4 +67,17 @@ export type DecksResponse = {
   maxCardsCount: number
 } & PaginatedEntity<Deck>
 
-export type DecksCardsByIdResponse = PaginatedEntity<Card>
+export type GetDeckByIdResponse = {
+  id: string
+  userId: string
+  name: string
+  isPrivate: boolean
+  shots: number
+  cover: string
+  rating: number
+  created: string
+  updated: string
+  cardsCount: number
+} & Author
+
+export type DeckCardsByIdResponse = PaginatedEntity<Card>

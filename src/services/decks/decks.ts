@@ -2,9 +2,12 @@ import { baseApi } from '@/services/base-api.ts'
 import {
   CreateDeckArgs,
   Deck,
-  DecksCardsByIdResponse,
+  DeckCardsByIdResponse,
   DecksResponse,
   GetDecksArgs,
+  GetDeckCardsByIdArgs,
+  GetDeckByIdArgs,
+  GetDeckByIdResponse,
 } from '@/services/decks/types'
 
 const decksApi = baseApi.injectEndpoints({
@@ -22,9 +25,15 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      getDecksCardsById: builder.query<DecksCardsByIdResponse, { id: string }>({
-        query: ({ id }) => {
-          return { url: `v1/decks/${id}/cards`, method: 'GET' }
+      getDeckCardsById: builder.query<DeckCardsByIdResponse, GetDeckCardsByIdArgs>({
+        query: args => {
+          return { url: `v1/decks/${args.id}/cards`, method: 'GET' }
+        },
+        providesTags: ['Decks'],
+      }),
+      getDeckById: builder.query<GetDeckByIdResponse, GetDeckByIdArgs>({
+        query: args => {
+          return { url: `v1/decks/${args.id}`, method: 'GET' }
         },
         providesTags: ['Decks'],
       }),
@@ -32,4 +41,9 @@ const decksApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetDecksQuery, useCreateDeckMutation, useGetDecksCardsByIdQuery } = decksApi
+export const {
+  useGetDecksQuery,
+  useCreateDeckMutation,
+  useGetDeckByIdQuery,
+  useGetDeckCardsByIdQuery,
+} = decksApi
