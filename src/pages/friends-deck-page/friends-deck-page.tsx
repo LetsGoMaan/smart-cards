@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import s from './friends-deck-page.module.scss'
 
+import { useDebounce } from '@/common'
 import {
   Button,
   Column,
@@ -23,6 +24,8 @@ import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 export const FriendsDeckPage = () => {
   const { id } = useParams()
   const [sort, setSort] = useState<Sort>(null)
+  const [searchValue, setSearchValue] = useState('')
+  const debouncedSearchValue = useDebounce(searchValue, 500)
   const sortedString = useMemo(() => {
     if (!sort) return null
 
@@ -31,6 +34,7 @@ export const FriendsDeckPage = () => {
   const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
     id,
     orderBy: sortedString,
+    question: debouncedSearchValue,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
 
@@ -69,7 +73,13 @@ export const FriendsDeckPage = () => {
           </Typography>
         </Button>
       </div>
-      <Input type={'search'} className={s.searchInput} />
+      <Input
+        value={searchValue}
+        onChangeValue={value => setSearchValue(value)}
+        type={'search'}
+        className={s.searchInput}
+        onClearClick={() => setSearchValue('')}
+      />
       <Table>
         <TableHeader columns={columns} sort={sort} onSort={setSort} />
         <TableBody>
