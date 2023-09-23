@@ -1,3 +1,3 @@
 export * from './decks'
-export * from './decksMenu'
-export * from './decksTable'
+export * from './decks-menu'
+export * from './decks-table'
