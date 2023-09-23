@@ -13,15 +13,15 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { Deck } from '@/services/decks/types.ts'
+import { Deck } from '@/services'
 
 type DecksTableProps = {
   decks: Deck[] | undefined
   sort: Sort
   setSort: (sort: Sort) => void
-  deckAuthorId: string
+  authDeckAuthorId: string
 }
-export const DecksTable = ({ decks, sort, setSort, deckAuthorId }: DecksTableProps) => {
+export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTableProps) => {
   const columns: Column[] = [
     {
       key: 'name',
@@ -51,7 +51,7 @@ export const DecksTable = ({ decks, sort, setSort, deckAuthorId }: DecksTablePro
       <TableBody>
         {decks?.map(deck => {
           const packPath =
-            deck.author.id !== deckAuthorId ? `/friends-pack/${deck.id}` : `/my-pack/${deck.id}`
+            deck.author.id !== authDeckAuthorId ? `/friends-pack/${deck.id}` : `/my-pack/${deck.id}`
 
           return (
             <TableRow key={deck.id}>
