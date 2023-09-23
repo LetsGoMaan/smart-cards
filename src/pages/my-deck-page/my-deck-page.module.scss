@@ -1,0 +1,25 @@
+.myDeckWrapper {
+  width: 100%;
+  padding: 0 8.5rem;
+
+  .titleAndButton {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    .titleAndDrop {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .dropButton {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .searchInput {
+    margin-bottom: 1.5rem;
+  }
+}
