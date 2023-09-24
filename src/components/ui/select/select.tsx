@@ -10,16 +10,18 @@ import { Typography } from '@/components/ui'
 
 export type Options = {
   value: string
+  label?: string
   disabled?: boolean
 }
 type SelectProps = {
-  defaultValue: string
+  defaultValue?: string
   value?: string
   placeholder?: ReactNode
   selectOptions: Options[]
   onValueChange?: (value: string) => void
   disabled?: boolean
   label?: string
+  className?: string
 }
 export const Select = ({
   defaultValue,
@@ -29,6 +31,7 @@ export const Select = ({
   onValueChange,
   disabled,
   label,
+  className,
 }: SelectProps) => {
   return (
     <Label.Root>
@@ -46,7 +49,7 @@ export const Select = ({
         disabled={disabled}
         onValueChange={onValueChange}
       >
-        <SelectRadixUI.Trigger className={s.trigger} tabIndex={1}>
+        <SelectRadixUI.Trigger className={`${s.trigger} ${className}`} tabIndex={1}>
           <SelectRadixUI.Value placeholder={placeholder} />
           <ChevronDownIcon className={s.icon} />
         </SelectRadixUI.Trigger>
