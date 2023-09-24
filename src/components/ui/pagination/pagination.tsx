@@ -1,14 +1,9 @@
-//import { FC } from 'react'
-
-//import { clsx } from 'clsx'
-
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
-import s from './pagination.module.scss'
+import { Select } from '../select'
 
-//import { ArrowLeft, ArrowRight } from '@/assets'
-import { Select } from '@/components'
-import { usePagination } from '@/components/ui/pagination/usePagination.tsx'
+import s from './pagination.module.scss'
+import { usePagination } from './usePagination'
 
 type PaginationConditionals =
   | {
@@ -23,29 +18,24 @@ type PaginationConditionals =
     }
 
 export type PaginationProps = {
-  count?: number
+  count: number
   page: number
   onChange: (page: number) => void
   siblings?: number
-  perPage?: number
+  perPage?: number | null
   perPageOptions?: number[]
   onPerPageChange?: (itemPerPage: number) => void
 } & PaginationConditionals
 
-/*const classNames = {
-  //root: s.root,
-  //container: s.container,
-  //selectBox: s.selectBox,
-  //select: s.select,
-  item: s.item,
-  //dots: s.dots,
-  //icon: s.icon,
-  pageButton(selected?: boolean) {
-    return clsx(this.item, selected && s.selected)
-  },
-}*/
-
-export const Pagination = ({ onChange, count = 10, page = 1, siblings }: PaginationProps) => {
+export const Pagination = ({
+  onChange,
+  count = 10,
+  page = 1,
+  perPage = null,
+  perPageOptions,
+  onPerPageChange,
+  siblings,
+}: PaginationProps) => {
   const {
     paginationRange,
     isLastPage,
@@ -60,6 +50,8 @@ export const Pagination = ({ onChange, count = 10, page = 1, siblings }: Paginat
     siblings,
   })
 
+  const showPerPageSelect = !!perPage && !!perPageOptions && !!onPerPageChange
+
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -73,6 +65,16 @@ export const Pagination = ({ onChange, count = 10, page = 1, siblings }: Paginat
 
         <NextButton onClick={handleNextPageClicked} disabled={isLastPage} />
       </div>
+
+      {showPerPageSelect && (
+        <PerPageSelect
+          {...{
+            perPage,
+            perPageOptions,
+            onPerPageChange,
+          }}
+        />
+      )}
     </div>
   )
 }
@@ -94,12 +96,7 @@ const PageButton = ({ onClick, disabled, selected, page }: PageButtonProps) => {
   const activePage = selected ? s.selected : ''
 
   return (
-    <button
-      onClick={onClick}
-      disabled={selected || disabled}
-      //className={classNames.pageButton(selected)}
-      className={activePage}
-    >
+    <button onClick={onClick} disabled={selected || disabled} className={`${activePage} ${s.item}`}>
       {page}
     </button>
   )
@@ -107,7 +104,6 @@ const PageButton = ({ onClick, disabled, selected, page }: PageButtonProps) => {
 const PrevButton = ({ onClick, disabled }: NavigationButtonProps) => {
   return (
     <button className={s.item} onClick={onClick} disabled={disabled}>
-      {/*<ArrowLeft className={classNames.icon} />*/}
       <ChevronLeftIcon className={s.icon} />
     </button>
   )
@@ -116,7 +112,6 @@ const PrevButton = ({ onClick, disabled }: NavigationButtonProps) => {
 const NextButton = ({ onClick, disabled }: NavigationButtonProps) => {
   return (
     <button className={s.item} onClick={onClick} disabled={disabled}>
-      {/*<ArrowRight className={classNames.icon} />*/}
       <ChevronRightIcon className={s.icon} />
     </button>
   )
@@ -149,26 +144,29 @@ const MainPaginationButtons = ({
 }
 
 export type PerPageSelectProps = {
-  //perPage: number
-  perPage: string
-  perPageOptions: string[]
-  onPerPageChange: (itemPerPage: string) => void
+  perPage: number
+  perPageOptions: number[]
+  onPerPageChange: (itemPerPage: number) => void
 }
 
 export const PerPageSelect = ({ perPage, perPageOptions, onPerPageChange }: PerPageSelectProps) => {
   const selectOptions = perPageOptions.map(value => ({
-    label: value,
-    value,
+    label: value.toString(),
+    value: value.toString(),
   }))
+  const selectPerPage = perPage.toString()
+  const onPerPageChangeHandler = (itemPerPage: string) => {
+    onPerPageChange(+itemPerPage)
+  }
 
   return (
     <div className={s.selectBox}>
       Показать
       <Select
         className={s.select}
-        value={perPage}
+        value={selectPerPage}
         selectOptions={selectOptions}
-        onValueChange={onPerPageChange}
+        onValueChange={onPerPageChangeHandler}
         //variant="pagination"
       />
       на странице
