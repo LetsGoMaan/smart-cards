@@ -18,7 +18,7 @@ export const Decks = () => {
 
     return `${sort.key}-${sort.direction}`
   }, [sort])
-  const [onPage, setOnPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
 
   const { isLoading, data } = useGetDecksQuery({
@@ -27,7 +27,7 @@ export const Decks = () => {
     authorId,
     minCardsCount,
     maxCardsCount,
-    currentPage: onPage,
+    currentPage,
     itemsPerPage: perPage,
   })
 
@@ -43,8 +43,8 @@ export const Decks = () => {
       <Pagination
         className={s.pagination}
         count={totalPages}
-        page={onPage}
-        onChange={setOnPage}
+        page={currentPage}
+        onChange={setCurrentPage}
         perPage={perPage}
         onPerPageChange={setPerPage}
         perPageOptions={[10, 20, 30, 50]}
