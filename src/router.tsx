@@ -8,6 +8,7 @@ import {
 
 import { Layout } from '@/components'
 import { Decks, FriendsDeckPage, MyDeckPage, Profile } from '@/pages'
+import { CardPage } from '@/pages/card-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -32,6 +33,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/friends-pack/:id',
     element: <FriendsDeckPage />,
+  },
+  {
+    path: '/card/:id',
+    element: <CardPage />,
   },
 ]
 

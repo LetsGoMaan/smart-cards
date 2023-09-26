@@ -80,4 +80,15 @@ export type GetDeckByIdResponse = {
   cardsCount: number
 } & Author
 
+export type GetRandomCard = {
+  id?: string
+  previousCardId?: string
+}
+
+export type SaveCardRating = {
+  id?: string
+  cardId?: string
+  grade: number
+}
+
 export type DeckCardsByIdResponse = PaginatedEntity<Card>

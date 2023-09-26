@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { StarIcon } from '@radix-ui/react-icons'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import s from './friends-deck-page.module.scss'
 
@@ -74,7 +74,7 @@ export const FriendsDeckPage = () => {
         <Typography className={s.namePack} variant={'large'}>
           {deckData?.name}
         </Typography>
-        <Button>
+        <Button className={s.learnPackButton} as={Link} to={`/card/${id}`}>
           <Typography variant={'subtitle2'} as={'h4'}>
             Learn to Pack
           </Typography>

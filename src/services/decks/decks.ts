@@ -8,6 +8,9 @@ import {
   GetDeckCardsByIdArgs,
   GetDeckByIdArgs,
   GetDeckByIdResponse,
+  Card,
+  GetRandomCard,
+  SaveCardRating,
 } from '@/services/decks/types'
 
 const decksApi = baseApi.injectEndpoints({
@@ -37,6 +40,18 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
+      getRandomCard: builder.query<Card, GetRandomCard>({
+        query: ({ id, ...args }) => {
+          return { url: `v1/decks/${id}/learn`, method: 'GET', params: { ...args } }
+        },
+        providesTags: ['Decks'],
+      }),
+      saveCardRating: builder.mutation<{}, SaveCardRating>({
+        query: ({ id, ...args }) => {
+          return { url: `v1/decks/${id}/learn`, method: 'POST', body: { ...args } }
+        },
+        invalidatesTags: ['Decks'],
+      }),
     }
   },
 })
@@ -46,4 +61,6 @@ export const {
   useCreateDeckMutation,
   useGetDeckByIdQuery,
   useGetDeckCardsByIdQuery,
+  useGetRandomCardQuery,
+  useSaveCardRatingMutation,
 } = decksApi

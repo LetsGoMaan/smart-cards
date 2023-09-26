@@ -1,0 +1,47 @@
+.backButton {
+  margin-top: 1.5rem;
+  margin-left: 8.5rem;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+
+  .cardPage {
+    width: 26.25rem;
+    padding: 2.062rem 2.25rem 3rem;
+
+    .title {
+      margin-bottom: 2.812rem;
+      text-align: center;
+    }
+
+    .textWrapper {
+      display: flex;
+      gap: 0.312rem;
+
+      .shots {
+        color: var(--color-dark-100);
+      }
+    }
+
+    .answer {
+      margin-top: 2.187rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .showAnswer {
+      box-sizing: border-box;
+      margin-top: 2.562rem;
+    }
+
+    .radioTitle {
+      margin-bottom: 0.812rem;
+    }
+
+    .nextQuestion {
+      box-sizing: border-box;
+      margin-top: 1.812rem;
+    }
+  }
+}
