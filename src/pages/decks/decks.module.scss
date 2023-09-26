@@ -1,3 +1,10 @@
 .generalBlock {
   margin: 2.062rem 8.562rem;
+  display: flex;
+  flex-direction: column;
+
+  .pagination {
+    margin-top: 1.5rem;
+    align-self: flex-end;
+  }
 }

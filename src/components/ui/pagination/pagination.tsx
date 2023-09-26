@@ -18,6 +18,7 @@ type PaginationConditionals =
     }
 
 export type PaginationProps = {
+  className?: string
   count: number
   page: number
   onChange: (page: number) => void
@@ -28,6 +29,7 @@ export type PaginationProps = {
 } & PaginationConditionals
 
 export const Pagination = ({
+  className,
   onChange,
   count = 10,
   page = 1,
@@ -53,7 +55,7 @@ export const Pagination = ({
   const showPerPageSelect = !!perPage && !!perPageOptions && !!onPerPageChange
 
   return (
-    <div className={s.root}>
+    <div className={`${s.root} ${className}`}>
       <div className={s.container}>
         <PrevButton onClick={handlePreviousPageClicked} disabled={isFirstPage} />
 
@@ -161,7 +163,7 @@ export const PerPageSelect = ({ perPage, perPageOptions, onPerPageChange }: PerP
 
   return (
     <div className={s.selectBox}>
-      Показать
+      Show
       <Select
         className={s.select}
         value={selectPerPage}
@@ -169,7 +171,7 @@ export const PerPageSelect = ({ perPage, perPageOptions, onPerPageChange }: PerP
         onValueChange={onPerPageChangeHandler}
         //variant="pagination"
       />
-      на странице
+      on page
     </div>
   )
 }

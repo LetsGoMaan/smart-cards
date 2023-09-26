@@ -1,6 +1,8 @@
 .deckWrapper {
   width: 100%;
   padding: 0 8.5rem;
+  display: flex;
+  flex-direction: column;
 
   .titleAndButton {
     display: flex;
@@ -10,5 +12,10 @@
 
   .searchInput {
     margin-bottom: 1.5rem;
+  }
+
+  .pagination {
+    align-self: flex-end;
+    margin-top: 1.5rem;
   }
 }
