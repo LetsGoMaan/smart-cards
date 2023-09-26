@@ -1,13 +1,17 @@
 .deckWrapper {
-  width: 100%;
-  padding: 0 8.5rem;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 0 8.5rem;
 
   .titleAndButton {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1.5rem;
+  }
+
+  .learnPackButton {
+    text-decoration: none;
   }
 
   .searchInput {
