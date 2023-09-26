@@ -10,6 +10,7 @@ import {
   Button,
   Column,
   Input,
+  Pagination,
   Sort,
   Table,
   TableBody,
@@ -31,13 +32,19 @@ export const FriendsDeckPage = () => {
 
     return `${sort.key}-${sort.direction}`
   }, [sort])
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+
   const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
     id,
     orderBy: sortedString,
     question: debouncedSearchValue,
+    currentPage,
+    itemsPerPage,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
-
+  const totalPages = data?.pagination.totalPages || 1
   const columns: Column[] = [
     {
       key: 'question',
@@ -118,6 +125,15 @@ export const FriendsDeckPage = () => {
           })}
         </TableBody>
       </Table>
+      <Pagination
+        className={s.pagination}
+        count={totalPages}
+        page={currentPage}
+        onChange={setCurrentPage}
+        perPage={itemsPerPage}
+        onPerPageChange={setItemsPerPage}
+        perPageOptions={[10, 20, 30, 50]}
+      />
     </div>
   )
 }
