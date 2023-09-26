@@ -22,6 +22,11 @@ type DecksTableProps = {
   authDeckAuthorId: string
 }
 export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTableProps) => {
+  // const [getRandomCard, { isError, error }] = useLazyGetRandomCardQuery()
+  //
+  // console.log(isError)
+  // console.log(error?.data.message)
+
   const columns: Column[] = [
     {
       key: 'name',
@@ -78,9 +83,19 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
               </TableData>
               <TableData>
                 <div className={s.controlButtons}>
-                  <img src={playIcon} alt={'play'} />
-                  <img src={editButton} alt={'edit'} />
-                  <img src={deleteOutline} alt={'delete'} />
+                  {/*<button onClick={() => setDeckId(deck.id)}>*/}
+                  {/*<button onClick={() => getRandomCard({ id: deck.id })}>*/}
+                  <Link to={`/card/${deck.id}`}>
+                    <img src={playIcon} alt={'play'} />
+                  </Link>
+
+                  {/*</button>*/}
+                  <button>
+                    <img src={editButton} alt={'edit'} />
+                  </button>
+                  <button>
+                    <img src={deleteOutline} alt={'delete'} />
+                  </button>
                 </div>
               </TableData>
             </TableRow>
