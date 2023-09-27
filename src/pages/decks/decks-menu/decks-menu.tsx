@@ -17,7 +17,13 @@ import {
   TabSwitcher,
   Typography,
 } from '@/components'
-import { decksSlice, useAppDispatch, useAppSelector, useCreateDeckMutation } from '@/services'
+import {
+  decksSlice,
+  useAppDispatch,
+  useAppSelector,
+  useAuthMeQuery,
+  useCreateDeckMutation,
+} from '@/services'
 
 type PackFormSchema = z.infer<typeof packSchema>
 const packSchema = z.object({
@@ -42,6 +48,7 @@ export const DecksMenu = () => {
   const dispatch = useAppDispatch()
   const { searchByName, minCardsCount, maxCardsCount } = useAppSelector(state => state.decks)
   const [isModalOpen, setModalOpen] = useState(false)
+  const { data: authData } = useAuthMeQuery()
   const [createDeck, {}] = useCreateDeckMutation()
 
   const tabs = [
@@ -54,7 +61,7 @@ export const DecksMenu = () => {
       title: 'All Cards',
     },
   ]
-  const authorId = 'f2be95b9-4d07-4751-a775-bd612fc9553a' //from response
+  const authorId = authData?.id || '' //from response
   const [tabValue, setTabValue] = useState(tabs[1].value)
 
   const setSearchByName = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))

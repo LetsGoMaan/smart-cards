@@ -19,7 +19,7 @@ type DecksTableProps = {
   decks: Deck[] | undefined
   sort: Sort
   setSort: (sort: Sort) => void
-  authDeckAuthorId: string
+  authDeckAuthorId?: string
 }
 export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTableProps) => {
   // const [getRandomCard, { isError, error }] = useLazyGetRandomCardQuery()
@@ -90,12 +90,16 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
                   </Link>
 
                   {/*</button>*/}
-                  <button>
-                    <img src={editButton} alt={'edit'} />
-                  </button>
-                  <button>
-                    <img src={deleteOutline} alt={'delete'} />
-                  </button>
+                  {deck.author.id === authDeckAuthorId && (
+                    <>
+                      <button>
+                        <img src={editButton} alt={'edit'} />
+                      </button>
+                      <button>
+                        <img src={deleteOutline} alt={'delete'} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </TableData>
             </TableRow>
