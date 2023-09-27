@@ -5,7 +5,7 @@ import s from './decks.module.scss'
 import { useDebounce } from '@/common'
 import { Pagination, Sort } from '@/components'
 import { DecksMenu, DecksTable } from '@/pages/decks'
-import { useGetDecksQuery, useAppSelector } from '@/services'
+import { useGetDecksQuery, useAppSelector, useAuthMeQuery } from '@/services'
 
 export const Decks = () => {
   const { searchByName, authorId, minCardsCount, maxCardsCount } = useAppSelector(
@@ -20,7 +20,7 @@ export const Decks = () => {
   }, [sort])
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-
+  const { data: authData } = useAuthMeQuery()
   const { isLoading, data } = useGetDecksQuery({
     name: debouncedSearchValue,
     orderBy: sortedString,
@@ -32,7 +32,7 @@ export const Decks = () => {
   })
 
   const totalPages = data?.pagination.totalPages || 1
-  const myId = 'f2be95b9-4d07-4751-a775-bd612fc9553a' // need to change!!!
+  const myId = authData?.id // already change!!!
 
   if (isLoading) return <div>loading</div>
 

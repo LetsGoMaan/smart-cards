@@ -91,4 +91,14 @@ export type SaveCardRating = {
   grade: number
 }
 
+export type CreateCardArgs = {
+  id?: string
+  question: string
+  answer: string
+  questionImg?: string
+  answerImg?: string
+  questionVideo?: string
+  answerVideo?: string
+}
+
 export type DeckCardsByIdResponse = PaginatedEntity<Card>
