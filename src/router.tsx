@@ -7,13 +7,25 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from '@/components'
-import { Decks, FriendsDeckPage, MyDeckPage, Profile } from '@/pages'
-import { CardPage } from '@/pages/card-page'
+import {
+  CardPage,
+  Decks,
+  FriendsDeckPage,
+  MyDeckPage,
+  Profile,
+  SignInPage,
+  SignUpPage,
+} from '@/pages'
+import { useAuthMeQuery } from '@/services'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <div>login</div>,
+    element: <SignInPage />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUpPage />,
   },
 ]
 
@@ -48,7 +60,10 @@ const router = createBrowserRouter([
 ])
 
 function PrivateRoutes() {
-  const isLoggedIn = true
+  const { data, isLoading } = useAuthMeQuery()
+
+  if (isLoading) return <div>loading...</div>
+  const isLoggedIn = !!data
 
   return isLoggedIn ? <Outlet /> : <Navigate to={'/login'} />
 }
