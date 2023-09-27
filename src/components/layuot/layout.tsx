@@ -1,34 +1,40 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import s from './layout.module.scss'
 
 import { defaultAvatar, logo, logOut, personOutline } from '@/assets'
 import { Avatar, Button, DropDownItem, DropDownMenu, Header, NameWithAvatar } from '@/components'
-import { useLogoutMutation } from '@/services'
+import { useAuthMeQuery, useLogoutMutation } from '@/services'
 
 export const Layout = () => {
-  const authData = { isSignedIn: true, name: '', avatar: '', email: '' } //server-data
+  //const authData = { isSignedIn: true, name: '', avatar: '', email: '' } //server-data
+  const { data } = useAuthMeQuery() //server-data
   const [logout] = useLogoutMutation()
+  const navigate = useNavigate()
+  const logOutHandler = () => {
+    logout()
+      .unwrap()
+      .then(() => {
+        navigate('/login')
+      })
+  }
 
   return (
     <>
       <Header>
         <img src={logo} alt={'logo'} />
-        {authData.isSignedIn ? (
+        {data ? (
           <DropDownMenu
             align={'end'}
             trigger={
-              <NameWithAvatar
-                name={authData.name || 'Yolo'}
-                avatar={authData.avatar || defaultAvatar}
-              />
+              <NameWithAvatar name={data.name || 'Yolo'} avatar={data.avatar || defaultAvatar} />
             }
           >
             <DropDownItem>
-              <Avatar avatar={authData.avatar || defaultAvatar} />
+              <Avatar avatar={data.avatar || defaultAvatar} />
               <div>
-                <div>{authData.name || 'Yolo'}</div>
-                <div className={s.email}>{authData.email || 'ilikekovrizku@gmail.com'}</div>
+                <div>{data.name || 'Yolo'}</div>
+                <div className={s.email}>{data.email || 'ilikekovrizku@gmail.com'}</div>
               </div>
             </DropDownItem>
             <DropDownItem>
@@ -39,10 +45,10 @@ export const Layout = () => {
               </Link>
             </DropDownItem>
             <DropDownItem>
-              <Link onClick={() => logout()} className={s.link} to={'/sign-in'}>
+              <button onClick={logOutHandler} className={s.link}>
                 <img src={logOut} alt={'icon'} />
                 <span>Sign Out</span>
-              </Link>
+              </button>
             </DropDownItem>
           </DropDownMenu>
         ) : (

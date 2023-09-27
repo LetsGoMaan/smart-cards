@@ -10,6 +10,7 @@ import { Button, Card, ControlledCheckbox, ControlledInput, Typography } from '@
 
 type SignInProps = {
   onSubmit: (data: SignInFormSchema) => void
+  disabled?: boolean
 }
 export type SignInFormSchema = z.infer<typeof signInSchema>
 
@@ -19,7 +20,7 @@ const signInSchema = z.object({
   rememberMe: z.boolean().default(false),
 })
 
-export const SignIn = ({ onSubmit }: SignInProps) => {
+export const SignIn = ({ onSubmit, disabled }: SignInProps) => {
   const {
     handleSubmit,
     control,
@@ -62,7 +63,7 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
         >
           Forgot Password?
         </Typography>
-        <Button type={'submit'} className={s.buttonSubmit} fullWidth={true}>
+        <Button type={'submit'} disabled={disabled} className={s.buttonSubmit} fullWidth={true}>
           Sign In
         </Button>
         <Typography as={'h4'} className={s.haveAccount} variant={'body2'}>
