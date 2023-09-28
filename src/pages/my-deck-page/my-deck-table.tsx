@@ -1,6 +1,6 @@
 import s from './my-deck-page.module.scss'
 
-import { deleteOutline, editButton, starFullIcon, starIcon } from '@/assets'
+import { deleteOutline, editButton } from '@/assets'
 import {
   Column,
   Sort,
@@ -66,16 +66,7 @@ export const MyDeckTable = ({ cards, sort, setSort }: MyDeckTableProps) => {
                 </Typography>
               </TableData>
               <TableData style={{ width: '20%' }}>
-                <Typography as={'div'} variant={'body2'}>
-                  {/*<div style={{ display: 'flex', gap: '10px' }}>
-                    <img src={card.grade >= 1 ? starFullIcon : starIcon} alt={'star'} />
-                    <img src={card.grade >= 2 ? starFullIcon : starIcon} alt={'star'} />
-                    <img src={card.grade >= 3 ? starFullIcon : starIcon} alt={'star'} />
-                    <img src={card.grade >= 4 ? starFullIcon : starIcon} alt={'star'} />
-                    <img src={card.grade >= 5 ? starFullIcon : starIcon} alt={'star'} />
-                  </div>*/}
-                  <Grade grade={card.grade} />
-                </Typography>
+                <Grade grade={card.grade} />
               </TableData>
               <TableData>
                 <div className={s.editButtons}>

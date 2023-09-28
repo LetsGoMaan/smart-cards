@@ -108,9 +108,7 @@ export const FriendsDeckPage = () => {
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '20%' }}>
-                  {/*<Typography as={'div'} variant={'body2'}>*/}
                   <Grade grade={card.grade} />
-                  {/*</Typography>*/}
                 </TableData>
               </TableRow>
             )
