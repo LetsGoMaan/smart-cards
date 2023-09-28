@@ -1,6 +1,6 @@
-import { StarIcon } from '@radix-ui/react-icons'
+import s from './my-deck-page.module.scss'
 
-import { deleteOutline, editButton } from '@/assets'
+import { deleteOutline, editButton, starFullIcon, starIcon } from '@/assets'
 import {
   Column,
   Sort,
@@ -11,6 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@/components'
+import { Grade } from '@/pages'
 import { Card } from '@/services'
 
 type MyDeckTableProps = {
@@ -66,19 +67,25 @@ export const MyDeckTable = ({ cards, sort, setSort }: MyDeckTableProps) => {
               </TableData>
               <TableData style={{ width: '20%' }}>
                 <Typography as={'div'} variant={'body2'}>
-                  {card.rating}
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                  </div>
+                  {/*<div style={{ display: 'flex', gap: '10px' }}>
+                    <img src={card.grade >= 1 ? starFullIcon : starIcon} alt={'star'} />
+                    <img src={card.grade >= 2 ? starFullIcon : starIcon} alt={'star'} />
+                    <img src={card.grade >= 3 ? starFullIcon : starIcon} alt={'star'} />
+                    <img src={card.grade >= 4 ? starFullIcon : starIcon} alt={'star'} />
+                    <img src={card.grade >= 5 ? starFullIcon : starIcon} alt={'star'} />
+                  </div>*/}
+                  <Grade grade={card.grade} />
                 </Typography>
               </TableData>
               <TableData>
-                <img src={editButton} alt={'edit'} />
-                <img src={deleteOutline} alt={'delete'} />
+                <div className={s.editButtons}>
+                  <button>
+                    <img src={editButton} alt={'edit'} />
+                  </button>
+                  <button>
+                    <img src={deleteOutline} alt={'delete'} />
+                  </button>
+                </div>
               </TableData>
             </TableRow>
           )

@@ -65,7 +65,7 @@ export const MyDeckPage = () => {
       <div className={s.titleAndButton}>
         <div className={s.titleAndDrop}>
           <Typography className={s.namePack} variant={'large'}>
-            My Pack
+            {deckData?.name}
           </Typography>
           <DropDownMenu
             align={'end'}

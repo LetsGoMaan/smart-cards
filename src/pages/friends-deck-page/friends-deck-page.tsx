@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 
-import { StarIcon } from '@radix-ui/react-icons'
 import { Link, useParams } from 'react-router-dom'
 
 import s from './friends-deck-page.module.scss'
@@ -19,7 +18,7 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { BackButton, EmptyDeck } from '@/pages'
+import { BackButton, EmptyDeck, Grade } from '@/pages'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 
 export const FriendsDeckPage = () => {
@@ -109,16 +108,9 @@ export const FriendsDeckPage = () => {
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '20%' }}>
-                  <Typography as={'div'} variant={'body2'}>
-                    {card.rating}
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                    </div>
-                  </Typography>
+                  {/*<Typography as={'div'} variant={'body2'}>*/}
+                  <Grade grade={card.grade} />
+                  {/*</Typography>*/}
                 </TableData>
               </TableRow>
             )
