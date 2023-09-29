@@ -21,6 +21,25 @@ import {
 import { BackButton, EmptyDeck, Grade } from '@/pages'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 
+const columns: Column[] = [
+  {
+    key: 'question',
+    title: 'Question',
+  },
+  {
+    key: 'answer',
+    title: 'Answer',
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+  },
+  {
+    key: 'grade',
+    title: 'Grade',
+  },
+]
+
 export const FriendsDeckPage = () => {
   const { id } = useParams()
   const [sort, setSort] = useState<Sort>(null)
@@ -43,27 +62,12 @@ export const FriendsDeckPage = () => {
     itemsPerPage,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
+  const cardsArray = useMemo(() => {
+    return data?.items
+  }, [])
   const totalPages = data?.pagination.totalPages || 1
-  const columns: Column[] = [
-    {
-      key: 'question',
-      title: 'Question',
-    },
-    {
-      key: 'answer',
-      title: 'Answer',
-    },
-    {
-      key: 'updated',
-      title: 'Last Updated',
-    },
-    {
-      key: 'grade',
-      title: 'Grade',
-    },
-  ]
 
-  if (data?.items.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={false} />
+  if (cardsArray?.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={false} />
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
 
   return (

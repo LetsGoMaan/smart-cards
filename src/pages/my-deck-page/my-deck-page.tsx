@@ -8,6 +8,7 @@ import { z } from 'zod'
 import s from './my-deck-page.module.scss'
 
 import { buttonForDrop, deleteOutline, editButton, playIcon } from '@/assets'
+import { useDebounce } from '@/common'
 import {
   Button,
   ControlledInput,
@@ -28,6 +29,8 @@ const cardSchema = z.object({
 })
 
 export const MyDeckPage = () => {
+  const [searchValue, setSearchValue] = useState('')
+  const debouncedSearchValue = useDebounce(searchValue, 500)
   const [sort, setSort] = useState<Sort>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const sortedString = useMemo(() => {
@@ -40,8 +43,12 @@ export const MyDeckPage = () => {
   const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
     id,
     orderBy: sortedString,
+    question: debouncedSearchValue,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
+  const cardsArray = useMemo(() => {
+    return data?.items
+  }, [])
 
   const {
     handleSubmit,
@@ -56,7 +63,7 @@ export const MyDeckPage = () => {
     setIsModalOpen(false)
   }
 
-  if (data?.items.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={true} />
+  if (cardsArray?.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={true} />
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
 
   return (
@@ -95,7 +102,13 @@ export const MyDeckPage = () => {
           </Typography>
         </Button>
       </div>
-      <Input type={'search'} className={s.searchInput} />
+      <Input
+        value={searchValue}
+        onChangeValue={value => setSearchValue(value)}
+        type={'search'}
+        className={s.searchInput}
+        onClearClick={() => setSearchValue('')}
+      />
 
       <MyDeckTable cards={data?.items} sort={sort} setSort={setSort} />
       <Modal
