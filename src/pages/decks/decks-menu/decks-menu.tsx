@@ -1,55 +1,17 @@
 import { useState } from 'react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { z } from 'zod'
-
 import s from './decks-menu.module.scss'
 
 import { deleteOutline } from '@/assets'
-import {
-  Button,
-  ControlledCheckbox,
-  ControlledInput,
-  Input,
-  Modal,
-  Slider,
-  TabSwitcher,
-  Typography,
-} from '@/components'
-import {
-  decksSlice,
-  useAppDispatch,
-  useAppSelector,
-  useAuthMeQuery,
-  useCreateDeckMutation,
-} from '@/services'
-
-type PackFormSchema = z.infer<typeof packSchema>
-const packSchema = z.object({
-  packName: z.string().nonempty().max(30),
-  isPackPrivate: z.boolean().default(false),
-})
+import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
+import { DeckModalAdd } from '@/pages'
+import { decksSlice, useAppDispatch, useAppSelector, useAuthMeQuery } from '@/services'
 
 export const DecksMenu = () => {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<PackFormSchema>({ resolver: zodResolver(packSchema) })
-
-  const onSubmit: SubmitHandler<PackFormSchema> = data => {
-    createDeck({ name: data.packName })
-    reset()
-    setModalOpen(false)
-  }
-
   const dispatch = useAppDispatch()
   const { searchByName, minCardsCount, maxCardsCount } = useAppSelector(state => state.decks)
   const [isModalOpen, setModalOpen] = useState(false)
   const { data: authData } = useAuthMeQuery()
-  const [createDeck, {}] = useCreateDeckMutation()
 
   const tabs = [
     {
@@ -92,7 +54,7 @@ export const DecksMenu = () => {
         </Typography>
         <Button onClick={() => setModalOpen(true)}>
           <Typography as={'h4'} variant={'subtitle2'}>
-            Add New Pack{' '}
+            Add New Pack
           </Typography>
         </Button>
       </div>
@@ -124,35 +86,7 @@ export const DecksMenu = () => {
           </Typography>
         </Button>
       </div>
-      <Modal
-        title={'Add New Pack'}
-        showCloseButton={true}
-        onClose={() => setModalOpen(false)}
-        isOpen={isModalOpen}
-      >
-        <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
-          <ControlledInput
-            name={'packName'}
-            control={control}
-            label={'Name Pack'}
-            errorMessage={errors.packName?.message}
-          />
-          <ControlledCheckbox name={'isPackPrivate'} control={control} label={'Private pack'} />
-
-          <div className={s.modalButtons}>
-            <Button type={'button'} onClick={() => setModalOpen(false)} variant={'secondary'}>
-              <Typography as={'h4'} variant={'subtitle2'}>
-                Cancel
-              </Typography>
-            </Button>
-            <Button type={'submit'}>
-              <Typography as={'h4'} variant={'subtitle2'}>
-                Add New Pack{' '}
-              </Typography>
-            </Button>
-          </div>
-        </form>
-      </Modal>
+      <DeckModalAdd isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
     </div>
   )
 }

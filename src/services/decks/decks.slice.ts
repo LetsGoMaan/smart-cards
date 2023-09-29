@@ -4,11 +4,11 @@ const initialState = {
   itemsPerPage: 10,
   currentPage: 1,
   searchByName: '',
-  cardName: '',
+  //cardName: '',
   authorId: '',
   minCardsCount: '0',
   maxCardsCount: '100',
-  //orderBy: 'updated-desc',
+  editName: '',
   orderBy: '',
   //orderBy: null,
 }
@@ -26,9 +26,9 @@ export const decksSlice = createSlice({
     setSearchByName: (state, action: PayloadAction<string>) => {
       state.searchByName = action.payload
     },
-    setCardName: (state, action: PayloadAction<string>) => {
+    /*setCardName: (state, action: PayloadAction<string>) => {
       state.cardName = action.payload
-    },
+    },*/
     setCardsByAuthor: (state, action: PayloadAction<string>) => {
       state.authorId = action.payload
     },
@@ -38,6 +38,9 @@ export const decksSlice = createSlice({
     },
     setOrderBy: (state, action: PayloadAction<string>) => {
       state.orderBy = action.payload
+    },
+    setEditName: (state, action: PayloadAction<string>) => {
+      state.editName = action.payload
     },
     setDefaultValues: () => {
       return {

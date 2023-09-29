@@ -24,6 +24,16 @@ export type GetDeckCardsByIdArgs = {
 
 export type CreateDeckArgs = {
   name: string
+  cover?: string
+  isPrivate?: boolean
+}
+
+export type UpdateDeckArgs = {
+  id: string
+} & CreateDeckArgs
+
+export type DeleteDeckArgs = {
+  id: string
 }
 
 export interface Author {

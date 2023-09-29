@@ -12,6 +12,8 @@ import {
   GetRandomCard,
   SaveCardRating,
   CreateCardArgs,
+  UpdateDeckArgs,
+  DeleteDeckArgs,
 } from '@/services/decks/types'
 
 const decksApi = baseApi.injectEndpoints({
@@ -24,8 +26,8 @@ const decksApi = baseApi.injectEndpoints({
         providesTags: ['Decks'],
       }),
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
-        query: ({ name }) => {
-          return { url: `v1/decks`, method: 'POST', body: { name } }
+        query: ({ ...args }) => {
+          return { url: `v1/decks`, method: 'POST', body: { ...args } }
         },
         invalidatesTags: ['Decks'],
       }),
@@ -59,6 +61,18 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+      updateDeck: builder.mutation<Deck, UpdateDeckArgs>({
+        query: ({ id, ...args }) => {
+          return { url: `v1/decks/${id}`, method: 'PATCH', body: { ...args } }
+        },
+        invalidatesTags: ['Decks'],
+      }),
+      deleteDeckById: builder.mutation<Deck, DeleteDeckArgs>({
+        query: ({ id }) => {
+          return { url: `v1/decks/${id}`, method: 'DELETE' }
+        },
+        invalidatesTags: ['Decks'],
+      }),
     }
   },
 })
@@ -71,4 +85,6 @@ export const {
   useGetRandomCardQuery,
   useSaveCardRatingMutation,
   useCreateCardMutation,
+  useUpdateDeckMutation,
+  useDeleteDeckByIdMutation,
 } = decksApi

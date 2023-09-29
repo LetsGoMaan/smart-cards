@@ -64,7 +64,7 @@ export const Modal = ({ children, isOpen, showCloseButton, title, onClose }: Mod
                   {showCloseButton && (
                     <div className={s.titleWrapper}>
                       <DialogRadixUI.Title className={s.dialogTitle}>
-                        <Typography className={s.title} variant={'h2'}>
+                        <Typography className={s.title} variant={'h2'} as={'p'}>
                           {title}
                         </Typography>
                       </DialogRadixUI.Title>
