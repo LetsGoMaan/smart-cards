@@ -11,7 +11,10 @@ const initialState = {
   maxCardsCount: '100',
   editName: '',
   orderBy: '',
-  //orderBy: null,
+  myCardsPage: {
+    currentPage: '1',
+    itemsPerPage: '10',
+  },
 }
 
 export const decksSlice = createSlice({
@@ -51,6 +54,12 @@ export const decksSlice = createSlice({
       return {
         ...initialState,
       }
+    },
+    setCurrentPageMyDeck: (state, action: PayloadAction<string>) => {
+      state.myCardsPage.currentPage = action.payload
+    },
+    setItemsPerPageMyDeck: (state, action: PayloadAction<string>) => {
+      state.myCardsPage.itemsPerPage = action.payload
     },
     /*
     setCardsOrderBy: (state, action: PayloadAction<string>) => {

@@ -16,11 +16,19 @@ import {
   DropDownMenu,
   Input,
   Modal,
+  Pagination,
   Sort,
   Typography,
 } from '@/components'
 import { BackButton, EmptyDeck, MyDeckTable } from '@/pages'
-import { useCreateCardMutation, useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
+import {
+  decksSlice,
+  useAppDispatch,
+  useAppSelector,
+  useCreateCardMutation,
+  useGetDeckByIdQuery,
+  useGetDeckCardsByIdQuery,
+} from '@/services'
 
 type CardFormSchema = z.infer<typeof cardSchema>
 const cardSchema = z.object({
@@ -29,10 +37,14 @@ const cardSchema = z.object({
 })
 
 export const MyDeckPage = () => {
+  const { myCardsPage } = useAppSelector(state => state.decks)
+  const dispatch = useAppDispatch()
   const [searchValue, setSearchValue] = useState('')
   const debouncedSearchValue = useDebounce(searchValue, 500)
   const [sort, setSort] = useState<Sort>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  //const [currentPage, setCurrentPage] = useState(1)
+  //const [itemsPerPage, setItemsPerPage] = useState(10)
   const sortedString = useMemo(() => {
     if (!sort) return null
 
@@ -44,6 +56,8 @@ export const MyDeckPage = () => {
     id,
     orderBy: sortedString,
     question: debouncedSearchValue,
+    currentPage: +myCardsPage.currentPage,
+    itemsPerPage: +myCardsPage.itemsPerPage,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
   const cardsArray = useMemo(() => {
@@ -61,6 +75,13 @@ export const MyDeckPage = () => {
     createCard({ id, answer: data.answer, question: data.question })
     reset()
     setIsModalOpen(false)
+  }
+  const count = data?.pagination.totalPages || 0
+  const setCurrentPage = (page: number) => {
+    dispatch(decksSlice.actions.setCurrentPageMyDeck(page.toString()))
+  }
+  const setItemsPerPage = (itemPerPage: number) => {
+    dispatch(decksSlice.actions.setItemsPerPageMyDeck(itemPerPage.toString()))
   }
 
   if (cardsArray?.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={true} />
@@ -111,6 +132,15 @@ export const MyDeckPage = () => {
       />
 
       <MyDeckTable cards={data?.items} sort={sort} setSort={setSort} />
+      <Pagination
+        className={s.pagination}
+        count={count}
+        page={+myCardsPage.currentPage}
+        onChange={page => setCurrentPage(page)}
+        perPage={+myCardsPage.itemsPerPage}
+        onPerPageChange={itemPerPage => setItemsPerPage(itemPerPage)}
+        perPageOptions={[10, 20, 30, 50]}
+      />
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
