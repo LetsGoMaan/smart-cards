@@ -6,27 +6,32 @@
 }
 
 .dialogContent {
-  background-color: transparent;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   width: 90vw;
+
+  background-color: transparent;
 
   &:focus {
     outline: none;
   }
 
   .modal {
-    background-color: var(--color-dark-700);
-    min-width: 33.25rem;
-    min-height: 3.75rem;
-    color: #fff;
     position: fixed;
+    z-index: 101;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 101;
+
+    min-width: 33.25rem;
+    min-height: 3.75rem;
+
+    color: #fff;
+
+    background-color: var(--color-dark-700);
     border: 1px solid var(--color-dark-500);
     border-radius: 2px;
 
@@ -34,7 +39,8 @@
       display: flex;
       justify-content: space-between;
       padding: 18px 24px;
-      /*border-bottom: 1px solid var(--color-dark-500);*/
+
+      /* border-bottom: 1px solid var(--color-dark-500); */
 
       .dialogTitle {
         all: unset;
@@ -45,17 +51,17 @@
       }
 
       .closeMark {
+        cursor: pointer;
         width: 24px;
         height: 24px;
-        cursor: pointer;
       }
     }
 
     .modalContent {
-      padding: 18px 24px 24px;
       display: flex;
       flex-direction: column;
       gap: 24px;
+      padding: 18px 24px 24px;
     }
   }
 }

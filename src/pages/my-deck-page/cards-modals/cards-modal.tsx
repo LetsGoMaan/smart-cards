@@ -14,12 +14,12 @@ type Props = {
   isModalOpen: boolean
   setIsModalOpen: (open: boolean) => void
   id?: string
-  title: string
-  cardId: string
+  title?: string
+  cardId?: string
   valueQuestion?: string
   valueAnswer?: string
-  setValueAnswer: Dispatch<SetStateAction<string>>
-  setValueQuestion: Dispatch<SetStateAction<string>>
+  setValueAnswer?: Dispatch<SetStateAction<string>>
+  setValueQuestion?: Dispatch<SetStateAction<string>>
 }
 
 type CardFormSchema = z.infer<typeof cardSchema>
@@ -52,11 +52,11 @@ export const CardsModal = ({
   }
 
   const answerHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueAnswer(e.currentTarget.value)
+    setValueAnswer && setValueAnswer(e.currentTarget.value)
   }
 
   const questionHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueQuestion(e.currentTarget.value)
+    setValueQuestion && setValueQuestion(e.currentTarget.value)
   }
 
   const {
