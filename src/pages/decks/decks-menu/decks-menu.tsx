@@ -9,7 +9,9 @@ import { decksSlice, useAppDispatch, useAppSelector, useAuthMeQuery } from '@/se
 
 export const DecksMenu = () => {
   const dispatch = useAppDispatch()
-  const { searchByName, minCardsCount, maxCardsCount } = useAppSelector(state => state.decks)
+  const { searchByName, minCardsCount, maxCardsCount, tabValue } = useAppSelector(
+    state => state.decks
+  )
   const [isModalOpen, setModalOpen] = useState(false)
   const { data: authData } = useAuthMeQuery()
 
@@ -24,17 +26,14 @@ export const DecksMenu = () => {
     },
   ]
   const authorId = authData?.id || '' //from response
-  const [tabValue, setTabValue] = useState(tabs[1].value)
 
   const setSearchByName = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
 
   const setCardsByAuthor = (tabValue: string) => {
     if (tabValue === 'myCards') {
-      dispatch(decksSlice.actions.setCardsByAuthor(authorId))
-      setTabValue(tabs[0].value)
+      dispatch(decksSlice.actions.setCardsByAuthor({ authorId, tabValue: 'myCards' }))
     } else {
-      dispatch(decksSlice.actions.setCardsByAuthor(''))
-      setTabValue(tabs[1].value)
+      dispatch(decksSlice.actions.setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
     }
   }
   const setMinMaxValue = (value: number[]) => {
@@ -43,7 +42,7 @@ export const DecksMenu = () => {
 
   const setDefaultValues = () => {
     dispatch(decksSlice.actions.setDefaultValues())
-    setTabValue(tabs[1].value)
+    dispatch(decksSlice.actions.setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
   }
 
   return (
