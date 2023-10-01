@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import s from './my-deck-page.module.scss'
 
@@ -15,7 +15,7 @@ import {
   Sort,
   Typography,
 } from '@/components'
-import { BackButton, CardsModal, EmptyDeck, MyDeckTable } from '@/pages'
+import { BackButton, CardsModal, DeckModal, DeleteItemModal, EmptyDeck, MyDeckTable } from '@/pages'
 import {
   decksSlice,
   useAppDispatch,
@@ -30,7 +30,9 @@ export const MyDeckPage = () => {
   const [searchValue, setSearchValue] = useState('')
   const debouncedSearchValue = useDebounce(searchValue, 500)
   const [sort, setSort] = useState<Sort>(null)
-  const [isModalAddOpen, setIsModalAddOpen] = useState(false)
+  const [isCardModalOpen, setIsCardModalOpen] = useState(false)
+  const [isDeckModalOpen, setIsDeckModalOpen] = useState(false)
+  const [isDeckDeleteModalOpen, setIsDeckDeleteModalOpen] = useState(false)
 
   //const [currentPage, setCurrentPage] = useState(1)
   //const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -61,6 +63,14 @@ export const MyDeckPage = () => {
   const setItemsPerPage = (itemPerPage: number) => {
     dispatch(decksSlice.actions.setItemsPerPageMyDeck(itemPerPage.toString()))
   }
+  const deleteId = id || ''
+
+  const deleteHandler = () => {
+    setIsDeckDeleteModalOpen(true)
+    /*setTimeout(() => {
+      navigate(-1)
+    }, 3000)*/
+  }
 
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
   if (cardsArray?.length === 0)
@@ -68,8 +78,8 @@ export const MyDeckPage = () => {
       <EmptyDeck
         deckName={deckData?.name}
         isMyDeck={true}
-        isModalOpen={isModalAddOpen}
-        setIsModalOpen={setIsModalAddOpen}
+        isModalOpen={isCardModalOpen}
+        setIsModalOpen={setIsCardModalOpen}
         id={id}
       />
     )
@@ -91,20 +101,28 @@ export const MyDeckPage = () => {
             }
           >
             <DropDownItem>
-              <img src={playIcon} alt={'learn'} />
-              <Typography variant={'caption'}>Learn</Typography>
+              <Typography className={s.dropLink} as={Link} to={`/card/${id}`} variant={'caption'}>
+                <img src={playIcon} alt={'learn'} />
+                Learn
+              </Typography>
             </DropDownItem>
             <DropDownItem>
-              <img src={editButton} alt={'edit'} />
-              <Typography variant={'caption'}>Edit</Typography>
+              <button onClick={() => setIsDeckModalOpen(true)} className={s.dropLink}>
+                <img src={editButton} alt={'edit'} />
+                <Typography as={'p'} variant={'caption'}>
+                  Edit
+                </Typography>
+              </button>
             </DropDownItem>
             <DropDownItem>
-              <img src={deleteOutline} alt={'delete'} />
-              <Typography variant={'caption'}>Delete</Typography>
+              <button onClick={deleteHandler} className={s.dropLink}>
+                <img src={deleteOutline} alt={'delete'} />
+                <Typography variant={'caption'}>Delete</Typography>
+              </button>
             </DropDownItem>
           </DropDownMenu>
         </div>
-        <Button onClick={() => setIsModalAddOpen(true)}>
+        <Button onClick={() => setIsCardModalOpen(true)}>
           <Typography variant={'subtitle2'} as={'h4'}>
             Add New Card
           </Typography>
@@ -130,9 +148,22 @@ export const MyDeckPage = () => {
       />
       <CardsModal
         title={'Add New Card'}
-        setIsModalOpen={setIsModalAddOpen}
-        isModalOpen={isModalAddOpen}
+        setIsModalOpen={setIsCardModalOpen}
+        isModalOpen={isCardModalOpen}
         id={id}
+      />
+      <DeckModal
+        isModalOpen={isDeckModalOpen}
+        setModalOpen={setIsDeckModalOpen}
+        modalTitle={'Edit Pack'}
+        buttonTitle={'Save Changes'}
+      />
+      <DeleteItemModal
+        isModalOpen={isDeckDeleteModalOpen}
+        setIsModalOpen={setIsDeckDeleteModalOpen}
+        id={deleteId}
+        title={'Delete Pack'}
+        deckName={deckData?.name}
       />
     </div>
   )

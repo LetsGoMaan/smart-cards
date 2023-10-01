@@ -19,8 +19,8 @@ import {
 type EditModalProps = {
   id?: string
   deckName?: string
-  modalTitle?: string
-  buttonTitle?: string
+  modalTitle: string
+  buttonTitle: string
   isModalOpen: boolean
   setModalOpen: (isOpen: boolean) => void
 }
