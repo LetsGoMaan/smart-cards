@@ -15,7 +15,7 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { DeckModalEdit, DeckModalDelete } from '@/pages'
+import { DeckModal, DeckModalDelete } from '@/pages'
 import { Deck, decksSlice, useAppDispatch } from '@/services'
 
 type DecksTableProps = {
@@ -124,9 +124,11 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
           })}
         </TableBody>
       </Table>
-      <DeckModalEdit
+      <DeckModal
         id={id}
         deckName={deckName}
+        modalTitle={'Edit Pack'}
+        buttonTitle={'Save Changes'}
         isModalOpen={isModalOpen}
         setModalOpen={setModalOpen}
       />

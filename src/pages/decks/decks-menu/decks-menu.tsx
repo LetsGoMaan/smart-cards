@@ -4,7 +4,7 @@ import s from './decks-menu.module.scss'
 
 import { deleteOutline } from '@/assets'
 import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
-import { DeckModalAdd } from '@/pages'
+import { DeckModal, DeckModalAdd } from '@/pages'
 import { decksSlice, useAppDispatch, useAppSelector, useAuthMeQuery } from '@/services'
 
 export const DecksMenu = () => {
@@ -25,7 +25,7 @@ export const DecksMenu = () => {
       title: 'All Cards',
     },
   ]
-  const authorId = authData?.id || '' //from response
+  const authorId = authData?.id || ''
 
   const setSearchByName = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
 
@@ -85,7 +85,12 @@ export const DecksMenu = () => {
           </Typography>
         </Button>
       </div>
-      <DeckModalAdd isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+      <DeckModal
+        isModalOpen={isModalOpen}
+        setModalOpen={setModalOpen}
+        modalTitle={'Add New Pack'}
+        buttonTitle={'Add New Pack'}
+      />
     </div>
   )
 }

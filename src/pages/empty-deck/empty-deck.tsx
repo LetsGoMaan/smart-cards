@@ -7,8 +7,8 @@ import { CardsModal } from '@/pages/my-deck-page/cards-modals/cards-modal.tsx'
 type EmptyDeckProps = {
   deckName: string | undefined
   isMyDeck: boolean
-  isModalOpen: boolean
-  setIsModalOpen: (open: boolean) => void
+  isModalOpen?: boolean
+  setIsModalOpen?: (open: boolean) => void
   id?: string
 }
 export const EmptyDeck = ({
@@ -18,6 +18,14 @@ export const EmptyDeck = ({
   isModalOpen,
   id,
 }: EmptyDeckProps) => {
+  const onModalOpen = () => {
+    setIsModalOpen && setIsModalOpen(true)
+  }
+  const onSetOpen = (isOpen: boolean) => {
+    setIsModalOpen && setIsModalOpen(isOpen)
+  }
+  const isOpen = isModalOpen || false
+
   return (
     <div className={s.emptyDeckWrapper}>
       <BackButton />
@@ -29,7 +37,7 @@ export const EmptyDeck = ({
           <Typography className={s.textWarning} variant={'body1'} as={'p'}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
-          <Button onClick={() => setIsModalOpen(true)}>
+          <Button onClick={onModalOpen}>
             <Typography variant={'subtitle2'} as={'h4'}>
               Add New Card
             </Typography>
@@ -42,7 +50,7 @@ export const EmptyDeck = ({
           </Typography>
         </div>
       )}
-      <CardsModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} id={id} />
+      <CardsModal setIsModalOpen={open => onSetOpen(open)} isModalOpen={isOpen} id={id} />
     </div>
   )
 }

@@ -29,7 +29,7 @@ export type CreateDeckArgs = {
 }
 
 export type UpdateDeckArgs = {
-  id: string
+  id?: string
 } & CreateDeckArgs
 
 export type DeleteDeckArgs = {

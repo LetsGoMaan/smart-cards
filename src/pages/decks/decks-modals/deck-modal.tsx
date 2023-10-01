@@ -7,19 +7,34 @@ import s from './deck-modal.module.scss'
 
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
 import { PackFormSchema, packSchema } from '@/pages'
-import { decksSlice, useAppDispatch, useAppSelector, useUpdateDeckMutation } from '@/services'
+import {
+  decksSlice,
+  useAppDispatch,
+  useAppSelector,
+  useCreateDeckMutation,
+  useUpdateDeckMutation,
+} from '@/services'
 
 type EditModalProps = {
-  id: string
-  deckName: string
+  id?: string
+  deckName?: string
+  modalTitle?: string
+  buttonTitle?: string
   isModalOpen: boolean
   setModalOpen: (isOpen: boolean) => void
 }
-export const DeckModalEdit = ({ isModalOpen, setModalOpen, id }: EditModalProps) => {
+export const DeckModal = ({
+  isModalOpen,
+  setModalOpen,
+  id,
+  modalTitle,
+  buttonTitle,
+}: EditModalProps) => {
   const editName = useAppSelector(state => state.decks.editName)
   const dispatch = useAppDispatch()
   //const [editDeckName, setEditDeckName] = useState(deckName)
 
+  const [createDeck] = useCreateDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
   const {
     register,
@@ -30,32 +45,30 @@ export const DeckModalEdit = ({ isModalOpen, setModalOpen, id }: EditModalProps)
   } = useForm<PackFormSchema>({ resolver: zodResolver(packSchema) })
 
   const onSubmit: SubmitHandler<PackFormSchema> = data => {
-    updateDeck({ id, name: data.packName })
+    if (modalTitle === 'Add New Pack') {
+      createDeck({ name: data.packName })
+    } else {
+      updateDeck({ id, name: data.packName })
+    }
     reset()
     setModalOpen(false)
   }
 
-  const setEditNameE = (e: ChangeEvent<HTMLInputElement>) => {
+  const setEditName = (e: ChangeEvent<HTMLInputElement>) => {
     //setEditDeckName(name)
     dispatch(decksSlice.actions.setEditName(e.currentTarget.value))
   }
 
   return (
     <Modal
-      title={'Edit Pack'}
+      title={modalTitle}
       showCloseButton={true}
       onClose={() => setModalOpen(false)}
       isOpen={isModalOpen}
     >
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
-        {/*<ControlledInput
-          name={'packName'}
-          control={control}
-          label={'Edit Pack'}
-          errorMessage={errors.packName?.message}
-        />*/}
         <Input
-          label={'Edit Pack'}
+          label={'Name Pack'}
           {...register('packName')}
           //value={editDeckName}
           //value={deckName}
@@ -63,7 +76,7 @@ export const DeckModalEdit = ({ isModalOpen, setModalOpen, id }: EditModalProps)
           //onChangeValue={value => setEditName(value)}
           //onChangeValue={value => setEditDeckName(value)}
           //onChange={e => setEditDeckName(e.currentTarget.value)}
-          onChange={setEditNameE}
+          onChange={setEditName}
           //onChangeValue={setEditName}
           errorMessage={errors.packName?.message}
         />
@@ -77,7 +90,7 @@ export const DeckModalEdit = ({ isModalOpen, setModalOpen, id }: EditModalProps)
           </Button>
           <Button type={'submit'}>
             <Typography as={'h4'} variant={'subtitle2'}>
-              Save Changes
+              {buttonTitle}
             </Typography>
           </Button>
         </div>
