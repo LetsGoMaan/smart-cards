@@ -4,12 +4,12 @@ const initialState = {
   itemsPerPage: 10,
   currentPage: 1,
   searchByName: '',
-  //cardName: '',
   authorId: '',
   tabValue: 'allCards',
   minCardsCount: '0',
   maxCardsCount: '100',
-  editName: '',
+  addDeckName: '',
+  editDeckName: '',
   orderBy: '',
   myCardsPage: {
     currentPage: '1',
@@ -30,9 +30,6 @@ export const decksSlice = createSlice({
     setSearchByName: (state, action: PayloadAction<string>) => {
       state.searchByName = action.payload
     },
-    /*setCardName: (state, action: PayloadAction<string>) => {
-      state.cardName = action.payload
-    },*/
     setCardsByAuthor: (
       state,
       action: PayloadAction<{ authorId: string; tabValue: 'allCards' | 'myCards' }>
@@ -47,8 +44,11 @@ export const decksSlice = createSlice({
     setOrderBy: (state, action: PayloadAction<string>) => {
       state.orderBy = action.payload
     },
-    setEditName: (state, action: PayloadAction<string>) => {
-      state.editName = action.payload
+    setEditDeckName: (state, action: PayloadAction<string>) => {
+      state.editDeckName = action.payload
+    },
+    setDeckName: (state, action: PayloadAction<string>) => {
+      state.addDeckName = action.payload
     },
     setDefaultValues: () => {
       return {
@@ -61,9 +61,7 @@ export const decksSlice = createSlice({
     setItemsPerPageMyDeck: (state, action: PayloadAction<string>) => {
       state.myCardsPage.itemsPerPage = action.payload
     },
-    /*
-    setCardsOrderBy: (state, action: PayloadAction<string>) => {
-      state.orderBy = action.payload
-    },*/
   },
 })
+
+export const { setDeckName, setEditDeckName } = decksSlice.actions

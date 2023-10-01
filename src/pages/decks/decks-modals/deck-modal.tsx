@@ -2,13 +2,14 @@ import { ChangeEvent } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import s from './deck-modal.module.scss'
 
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
-import { PackFormSchema, packSchema } from '@/pages'
 import {
-  decksSlice,
+  setDeckName,
+  setEditDeckName,
   useAppDispatch,
   useAppSelector,
   useCreateDeckMutation,
@@ -23,6 +24,13 @@ type EditModalProps = {
   isModalOpen: boolean
   setModalOpen: (isOpen: boolean) => void
 }
+
+export type PackFormSchema = z.infer<typeof packSchema>
+export const packSchema = z.object({
+  packName: z.string().nonempty().min(3).max(30),
+  isPackPrivate: z.boolean().default(false),
+})
+
 export const DeckModal = ({
   isModalOpen,
   setModalOpen,
@@ -30,7 +38,7 @@ export const DeckModal = ({
   modalTitle,
   buttonTitle,
 }: EditModalProps) => {
-  const editName = useAppSelector(state => state.decks.editName)
+  const { editDeckName, addDeckName } = useAppSelector(state => state.decks)
   const dispatch = useAppDispatch()
   //const [editDeckName, setEditDeckName] = useState(deckName)
 
@@ -47,6 +55,7 @@ export const DeckModal = ({
   const onSubmit: SubmitHandler<PackFormSchema> = data => {
     if (modalTitle === 'Add New Pack') {
       createDeck({ name: data.packName })
+      dispatch(setDeckName(''))
     } else {
       updateDeck({ id, name: data.packName })
     }
@@ -55,8 +64,11 @@ export const DeckModal = ({
   }
 
   const setEditName = (e: ChangeEvent<HTMLInputElement>) => {
-    //setEditDeckName(name)
-    dispatch(decksSlice.actions.setEditName(e.currentTarget.value))
+    if (modalTitle === 'Add New Pack') {
+      dispatch(setDeckName(e.currentTarget.value))
+    } else {
+      dispatch(setEditDeckName(e.currentTarget.value))
+    }
   }
 
   return (
@@ -67,19 +79,24 @@ export const DeckModal = ({
       isOpen={isModalOpen}
     >
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          label={'Name Pack'}
-          {...register('packName')}
-          //value={editDeckName}
-          //value={deckName}
-          value={editName}
-          //onChangeValue={value => setEditName(value)}
-          //onChangeValue={value => setEditDeckName(value)}
-          //onChange={e => setEditDeckName(e.currentTarget.value)}
-          onChange={setEditName}
-          //onChangeValue={setEditName}
-          errorMessage={errors.packName?.message}
-        />
+        {modalTitle === 'Add New Pack' ? (
+          <Input
+            label={'Name Pack'}
+            {...register('packName')}
+            value={addDeckName}
+            onChange={setEditName}
+            errorMessage={errors.packName?.message}
+          />
+        ) : (
+          <Input
+            label={'Name Pack'}
+            {...register('packName')}
+            value={editDeckName}
+            onChange={setEditName}
+            errorMessage={errors.packName?.message}
+          />
+        )}
+
         <ControlledCheckbox name={'isPackPrivate'} control={control} label={'Private pack'} />
 
         <div className={s.modalButtons}>

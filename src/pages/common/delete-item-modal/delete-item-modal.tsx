@@ -1,24 +1,42 @@
+import s from './delete-item-modal.module.scss'
+
 import { Button, Modal, Typography } from '@/components'
-import s from '@/pages/my-deck-page/cards-modals/cards-modal.module.scss'
+import { useDeleteDeckByIdMutation } from '@/services'
 import { useDeleteCardMutation } from '@/services/cards/cards-api.ts'
 
 type Props = {
   isModalOpen: boolean
   setIsModalOpen: (open: boolean) => void
   id: string
+  deckName?: string
+  cardName?: string
+  title: string
 }
 
-export const DeleteCardModal = ({ isModalOpen, setIsModalOpen, id }: Props) => {
+export const DeleteItemModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  id,
+  deckName,
+  cardName,
+  title,
+}: Props) => {
   const [deleteCard] = useDeleteCardMutation()
-
+  const [deleteDeck] = useDeleteDeckByIdMutation()
   const deleteHandler = () => {
-    deleteCard({ id })
-    setIsModalOpen(false)
+    if (title === 'Delete Pack') {
+      deleteDeck({ id })
+      setIsModalOpen(false)
+    } else {
+      deleteCard({ id })
+      setIsModalOpen(false)
+    }
   }
+  const isDeck = title === 'Delete Pack'
 
   return (
     <Modal
-      title={'Delete Card'}
+      title={title}
       isOpen={isModalOpen}
       showCloseButton={true}
       onClose={() => setIsModalOpen(false)}
@@ -29,11 +47,11 @@ export const DeleteCardModal = ({ isModalOpen, setIsModalOpen, id }: Props) => {
             Do you really want to remove{' '}
           </Typography>
           <Typography as={'span'} variant={'subtitle1'}>
-            Card Name?
+            {isDeck ? `pack ${deckName}?` : `card ${cardName}?`}
           </Typography>
         </div>
         <Typography as={'p'} variant={'body1'}>
-          All cards will be deleted.
+          {isDeck ? 'All cards will be deleted.' : 'Your card will be deleted.'}
         </Typography>
       </div>
 
@@ -45,7 +63,7 @@ export const DeleteCardModal = ({ isModalOpen, setIsModalOpen, id }: Props) => {
         </Button>
         <Button onClick={deleteHandler} type={'button'}>
           <Typography as={'h4'} variant={'subtitle2'}>
-            Delete Card
+            Delete {isDeck ? 'Pack' : 'Card'}
           </Typography>
         </Button>
       </div>

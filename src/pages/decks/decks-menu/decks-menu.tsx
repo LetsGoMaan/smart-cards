@@ -4,7 +4,7 @@ import s from './decks-menu.module.scss'
 
 import { deleteOutline } from '@/assets'
 import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
-import { DeckModal, DeckModalAdd } from '@/pages'
+import { DeckModal } from '@/pages'
 import { decksSlice, useAppDispatch, useAppSelector, useAuthMeQuery } from '@/services'
 
 export const DecksMenu = () => {

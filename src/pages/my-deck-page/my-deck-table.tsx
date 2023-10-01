@@ -13,9 +13,7 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { Grade } from '@/pages'
-import { CardsModal } from '@/pages/my-deck-page/cards-modals/cards-modal.tsx'
-import { DeleteCardModal } from '@/pages/my-deck-page/cards-modals/delete-card-modal.tsx'
+import { CardsModal, DeleteItemModal, Grade } from '@/pages'
 import { Card } from '@/services'
 
 type MyDeckTableProps = {
@@ -52,6 +50,7 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false)
   const [cardId, setCardId] = useState('')
+  const [question, setQuestion] = useState('')
   const [valueAnswer, setValueAnswer] = useState('')
   const [valueQuestion, setValueQuestion] = useState('')
 
@@ -62,9 +61,10 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
     setValueQuestion(cardQuestion)
   }
 
-  const deleteHandler = (cardId: string) => {
+  const deleteHandler = (cardId: string, question: string) => {
     setIsModalDeleteOpen(true)
     setCardId(cardId)
+    setQuestion(question)
   }
 
   return (
@@ -100,7 +100,10 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
                   >
                     <img src={editButton} alt={'edit'} />
                   </button>
-                  <button style={{ cursor: 'pointer' }} onClick={() => deleteHandler(card.id)}>
+                  <button
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => deleteHandler(card.id, card.question)}
+                  >
                     <img src={deleteOutline} alt={'delete'} />
                   </button>
                 </div>
@@ -120,10 +123,12 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
         setValueAnswer={setValueAnswer}
         setValueQuestion={setValueQuestion}
       />
-      <DeleteCardModal
+      <DeleteItemModal
         isModalOpen={isModalDeleteOpen}
         setIsModalOpen={setIsModalDeleteOpen}
         id={cardId}
+        title={'Delete Card'}
+        cardName={question}
       />
     </Table>
   )

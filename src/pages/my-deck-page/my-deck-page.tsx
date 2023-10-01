@@ -15,8 +15,7 @@ import {
   Sort,
   Typography,
 } from '@/components'
-import { BackButton, EmptyDeck, MyDeckTable } from '@/pages'
-import { CardsModal } from '@/pages/my-deck-page/cards-modals/cards-modal.tsx'
+import { BackButton, CardsModal, EmptyDeck, MyDeckTable } from '@/pages'
 import {
   decksSlice,
   useAppDispatch,

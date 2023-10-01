@@ -15,8 +15,8 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { DeckModal, DeckModalDelete } from '@/pages'
-import { Deck, decksSlice, useAppDispatch } from '@/services'
+import { DeckModal, DeleteItemModal } from '@/pages'
+import { Deck, setEditDeckName, useAppDispatch } from '@/services'
 
 type DecksTableProps = {
   decks?: Deck[]
@@ -56,7 +56,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
     setModalOpen(true)
     setId(id)
     setDeckName(name)
-    dispatch(decksSlice.actions.setEditName(name))
+    dispatch(setEditDeckName(name))
   }
   const deleteHandler = (id: string, name: string) => {
     setDeleteModalOpen(true)
@@ -132,11 +132,12 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
         isModalOpen={isModalOpen}
         setModalOpen={setModalOpen}
       />
-      <DeckModalDelete
+      <DeleteItemModal
         id={id}
         deckName={deckName}
         isModalOpen={isDeleteModalOpen}
-        setModalOpen={setDeleteModalOpen}
+        setIsModalOpen={setDeleteModalOpen}
+        title={'Delete Pack'}
       />
     </>
   )
