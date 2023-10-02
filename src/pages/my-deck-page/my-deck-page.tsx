@@ -67,9 +67,6 @@ export const MyDeckPage = () => {
 
   const deleteHandler = () => {
     setIsDeckDeleteModalOpen(true)
-    /*setTimeout(() => {
-      navigate(-1)
-    }, 3000)*/
   }
 
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
@@ -164,6 +161,7 @@ export const MyDeckPage = () => {
         id={deleteId}
         title={'Delete Pack'}
         deckName={deckData?.name}
+        isNavigate={true}
       />
     </div>
   )

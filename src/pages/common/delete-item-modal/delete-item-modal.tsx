@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom'
+
 import s from './delete-item-modal.module.scss'
 
 import { Button, Modal, Typography } from '@/components'
-import { useDeleteDeckByIdMutation } from '@/services'
-import { useDeleteCardMutation } from '@/services/cards/cards-api.ts'
+import { useDeleteDeckByIdMutation, useDeleteCardMutation } from '@/services'
 
 type Props = {
   isModalOpen: boolean
@@ -11,6 +12,7 @@ type Props = {
   deckName?: string
   cardName?: string
   title: string
+  isNavigate?: boolean
 }
 
 export const DeleteItemModal = ({
@@ -20,13 +22,16 @@ export const DeleteItemModal = ({
   deckName,
   cardName,
   title,
+  isNavigate,
 }: Props) => {
+  const navigate = useNavigate()
   const [deleteCard] = useDeleteCardMutation()
   const [deleteDeck] = useDeleteDeckByIdMutation()
   const deleteHandler = () => {
     if (title === 'Delete Pack') {
       deleteDeck({ id })
       setIsModalOpen(false)
+      if (isNavigate) navigate(-1)
     } else {
       deleteCard({ id })
       setIsModalOpen(false)
