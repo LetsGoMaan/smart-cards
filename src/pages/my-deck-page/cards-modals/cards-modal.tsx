@@ -24,8 +24,8 @@ type Props = {
 
 type CardFormSchema = z.infer<typeof cardSchema>
 const cardSchema = z.object({
-  question: z.string().nonempty().min(3).max(30),
-  answer: z.string().nonempty().min(3).max(30),
+  question: z.string().nonempty().min(3).max(500),
+  answer: z.string().nonempty().min(3).max(500),
 })
 
 export const CardsModal = ({

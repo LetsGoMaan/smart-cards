@@ -97,12 +97,12 @@ export const FriendsDeckPage = () => {
             return (
               <TableRow key={card.id}>
                 <TableData style={{ width: '30%' }}>
-                  <Typography as={'p'} variant={'body2'}>
+                  <Typography className={s.text} as={'p'} variant={'body2'}>
                     {card.question}
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '30%' }}>
-                  <Typography as={'p'} variant={'body2'}>
+                  <Typography className={s.text} as={'p'} variant={'body2'}>
                     {card.answer}
                   </Typography>
                 </TableData>

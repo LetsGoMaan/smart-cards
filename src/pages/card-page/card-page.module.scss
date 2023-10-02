@@ -20,6 +20,10 @@
       display: flex;
       gap: 0.312rem;
 
+      .question {
+        word-break: break-word;
+      }
+
       .shots {
         color: var(--color-dark-100);
       }

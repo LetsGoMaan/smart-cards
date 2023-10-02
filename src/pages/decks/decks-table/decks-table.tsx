@@ -46,10 +46,12 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
     {
       key: 'createdBy',
       title: 'Created by',
+      sortable: false,
     },
     {
       key: 'icons',
       title: '',
+      sortable: false,
     },
   ]
   const editHandler = (id: string, name: string) => {
@@ -67,7 +69,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
   return (
     <>
       <Table>
-        <TableHeader columns={columns} sort={sort} onSort={setSort} />
+        <TableHeader className={s.tHeader} columns={columns} sort={sort} onSort={setSort} />
         <TableBody>
           {decks?.map(deck => {
             const packPath =
@@ -100,13 +102,10 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
                 </TableData>
                 <TableData>
                   <div className={s.controlButtons}>
-                    {/*<button onClick={() => setDeckId(deck.id)}>*/}
-                    {/*<button onClick={() => getRandomCard({ id: deck.id })}>*/}
                     <Link to={`/card/${deck.id}`}>
                       <img src={playIcon} alt={'play'} />
                     </Link>
 
-                    {/*</button>*/}
                     {deck.author.id === authDeckAuthorId && (
                       <>
                         <button onClick={() => editHandler(deck.id, deck.name)}>

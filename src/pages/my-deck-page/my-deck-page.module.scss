@@ -38,6 +38,10 @@
   text-decoration: none;
 }
 
+.tableText {
+  word-break: break-word;
+}
+
 .editButtons {
   display: flex;
   gap: 0.625rem;
