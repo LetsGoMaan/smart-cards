@@ -47,11 +47,13 @@ const decksApi = baseApi.injectEndpoints({
         query: ({ id, ...args }) => {
           return { url: `v1/decks/${id}/learn`, method: 'GET', params: { ...args } }
         },
+        providesTags: ['Learn'],
       }),
       saveCardRating: builder.mutation<{}, SaveCardRating>({
         query: ({ id, ...args }) => {
           return { url: `v1/decks/${id}/learn`, method: 'POST', body: { ...args } }
         },
+        invalidatesTags: ['Learn'],
       }),
       createCard: builder.mutation<Card, CreateCardArgs>({
         query: ({ id, ...args }) => {
