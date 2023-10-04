@@ -5,12 +5,20 @@ import s from './decks.module.scss'
 import { useDebounce } from '@/common'
 import { Pagination, Sort } from '@/components'
 import { DecksMenu, DecksTable } from '@/pages/decks'
-import { useGetDecksQuery, useAppSelector, useAuthMeQuery } from '@/services'
+import {
+  useGetDecksQuery,
+  useAppSelector,
+  useAuthMeQuery,
+  setCurrentPage,
+  setItemsPerPage,
+  useAppDispatch,
+  setOrderBy,
+} from '@/services'
 
 export const Decks = () => {
-  const { searchByName, authorId, minCardsCount, maxCardsCount } = useAppSelector(
-    state => state.decks
-  )
+  const dispatch = useAppDispatch()
+  const { searchByName, authorId, minCardsCount, maxCardsCount, currentPage, itemsPerPage } =
+    useAppSelector(state => state.decks)
   const debouncedSearchValue = useDebounce(searchByName, 500)
   const [sort, setSort] = useState<Sort>(null)
   const sortedString = useMemo(() => {
@@ -18,8 +26,6 @@ export const Decks = () => {
 
     return `${sort.key}-${sort.direction}`
   }, [sort])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [perPage, setPerPage] = useState(10)
   const { data: authData } = useAuthMeQuery()
   const { isLoading, data } = useGetDecksQuery({
     name: debouncedSearchValue,
@@ -28,9 +34,19 @@ export const Decks = () => {
     minCardsCount,
     maxCardsCount,
     currentPage,
-    itemsPerPage: perPage,
+    itemsPerPage,
   })
 
+  const onSetCurrentPage = (page: number) => {
+    dispatch(setCurrentPage(page))
+  }
+  const onSetItemsPerPage = (count: number) => {
+    dispatch(setItemsPerPage(count))
+  }
+  const onSetSort = (sort: Sort) => {
+    setSort(sort)
+    dispatch(setOrderBy(`${sort?.key}-${sort?.direction}`))
+  }
   const totalPages = data?.pagination.totalPages || 1
   const myId = authData?.id // already change!!!
 
@@ -39,14 +55,14 @@ export const Decks = () => {
   return (
     <div className={s.generalBlock}>
       <DecksMenu />
-      <DecksTable decks={data?.items} sort={sort} setSort={setSort} authDeckAuthorId={myId} />
+      <DecksTable decks={data?.items} sort={sort} setSort={onSetSort} authDeckAuthorId={myId} />
       <Pagination
         className={s.pagination}
         count={totalPages}
         page={currentPage}
-        onChange={setCurrentPage}
-        perPage={perPage}
-        onPerPageChange={setPerPage}
+        onChange={onSetCurrentPage}
+        perPage={itemsPerPage}
+        onPerPageChange={onSetItemsPerPage}
         perPageOptions={[10, 20, 30, 50]}
       />
     </div>

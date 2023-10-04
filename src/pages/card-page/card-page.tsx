@@ -48,14 +48,18 @@ export const CardPage = () => {
             Learn {deckData?.name}
           </Typography>
           <div className={s.textWrapper}>
-            <Typography variant={'subtitle1'}>Question:</Typography>
-            <Typography variant={'body1'}>{data?.question}</Typography>
+            <Typography as={'p'} variant={'subtitle1'}>
+              Question:
+            </Typography>
+            <Typography className={s.question} as={'p'} variant={'body1'}>
+              {data?.question}
+            </Typography>
           </div>
           <div className={s.textWrapper}>
-            <Typography className={s.shots} variant={'body2'}>
+            <Typography as={'p'} className={s.shots} variant={'body2'}>
               Количество попыток ответов на вопрос:
             </Typography>
-            <Typography className={s.shots} variant={'subtitle2'}>
+            <Typography as={'p'} className={s.shots} variant={'subtitle2'}>
               {data?.shots}
             </Typography>
           </div>
@@ -72,10 +76,14 @@ export const CardPage = () => {
           {showAnswer && (
             <>
               <div className={`${s.textWrapper} ${s.answer}`}>
-                <Typography variant={'subtitle1'}>Answer:</Typography>
-                <Typography variant={'body1'}>{data?.answer}</Typography>
+                <Typography as={'p'} variant={'subtitle1'}>
+                  Answer:
+                </Typography>
+                <Typography as={'p'} variant={'body1'}>
+                  {data?.answer}
+                </Typography>
               </div>
-              <Typography className={s.radioTitle} variant={'subtitle1'}>
+              <Typography as={'p'} className={s.radioTitle} variant={'subtitle1'}>
                 Rate yourself
               </Typography>
               <Radio onChangeOption={rating => setRating(rating)} options={optionsForRadio} />

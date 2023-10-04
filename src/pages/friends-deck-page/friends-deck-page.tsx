@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 
-import { StarIcon } from '@radix-ui/react-icons'
 import { Link, useParams } from 'react-router-dom'
 
 import s from './friends-deck-page.module.scss'
@@ -19,8 +18,27 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { BackButton, EmptyDeck } from '@/pages'
+import { BackButton, EmptyDeck, Grade } from '@/pages'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
+
+const columns: Column[] = [
+  {
+    key: 'question',
+    title: 'Question',
+  },
+  {
+    key: 'answer',
+    title: 'Answer',
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+  },
+  {
+    key: 'grade',
+    title: 'Grade',
+  },
+]
 
 export const FriendsDeckPage = () => {
   const { id } = useParams()
@@ -44,27 +62,12 @@ export const FriendsDeckPage = () => {
     itemsPerPage,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
+  const cardsArray = useMemo(() => {
+    return data?.items
+  }, [])
   const totalPages = data?.pagination.totalPages || 1
-  const columns: Column[] = [
-    {
-      key: 'question',
-      title: 'Question',
-    },
-    {
-      key: 'answer',
-      title: 'Answer',
-    },
-    {
-      key: 'updated',
-      title: 'Last Updated',
-    },
-    {
-      key: 'grade',
-      title: 'Grade',
-    },
-  ]
 
-  if (data?.items.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={false} />
+  if (cardsArray?.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={false} />
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
 
   return (
@@ -94,12 +97,12 @@ export const FriendsDeckPage = () => {
             return (
               <TableRow key={card.id}>
                 <TableData style={{ width: '30%' }}>
-                  <Typography as={'p'} variant={'body2'}>
+                  <Typography className={s.text} as={'p'} variant={'body2'}>
                     {card.question}
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '30%' }}>
-                  <Typography as={'p'} variant={'body2'}>
+                  <Typography className={s.text} as={'p'} variant={'body2'}>
                     {card.answer}
                   </Typography>
                 </TableData>
@@ -109,16 +112,7 @@ export const FriendsDeckPage = () => {
                   </Typography>
                 </TableData>
                 <TableData style={{ width: '20%' }}>
-                  <Typography as={'div'} variant={'body2'}>
-                    {card.rating}
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                    </div>
-                  </Typography>
+                  <Grade grade={card.grade} />
                 </TableData>
               </TableRow>
             )

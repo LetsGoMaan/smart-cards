@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import s from './layout.module.scss'
 
@@ -10,13 +10,8 @@ export const Layout = () => {
   //const authData = { isSignedIn: true, name: '', avatar: '', email: '' } //server-data
   const { data } = useAuthMeQuery() //server-data
   const [logout] = useLogoutMutation()
-  const navigate = useNavigate()
   const logOutHandler = () => {
     logout()
-      .unwrap()
-      .then(() => {
-        navigate('/login')
-      })
   }
 
   return (

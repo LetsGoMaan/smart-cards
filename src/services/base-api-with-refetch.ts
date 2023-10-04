@@ -9,9 +9,9 @@ const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
   baseUrl,
   credentials: 'include',
-  prepareHeaders: headers => {
-    headers.append('x-short-access-token', 'true')
-  },
+  // prepareHeaders: headers => {
+  //   headers.append('x-short-access-token', 'true')
+  // },
 })
 
 export const customFetchBase: BaseQueryFn<

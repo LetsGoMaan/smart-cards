@@ -1,55 +1,26 @@
 import { useState } from 'react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { z } from 'zod'
-
 import s from './decks-menu.module.scss'
 
 import { deleteOutline } from '@/assets'
+import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
+import { DeckModal } from '@/pages'
 import {
-  Button,
-  ControlledCheckbox,
-  ControlledInput,
-  Input,
-  Modal,
-  Slider,
-  TabSwitcher,
-  Typography,
-} from '@/components'
-import {
-  decksSlice,
+  setCardsByAuthor,
+  setMinMaxCardsCount,
+  setSearchByName,
   useAppDispatch,
   useAppSelector,
   useAuthMeQuery,
-  useCreateDeckMutation,
 } from '@/services'
 
-type PackFormSchema = z.infer<typeof packSchema>
-const packSchema = z.object({
-  packName: z.string().nonempty().max(30),
-  isPackPrivate: z.boolean().default(false),
-})
-
 export const DecksMenu = () => {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<PackFormSchema>({ resolver: zodResolver(packSchema) })
-
-  const onSubmit: SubmitHandler<PackFormSchema> = data => {
-    createDeck({ name: data.packName })
-    reset()
-    setModalOpen(false)
-  }
-
   const dispatch = useAppDispatch()
-  const { searchByName, minCardsCount, maxCardsCount } = useAppSelector(state => state.decks)
+  const { searchByName, minCardsCount, maxCardsCount, tabValue } = useAppSelector(
+    state => state.decks
+  )
   const [isModalOpen, setModalOpen] = useState(false)
   const { data: authData } = useAuthMeQuery()
-  const [createDeck, {}] = useCreateDeckMutation()
 
   const tabs = [
     {
@@ -61,27 +32,25 @@ export const DecksMenu = () => {
       title: 'All Cards',
     },
   ]
-  const authorId = authData?.id || '' //from response
-  const [tabValue, setTabValue] = useState(tabs[1].value)
+  const authorId = authData?.id || ''
 
-  const setSearchByName = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
+  const onSetSearchByName = (search: string) => dispatch(setSearchByName(search))
 
-  const setCardsByAuthor = (tabValue: string) => {
+  const onSetCardsByAuthor = (tabValue: string) => {
     if (tabValue === 'myCards') {
-      dispatch(decksSlice.actions.setCardsByAuthor(authorId))
-      setTabValue(tabs[0].value)
+      dispatch(setCardsByAuthor({ authorId, tabValue: 'myCards' }))
     } else {
-      dispatch(decksSlice.actions.setCardsByAuthor(''))
-      setTabValue(tabs[1].value)
+      dispatch(setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
     }
   }
   const setMinMaxValue = (value: number[]) => {
-    dispatch(decksSlice.actions.setMinMaxCardsCount(value))
+    dispatch(setMinMaxCardsCount(value))
   }
 
   const setDefaultValues = () => {
-    dispatch(decksSlice.actions.setDefaultValues())
-    setTabValue(tabs[1].value)
+    dispatch(setSearchByName(''))
+    dispatch(setMinMaxCardsCount([0, 100]))
+    dispatch(setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
   }
 
   return (
@@ -92,21 +61,21 @@ export const DecksMenu = () => {
         </Typography>
         <Button onClick={() => setModalOpen(true)}>
           <Typography as={'h4'} variant={'subtitle2'}>
-            Add New Pack{' '}
+            Add New Pack
           </Typography>
         </Button>
       </div>
       <div className={s.menuItems}>
         <Input
-          onClearClick={() => setSearchByName('')}
+          onClearClick={() => onSetSearchByName('')}
           value={searchByName}
           type={'search'}
           placeholder={'Input search'}
-          onChangeValue={value => setSearchByName(value)}
+          onChangeValue={value => onSetSearchByName(value)}
         />
         <TabSwitcher
           value={tabValue}
-          onValueChange={setCardsByAuthor}
+          onValueChange={onSetCardsByAuthor}
           label={'Show packs cards'}
           tabs={tabs}
         />
@@ -124,35 +93,12 @@ export const DecksMenu = () => {
           </Typography>
         </Button>
       </div>
-      <Modal
-        title={'Add New Pack'}
-        showCloseButton={true}
-        onClose={() => setModalOpen(false)}
-        isOpen={isModalOpen}
-      >
-        <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
-          <ControlledInput
-            name={'packName'}
-            control={control}
-            label={'Name Pack'}
-            errorMessage={errors.packName?.message}
-          />
-          <ControlledCheckbox name={'isPackPrivate'} control={control} label={'Private pack'} />
-
-          <div className={s.modalButtons}>
-            <Button type={'button'} onClick={() => setModalOpen(false)} variant={'secondary'}>
-              <Typography as={'h4'} variant={'subtitle2'}>
-                Cancel
-              </Typography>
-            </Button>
-            <Button type={'submit'}>
-              <Typography as={'h4'} variant={'subtitle2'}>
-                Add New Pack{' '}
-              </Typography>
-            </Button>
-          </div>
-        </form>
-      </Modal>
+      <DeckModal
+        isModalOpen={isModalOpen}
+        setModalOpen={setModalOpen}
+        modalTitle={'Add New Pack'}
+        buttonTitle={'Add New Pack'}
+      />
     </div>
   )
 }
