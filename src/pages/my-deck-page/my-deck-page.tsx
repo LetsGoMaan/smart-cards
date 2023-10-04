@@ -17,7 +17,8 @@ import {
 } from '@/components'
 import { BackButton, CardsModal, DeckModal, DeleteItemModal, EmptyDeck, MyDeckTable } from '@/pages'
 import {
-  decksSlice,
+  setCurrentPageMyDeck,
+  setItemsPerPageMyDeck,
   useAppDispatch,
   useAppSelector,
   useGetDeckByIdQuery,
@@ -58,10 +59,10 @@ export const MyDeckPage = () => {
 
   const count = data?.pagination.totalPages || 0
   const setCurrentPage = (page: number) => {
-    dispatch(decksSlice.actions.setCurrentPageMyDeck(page.toString()))
+    dispatch(setCurrentPageMyDeck(page.toString()))
   }
   const setItemsPerPage = (itemPerPage: number) => {
-    dispatch(decksSlice.actions.setItemsPerPageMyDeck(itemPerPage.toString()))
+    dispatch(setItemsPerPageMyDeck(itemPerPage.toString()))
   }
   const deleteId = id || ''
 

@@ -5,7 +5,14 @@ import s from './decks-menu.module.scss'
 import { deleteOutline } from '@/assets'
 import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
 import { DeckModal } from '@/pages'
-import { decksSlice, useAppDispatch, useAppSelector, useAuthMeQuery } from '@/services'
+import {
+  setCardsByAuthor,
+  setMinMaxCardsCount,
+  setSearchByName,
+  useAppDispatch,
+  useAppSelector,
+  useAuthMeQuery,
+} from '@/services'
 
 export const DecksMenu = () => {
   const dispatch = useAppDispatch()
@@ -27,22 +34,23 @@ export const DecksMenu = () => {
   ]
   const authorId = authData?.id || ''
 
-  const setSearchByName = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
+  const onSetSearchByName = (search: string) => dispatch(setSearchByName(search))
 
-  const setCardsByAuthor = (tabValue: string) => {
+  const onSetCardsByAuthor = (tabValue: string) => {
     if (tabValue === 'myCards') {
-      dispatch(decksSlice.actions.setCardsByAuthor({ authorId, tabValue: 'myCards' }))
+      dispatch(setCardsByAuthor({ authorId, tabValue: 'myCards' }))
     } else {
-      dispatch(decksSlice.actions.setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
+      dispatch(setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
     }
   }
   const setMinMaxValue = (value: number[]) => {
-    dispatch(decksSlice.actions.setMinMaxCardsCount(value))
+    dispatch(setMinMaxCardsCount(value))
   }
 
   const setDefaultValues = () => {
-    dispatch(decksSlice.actions.setDefaultValues())
-    dispatch(decksSlice.actions.setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
+    dispatch(setSearchByName(''))
+    dispatch(setMinMaxCardsCount([0, 100]))
+    dispatch(setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
   }
 
   return (
@@ -59,15 +67,15 @@ export const DecksMenu = () => {
       </div>
       <div className={s.menuItems}>
         <Input
-          onClearClick={() => setSearchByName('')}
+          onClearClick={() => onSetSearchByName('')}
           value={searchByName}
           type={'search'}
           placeholder={'Input search'}
-          onChangeValue={value => setSearchByName(value)}
+          onChangeValue={value => onSetSearchByName(value)}
         />
         <TabSwitcher
           value={tabValue}
-          onValueChange={setCardsByAuthor}
+          onValueChange={onSetCardsByAuthor}
           label={'Show packs cards'}
           tabs={tabs}
         />
