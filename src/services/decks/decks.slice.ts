@@ -4,13 +4,17 @@ const initialState = {
   itemsPerPage: 10,
   currentPage: 1,
   searchByName: '',
-  cardName: '',
   authorId: '',
+  tabValue: 'allCards',
   minCardsCount: '0',
   maxCardsCount: '100',
-  //orderBy: 'updated-desc',
-  orderBy: '',
-  //orderBy: null,
+  addDeckName: '',
+  editDeckName: '',
+  orderBy: 'updated-desc',
+  myCardsPage: {
+    currentPage: '1',
+    itemsPerPage: '10',
+  },
 }
 
 export const decksSlice = createSlice({
@@ -26,11 +30,12 @@ export const decksSlice = createSlice({
     setSearchByName: (state, action: PayloadAction<string>) => {
       state.searchByName = action.payload
     },
-    setCardName: (state, action: PayloadAction<string>) => {
-      state.cardName = action.payload
-    },
-    setCardsByAuthor: (state, action: PayloadAction<string>) => {
-      state.authorId = action.payload
+    setCardsByAuthor: (
+      state,
+      action: PayloadAction<{ authorId: string; tabValue: 'allCards' | 'myCards' }>
+    ) => {
+      state.authorId = action.payload.authorId
+      state.tabValue = action.payload.tabValue
     },
     setMinMaxCardsCount: (state, action: PayloadAction<number[]>) => {
       state.minCardsCount = action.payload[0].toString()
@@ -39,14 +44,30 @@ export const decksSlice = createSlice({
     setOrderBy: (state, action: PayloadAction<string>) => {
       state.orderBy = action.payload
     },
-    setDefaultValues: () => {
-      return {
-        ...initialState,
-      }
+    setEditDeckName: (state, action: PayloadAction<string>) => {
+      state.editDeckName = action.payload
     },
-    /*
-    setCardsOrderBy: (state, action: PayloadAction<string>) => {
-      state.orderBy = action.payload
-    },*/
+    setDeckName: (state, action: PayloadAction<string>) => {
+      state.addDeckName = action.payload
+    },
+    setCurrentPageMyDeck: (state, action: PayloadAction<string>) => {
+      state.myCardsPage.currentPage = action.payload
+    },
+    setItemsPerPageMyDeck: (state, action: PayloadAction<string>) => {
+      state.myCardsPage.itemsPerPage = action.payload
+    },
   },
 })
+
+export const {
+  setDeckName,
+  setEditDeckName,
+  setSearchByName,
+  setCardsByAuthor,
+  setMinMaxCardsCount,
+  setCurrentPageMyDeck,
+  setItemsPerPageMyDeck,
+  setCurrentPage,
+  setItemsPerPage,
+  setOrderBy,
+} = decksSlice.actions

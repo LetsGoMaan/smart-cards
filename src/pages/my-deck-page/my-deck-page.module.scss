@@ -1,4 +1,6 @@
 .myDeckWrapper {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 0 8.5rem;
 
@@ -9,8 +11,8 @@
 
     .titleAndDrop {
       display: flex;
-      align-items: center;
       gap: 1rem;
+      align-items: center;
 
       .dropButton {
         display: flex;
@@ -22,4 +24,25 @@
   .searchInput {
     margin-bottom: 1.5rem;
   }
+
+  .pagination {
+    align-self: flex-end;
+    margin-top: 1.5rem;
+  }
+}
+
+.dropLink {
+  cursor: pointer;
+  display: flex;
+  gap: 0.375rem;
+  text-decoration: none;
+}
+
+.tableText {
+  word-break: break-word;
+}
+
+.editButtons {
+  display: flex;
+  gap: 0.625rem;
 }
