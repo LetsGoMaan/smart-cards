@@ -16,7 +16,7 @@ export type AuthResponse = {
   name: string
   created: string
   updated: string
-}
+} | null
 
 export type SignUpRequestArgs = {
   html?: string
