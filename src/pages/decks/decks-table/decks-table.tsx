@@ -80,9 +80,14 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
             return (
               <TableRow key={deck.id}>
                 <TableData style={{ width: '21%' }}>
-                  <Typography className={s.deckLink} to={packPath} as={Link} variant={'body2'}>
-                    {deck.name}
-                  </Typography>
+                  <div className={s.tableData}>
+                    {deck.cover && (
+                      <img className={s.packImage} src={deck.cover} alt="pack image" />
+                    )}
+                    <Typography className={s.deckLink} to={packPath} as={Link} variant={'body2'}>
+                      {deck.name}
+                    </Typography>
+                  </div>
                 </TableData>
 
                 <TableData style={{ width: '21%' }}>

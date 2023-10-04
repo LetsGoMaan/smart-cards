@@ -126,6 +126,7 @@ export const MyDeckPage = () => {
           </Typography>
         </Button>
       </div>
+      {deckData?.cover && <img className={s.packImage} src={deckData.cover} alt="pack image" />}
       <Input
         value={searchValue}
         onChangeValue={value => setSearchValue(value)}

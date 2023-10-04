@@ -7,7 +7,14 @@
   .titleAndButton {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 0.937rem;
+  }
+
+  .packImage {
+    width: 10.625rem;
     margin-bottom: 1.5rem;
+    object-fit: cover;
+    border-radius: 2px;
   }
 
   .learnPackButton {

@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -27,8 +27,9 @@ type EditModalProps = {
 
 export type PackFormSchema = z.infer<typeof packSchema>
 export const packSchema = z.object({
-  packName: z.string().nonempty().min(3).max(30),
+  name: z.string().nonempty().min(3).max(30),
   isPackPrivate: z.boolean().default(false),
+  cover: z.any(),
 })
 
 export const DeckModal = ({
@@ -40,7 +41,7 @@ export const DeckModal = ({
 }: EditModalProps) => {
   const { editDeckName, addDeckName } = useAppSelector(state => state.decks)
   const dispatch = useAppDispatch()
-  //const [editDeckName, setEditDeckName] = useState(deckName)
+  const [coverPreview, setCoverPreview] = useState('')
 
   const [createDeck] = useCreateDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
@@ -53,11 +54,17 @@ export const DeckModal = ({
   } = useForm<PackFormSchema>({ resolver: zodResolver(packSchema) })
 
   const onSubmit: SubmitHandler<PackFormSchema> = data => {
+    const formData = new FormData()
+
+    formData.append('cover', data.cover[0])
+    formData.append('name', data.name)
+
     if (modalTitle === 'Add New Pack') {
-      createDeck({ name: data.packName })
+      //createDeck({ name: data.packName })
+      createDeck(formData)
       dispatch(setDeckName(''))
     } else {
-      updateDeck({ id, name: data.packName })
+      updateDeck({ id, name: data.name })
     }
     reset()
     setModalOpen(false)
@@ -71,6 +78,12 @@ export const DeckModal = ({
     }
   }
 
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files[0]
+
+    setCoverPreview(URL.createObjectURL(file))
+  }
+
   return (
     <Modal
       title={modalTitle}
@@ -80,20 +93,30 @@ export const DeckModal = ({
     >
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
         {modalTitle === 'Add New Pack' ? (
-          <Input
-            label={'Name Pack'}
-            {...register('packName')}
-            value={addDeckName}
-            onChange={setEditName}
-            errorMessage={errors.packName?.message}
-          />
+          <div>
+            <Input
+              className={s.addInput}
+              label={'Name Pack'}
+              {...register('name')}
+              value={addDeckName}
+              onChange={setEditName}
+              errorMessage={errors.name?.message}
+            />
+            {coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}
+            <input
+              type={'file'}
+              {...register('cover')}
+              name={'cover'}
+              onChange={handleFileChange}
+            />
+          </div>
         ) : (
           <Input
             label={'Name Pack'}
-            {...register('packName')}
+            {...register('name')}
             value={editDeckName}
             onChange={setEditName}
-            errorMessage={errors.packName?.message}
+            errorMessage={errors.name?.message}
           />
         )}
 

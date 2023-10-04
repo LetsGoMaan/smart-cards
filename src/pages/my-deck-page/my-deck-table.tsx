@@ -75,14 +75,24 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
           return (
             <TableRow key={card.id}>
               <TableData style={{ width: '30%' }}>
-                <Typography className={s.tableText} as={'p'} variant={'body2'}>
-                  {card.question}
-                </Typography>
+                <div className={s.tableData}>
+                  {card.questionImg && (
+                    <img className={s.packImage} src={card.questionImg} alt="pack image" />
+                  )}
+                  <Typography className={s.tableText} as={'p'} variant={'body2'}>
+                    {card.question}
+                  </Typography>
+                </div>
               </TableData>
               <TableData style={{ width: '30%' }}>
-                <Typography className={s.tableText} as={'p'} variant={'body2'}>
-                  {card.answer}
-                </Typography>
+                <div className={s.tableData}>
+                  {card.answerImg && (
+                    <img className={s.packImage} src={card.answerImg} alt="pack image" />
+                  )}
+                  <Typography className={s.tableText} as={'p'} variant={'body2'}>
+                    {card.answer}
+                  </Typography>
+                </div>
               </TableData>
               <TableData style={{ width: '20%' }}>
                 <Typography as={'p'} variant={'body2'}>

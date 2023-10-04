@@ -7,7 +7,7 @@
   .titleAndButton {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.937rem;
 
     .titleAndDrop {
       display: flex;
@@ -38,8 +38,22 @@
   text-decoration: none;
 }
 
-.tableText {
-  word-break: break-word;
+.tableData {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  align-items: center;
+
+  .packImage {
+    width: 10.625rem;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  .tableText {
+    word-break: break-word;
+  }
 }
 
 .editButtons {

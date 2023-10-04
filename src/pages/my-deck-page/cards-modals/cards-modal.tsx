@@ -26,6 +26,8 @@ type CardFormSchema = z.infer<typeof cardSchema>
 const cardSchema = z.object({
   question: z.string().nonempty().min(3).max(500),
   answer: z.string().nonempty().min(3).max(500),
+  questionImg: z.string().nonempty(),
+  answerImg: z.string().nonempty(),
 })
 
 export const CardsModal = ({
@@ -43,6 +45,13 @@ export const CardsModal = ({
   const [updateCard] = useUpdateCardMutation()
 
   const onSubmit: SubmitHandler<CardFormSchema> = data => {
+    const formData = new FormData()
+
+    formData.append('question', data.question)
+    formData.append('answer', data.answer)
+    formData.append('questionImg', data.questionImg[0])
+    formData.append('answerImg', data.answerImg[0])
+
     title === 'Edit Card'
       ? updateCard({ id: cardId, answer: data.answer, question: data.question })
       : createCard({ id, answer: data.answer, question: data.question })
@@ -83,6 +92,7 @@ export const CardsModal = ({
             errorMessage={errors.question?.message}
             onChange={questionHandler}
           />
+          <input type={'file'} {...register('questionImg')} name={'questionImg'} />
           <Input
             {...register('answer')}
             name={'answer'}
@@ -91,6 +101,7 @@ export const CardsModal = ({
             errorMessage={errors.answer?.message}
             onChange={answerHandler}
           />
+          <input type={'file'} {...register('answerImg')} name={'answerImg'} />
         </div>
         <div className={s.buttons}>
           <Button type={'button'} onClick={() => setIsModalOpen(false)} variant={'secondary'}>

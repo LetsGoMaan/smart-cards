@@ -74,15 +74,14 @@ export const FriendsDeckPage = () => {
     <div className={s.deckWrapper}>
       <BackButton />
       <div className={s.titleAndButton}>
-        <Typography className={s.namePack} variant={'large'}>
-          {deckData?.name}
-        </Typography>
+        <Typography variant={'large'}>{deckData?.name}</Typography>
         <Button className={s.learnPackButton} as={Link} to={`/card/${id}`}>
           <Typography variant={'subtitle2'} as={'h4'}>
             Learn to Pack
           </Typography>
         </Button>
       </div>
+      {deckData?.cover && <img className={s.packImage} src={deckData.cover} alt="pack image" />}
       <Input
         value={searchValue}
         onChangeValue={value => setSearchValue(value)}

@@ -1,5 +1,5 @@
 import {
-  CreateDeckArgs,
+  //CreateDeckArgs,
   Deck,
   DeckCardsByIdResponse,
   DecksResponse,
@@ -25,9 +25,10 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      createDeck: builder.mutation<Deck, CreateDeckArgs>({
-        query: ({ ...args }) => {
-          return { url: `v1/decks`, method: 'POST', body: { ...args } }
+      //createDeck: builder.mutation<Deck, CreateDeckArgs>({
+      createDeck: builder.mutation<Deck, any>({
+        query: args => {
+          return { url: `v1/decks`, method: 'POST', body: args }
         },
         invalidatesTags: ['Decks'],
       }),
