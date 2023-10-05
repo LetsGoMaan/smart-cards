@@ -30,7 +30,10 @@ export type CreateDeckArgs = {
 
 export type UpdateDeckArgs = {
   id?: string
-} & CreateDeckArgs
+  name: string
+  cover: File
+  isPrivate?: boolean
+}
 
 export type DeleteDeckArgs = {
   id: string

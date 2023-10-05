@@ -19,6 +19,7 @@ import {
 type EditModalProps = {
   id?: string
   deckName?: string
+  deckCover?: string | null | undefined
   modalTitle: string
   buttonTitle: string
   isModalOpen: boolean
@@ -36,6 +37,7 @@ export const DeckModal = ({
   isModalOpen,
   setModalOpen,
   id,
+  deckCover,
   modalTitle,
   buttonTitle,
 }: EditModalProps) => {
@@ -64,7 +66,8 @@ export const DeckModal = ({
       createDeck(formData)
       dispatch(setDeckName(''))
     } else {
-      updateDeck({ id, name: data.name })
+      //updateDeck({ id, name: data.name })
+      updateDeck({ id, name: data.name, cover: data.cover[0] })
     }
     reset()
     setModalOpen(false)
@@ -79,10 +82,14 @@ export const DeckModal = ({
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event?.target?.files[0]
+    const files = event.target.files
 
-    setCoverPreview(URL.createObjectURL(file))
+    if (files && files.length > 0) {
+      setCoverPreview(URL.createObjectURL(files[0]))
+    }
   }
+
+  const imgSrc = coverPreview || deckCover
 
   return (
     <Modal
@@ -92,25 +99,28 @@ export const DeckModal = ({
       isOpen={isModalOpen}
     >
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
+        {/*{coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}*/}
+        {imgSrc && <img className={s.coverPreview} src={imgSrc} alt={'image'} />}
+        <input type={'file'} {...register('cover')} name={'cover'} onChange={handleFileChange} />
         {modalTitle === 'Add New Pack' ? (
-          <div>
-            <Input
-              className={s.addInput}
-              label={'Name Pack'}
-              {...register('name')}
-              value={addDeckName}
-              onChange={setEditName}
-              errorMessage={errors.name?.message}
-            />
-            {coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}
+          /*<div>*/
+          <Input
+            className={s.addInput}
+            label={'Name Pack'}
+            {...register('name')}
+            value={addDeckName}
+            onChange={setEditName}
+            errorMessage={errors.name?.message}
+          />
+        ) : (
+          /*{coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}
             <input
               type={'file'}
               {...register('cover')}
               name={'cover'}
               onChange={handleFileChange}
-            />
-          </div>
-        ) : (
+            />*/
+          /*</div>*/
           <Input
             label={'Name Pack'}
             {...register('name')}
