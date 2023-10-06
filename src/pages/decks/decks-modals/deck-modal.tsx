@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import s from './deck-modal.module.scss'
 
+import { imageIcon } from '@/assets'
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
 import {
   setDeckName,
@@ -73,6 +74,8 @@ export const DeckModal = ({
     setModalOpen(false)
   }
 
+  const inputValue = modalTitle === 'Add New Pack' ? addDeckName : editDeckName
+
   const setEditName = (e: ChangeEvent<HTMLInputElement>) => {
     if (modalTitle === 'Add New Pack') {
       dispatch(setDeckName(e.currentTarget.value))
@@ -101,34 +104,34 @@ export const DeckModal = ({
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
         {/*{coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}*/}
         {imgSrc && <img className={s.coverPreview} src={imgSrc} alt={'image'} />}
-        <input type={'file'} {...register('cover')} name={'cover'} onChange={handleFileChange} />
-        {modalTitle === 'Add New Pack' ? (
-          /*<div>*/
-          <Input
-            className={s.addInput}
-            label={'Name Pack'}
-            {...register('name')}
-            value={addDeckName}
-            onChange={setEditName}
-            errorMessage={errors.name?.message}
+        <div className={s.inputFileWrapper}>
+          <input
+            type={'file'}
+            {...register('cover')}
+            name={'cover'}
+            id="input-file"
+            className={s.inputFile}
+            multiple
+            onChange={handleFileChange}
           />
-        ) : (
-          /*{coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}
-            <input
-              type={'file'}
-              {...register('cover')}
-              name={'cover'}
-              onChange={handleFileChange}
-            />*/
-          /*</div>*/
-          <Input
-            label={'Name Pack'}
-            {...register('name')}
-            value={editDeckName}
-            onChange={setEditName}
-            errorMessage={errors.name?.message}
-          />
-        )}
+          <label htmlFor="input-file" className={s.addPhotoBtn}>
+            <div className={s.changeCover}>
+              <img src={imageIcon} alt={'picture'} />
+              <Typography as={'span'} variant={'subtitle2'}>
+                Change Cover
+              </Typography>
+            </div>
+          </label>
+        </div>
+        <Input
+          className={s.addInput}
+          label={'Name Pack'}
+          {...register('name')}
+          //value={addDeckName}
+          value={inputValue}
+          onChange={setEditName}
+          errorMessage={errors.name?.message}
+        />
 
         <ControlledCheckbox name={'isPackPrivate'} control={control} label={'Private pack'} />
 
