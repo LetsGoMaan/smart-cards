@@ -47,21 +47,27 @@ export const CardPage = () => {
           <Typography className={s.title} variant={'large'}>
             Learn {deckData?.name}
           </Typography>
-          <div className={s.textWrapper}>
-            <Typography as={'p'} variant={'subtitle1'}>
-              Question:
-            </Typography>
-            <Typography className={s.question} as={'p'} variant={'body1'}>
-              {data?.question}
-            </Typography>
-          </div>
-          <div className={s.textWrapper}>
-            <Typography as={'p'} className={s.shots} variant={'body2'}>
-              Количество попыток ответов на вопрос:
-            </Typography>
-            <Typography as={'p'} className={s.shots} variant={'subtitle2'}>
-              {data?.shots}
-            </Typography>
+          <div className={s.imgAndText}>
+            <div className={s.dataImg}>
+              {data?.questionImg && <img src={data.questionImg} alt={'question image'} />}
+            </div>
+            <div className={s.textWrapper}>
+              <Typography as={'p'} variant={'subtitle1'}>
+                Question:
+              </Typography>
+              <Typography className={s.question} as={'p'} variant={'body1'}>
+                {data?.question}
+              </Typography>
+            </div>
+            {/*</div>*/}
+            <div className={s.textWrapper}>
+              <Typography as={'p'} className={s.shots} variant={'body2'}>
+                Количество попыток ответов на вопрос:
+              </Typography>
+              <Typography as={'p'} className={s.shots} variant={'subtitle2'}>
+                {data?.shots}
+              </Typography>
+            </div>
           </div>
           {!showAnswer && (
             <Button
@@ -75,13 +81,18 @@ export const CardPage = () => {
           )}
           {showAnswer && (
             <>
-              <div className={`${s.textWrapper} ${s.answer}`}>
-                <Typography as={'p'} variant={'subtitle1'}>
-                  Answer:
-                </Typography>
-                <Typography as={'p'} variant={'body1'}>
-                  {data?.answer}
-                </Typography>
+              <div className={s.imgAndText}>
+                <div className={s.dataImg}>
+                  {data?.answerImg && <img src={data.answerImg} alt={'answer image'} />}
+                </div>
+                <div className={`${s.textWrapper} ${s.answer}`}>
+                  <Typography as={'p'} variant={'subtitle1'}>
+                    Answer:
+                  </Typography>
+                  <Typography as={'p'} variant={'body1'}>
+                    {data?.answer}
+                  </Typography>
+                </div>
               </div>
               <Typography as={'p'} className={s.radioTitle} variant={'subtitle1'}>
                 Rate yourself
