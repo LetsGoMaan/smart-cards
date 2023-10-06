@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 import s from './deck-modal.module.scss'
 
-import { imageIcon } from '@/assets'
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
+import { InputWithTypeFile } from '@/pages'
 import {
   setDeckName,
   setEditDeckName,
@@ -71,6 +71,7 @@ export const DeckModal = ({
       updateDeck({ id, name: data.name, cover: data.cover[0] })
     }
     reset()
+    setCoverPreview('')
     setModalOpen(false)
   }
 
@@ -104,25 +105,8 @@ export const DeckModal = ({
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
         {/*{coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}*/}
         {imgSrc && <img className={s.coverPreview} src={imgSrc} alt={'image'} />}
-        <div className={s.inputFileWrapper}>
-          <input
-            type={'file'}
-            {...register('cover')}
-            name={'cover'}
-            id="input-file"
-            className={s.inputFile}
-            multiple
-            onChange={handleFileChange}
-          />
-          <label htmlFor="input-file" className={s.addPhotoBtn}>
-            <div className={s.changeCover}>
-              <img src={imageIcon} alt={'picture'} />
-              <Typography as={'span'} variant={'subtitle2'}>
-                Change Cover
-              </Typography>
-            </div>
-          </label>
-        </div>
+        <InputWithTypeFile handleFileChange={handleFileChange} register={register} />
+
         <Input
           className={s.addInput}
           label={'Name Pack'}

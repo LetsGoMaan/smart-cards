@@ -63,7 +63,6 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
     dispatch(setEditDeckName(name))
   }
 
-  console.log('table', deckCover)
   const deleteHandler = (id: string, name: string) => {
     setDeleteModalOpen(true)
     setId(id)
