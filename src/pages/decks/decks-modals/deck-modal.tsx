@@ -103,9 +103,12 @@ export const DeckModal = ({
       isOpen={isModalOpen}
     >
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
-        {/*{coverPreview && <img className={s.coverPreview} src={coverPreview} alt={'image'} />}*/}
-        {imgSrc && <img className={s.coverPreview} src={imgSrc} alt={'image'} />}
-        <InputWithTypeFile handleFileChange={handleFileChange} register={register} />
+        <InputWithTypeFile
+          name={'cover'}
+          handleFileChange={handleFileChange}
+          imageSrc={imgSrc}
+          register={register}
+        />
 
         <Input
           className={s.addInput}
