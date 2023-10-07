@@ -58,7 +58,15 @@ const decksApi = baseApi.injectEndpoints({
       }),
       createCard: builder.mutation<Card, CreateCardArgs>({
         query: ({ id, ...args }) => {
-          return { url: `v1/decks/${id}/cards`, method: 'POST', body: { ...args } }
+          const formData = new FormData()
+
+          args.answerImg && formData.append('answerImg', args.answerImg)
+          formData.append('answer', args.answer)
+          args.questionImg && formData.append('questionImg', args.questionImg)
+          formData.append('question', args.question)
+
+          //return { url: `v1/decks/${id}/cards`, method: 'POST', body: { ...args } }
+          return { url: `v1/decks/${id}/cards`, method: 'POST', body: formData, formData: true }
         },
         invalidatesTags: ['Decks'],
       }),

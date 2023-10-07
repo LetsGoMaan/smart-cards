@@ -21,6 +21,13 @@
     }
   }
 
+  .packImage {
+    width: 10.625rem;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
   .searchInput {
     margin-bottom: 1.5rem;
   }
@@ -44,11 +51,10 @@
   gap: 0.625rem;
   align-items: center;
 
-  .packImage {
-    width: 10.625rem;
-    margin-bottom: 1.5rem;
+  .cardImage {
+    width: 7.375rem;
+    height: 3rem;
     object-fit: cover;
-    border-radius: 2px;
   }
 
   .tableText {

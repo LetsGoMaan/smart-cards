@@ -2,8 +2,8 @@ export type UpdateCardArgs = {
   id?: string
   question: string
   answer: string
-  questionImg?: string
-  answerImg?: string
+  questionImg?: File
+  answerImg?: File
   questionVideo?: string
   answerVideo?: string
 }

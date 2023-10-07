@@ -147,6 +147,7 @@ export const MyDeckPage = () => {
       />
       <CardsModal
         title={'Add New Card'}
+        buttonTitle={'Add New Card'}
         setIsModalOpen={setIsCardModalOpen}
         isModalOpen={isCardModalOpen}
         id={id}
