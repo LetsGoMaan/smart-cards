@@ -1,18 +1,27 @@
 import { defaultAvatar } from '@/assets'
 import { PersonalInfo, PersonalInfoFormSchema } from '@/components'
-import { useLogoutMutation } from '@/services'
+import { useAuthMeQuery, useLogoutMutation, useUpdateMeMutation } from '@/services'
 
 export const Profile = () => {
-  //change all data
-  const name = '' || 'Yolo'
-  const email = '' || 'yolo@superyolo.com'
-  const avatar = '' || defaultAvatar
+  const { data } = useAuthMeQuery() //change all data
+  const name = data?.name || 'Yolo'
+  const email = data?.email || 'yolo@superyolo.com'
+  const avatar = data?.avatar || defaultAvatar
   const [logOut] = useLogoutMutation()
-  const changeAvatar = (avatar: File) => {
-    avatar
+  const [updateMe] = useUpdateMeMutation()
+
+  const changeAvatar = (avatar: Blob) => {
+    const formData = new FormData()
+
+    formData.append('avatar', avatar)
+    updateMe(formData)
   }
   const submitChanges = (data: PersonalInfoFormSchema) => {
-    data
+    const formData = new FormData()
+
+    formData.append('name', data.nickname)
+    formData.append('email', data.email)
+    updateMe(formData)
   }
 
   return (

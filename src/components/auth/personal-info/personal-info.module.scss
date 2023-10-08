@@ -16,6 +16,8 @@
   .avatar {
     align-self: center;
     margin-bottom: 0.75rem;
+    object-fit: cover;
+    border-radius: 50%;
   }
 
   .name {
@@ -24,6 +26,8 @@
   }
 
   .infoContainer {
+    display: flex;
+    flex-direction: column;
     align-self: center;
 
     .editNameWrapper {
@@ -52,6 +56,7 @@
     }
   }
 
+  /*
   .inputWrapper {
     position: relative;
     width: 100%;
@@ -96,12 +101,65 @@
       }
     }
   }
+  */
+
+  .changeAvatar {
+    position: relative;
+    width: 100%;
+    text-align: center;
+
+    .addPhotoBtn {
+      cursor: pointer;
+
+      position: absolute;
+      z-index: 2;
+      top: -2.187rem;
+      left: 59%;
+
+      display: -webkit-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 0 auto;
+
+      color: #fff;
+
+      background: var(--color-dark-300);
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 10px 0 rgb(109 109 109 / 25%);
+
+      -webkit-box-align: center;
+      -webkit-box-pack: start;
+      -ms-flex-align: center;
+      -ms-flex-pack: start;
+    }
+
+    .inputIcon {
+      width: 1rem;
+    }
+
+    .inputFile {
+      cursor: pointer;
+
+      position: absolute;
+      z-index: 5;
+      top: -2.187rem;
+      right: 34%;
+
+      width: 1.5rem;
+
+      opacity: 0;
+    }
+  }
 
   .formWrapper {
     display: inline-flex;
     flex-direction: column;
 
-    .nickname {
+    .input {
       margin-bottom: 2.25rem;
     }
 
