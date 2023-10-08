@@ -7,7 +7,14 @@
   .titleAndButton {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 0.937rem;
+  }
+
+  .packImage {
+    width: 10.625rem;
     margin-bottom: 1.5rem;
+    object-fit: cover;
+    border-radius: 2px;
   }
 
   .learnPackButton {
@@ -18,8 +25,22 @@
     margin-bottom: 1.5rem;
   }
 
-  .text {
+  .dataWithImage {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    align-items: center;
     word-break: break-word;
+
+    .cardImage {
+      width: 7.375rem;
+      height: 3rem;
+      object-fit: cover;
+    }
+
+    .text {
+      word-break: break-word;
+    }
   }
 
   .pagination {

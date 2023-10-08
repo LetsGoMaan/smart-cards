@@ -1,5 +1,5 @@
 import {
-  CreateDeckArgs,
+  //CreateDeckArgs,
   Deck,
   DeckCardsByIdResponse,
   DecksResponse,
@@ -25,9 +25,10 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      createDeck: builder.mutation<Deck, CreateDeckArgs>({
-        query: ({ ...args }) => {
-          return { url: `v1/decks`, method: 'POST', body: { ...args } }
+      //createDeck: builder.mutation<Deck, CreateDeckArgs>({
+      createDeck: builder.mutation<Deck, FormData>({
+        query: args => {
+          return { url: `v1/decks`, method: 'POST', body: args }
         },
         invalidatesTags: ['Decks'],
       }),
@@ -57,13 +58,27 @@ const decksApi = baseApi.injectEndpoints({
       }),
       createCard: builder.mutation<Card, CreateCardArgs>({
         query: ({ id, ...args }) => {
-          return { url: `v1/decks/${id}/cards`, method: 'POST', body: { ...args } }
+          const formData = new FormData()
+
+          args.answerImg && formData.append('answerImg', args.answerImg)
+          formData.append('answer', args.answer)
+          args.questionImg && formData.append('questionImg', args.questionImg)
+          formData.append('question', args.question)
+
+          //return { url: `v1/decks/${id}/cards`, method: 'POST', body: { ...args } }
+          return { url: `v1/decks/${id}/cards`, method: 'POST', body: formData, formData: true }
         },
         invalidatesTags: ['Decks'],
       }),
       updateDeck: builder.mutation<Deck, UpdateDeckArgs>({
         query: ({ id, ...args }) => {
-          return { url: `v1/decks/${id}`, method: 'PATCH', body: { ...args } }
+          const formData = new FormData()
+
+          formData.append('name', args.name)
+          formData.append('cover', args.cover)
+          //return { url: `v1/decks/${id}`, method: 'PATCH', body: { ...args } }
+
+          return { url: `v1/decks/${id}`, method: 'PATCH', body: formData, formData: true }
         },
         invalidatesTags: ['Decks'],
       }),

@@ -74,15 +74,14 @@ export const FriendsDeckPage = () => {
     <div className={s.deckWrapper}>
       <BackButton />
       <div className={s.titleAndButton}>
-        <Typography className={s.namePack} variant={'large'}>
-          {deckData?.name}
-        </Typography>
+        <Typography variant={'large'}>{deckData?.name}</Typography>
         <Button className={s.learnPackButton} as={Link} to={`/card/${id}`}>
           <Typography variant={'subtitle2'} as={'h4'}>
             Learn to Pack
           </Typography>
         </Button>
       </div>
+      {deckData?.cover && <img className={s.packImage} src={deckData.cover} alt="pack image" />}
       <Input
         value={searchValue}
         onChangeValue={value => setSearchValue(value)}
@@ -91,20 +90,30 @@ export const FriendsDeckPage = () => {
         onClearClick={() => setSearchValue('')}
       />
       <Table>
-        <TableHeader columns={columns} sort={sort} onSort={setSort} />
+        <TableHeader style={{ cursor: 'pointer' }} columns={columns} sort={sort} onSort={setSort} />
         <TableBody>
           {data?.items.map(card => {
             return (
               <TableRow key={card.id}>
                 <TableData style={{ width: '30%' }}>
-                  <Typography className={s.text} as={'p'} variant={'body2'}>
-                    {card.question}
-                  </Typography>
+                  <div className={s.dataWithImage}>
+                    {card.questionImg && (
+                      <img className={s.cardImage} src={card.questionImg} alt={'question image'} />
+                    )}
+                    <Typography className={s.text} as={'p'} variant={'body2'}>
+                      {card.question}
+                    </Typography>
+                  </div>
                 </TableData>
                 <TableData style={{ width: '30%' }}>
-                  <Typography className={s.text} as={'p'} variant={'body2'}>
-                    {card.answer}
-                  </Typography>
+                  <div className={s.dataWithImage}>
+                    {card.answerImg && (
+                      <img className={s.cardImage} src={card.answerImg} alt={'answer image'} />
+                    )}
+                    <Typography className={s.text} as={'p'} variant={'body2'}>
+                      {card.answer}
+                    </Typography>
+                  </div>
                 </TableData>
                 <TableData style={{ width: '20%' }}>
                   <Typography as={'p'} variant={'body2'}>

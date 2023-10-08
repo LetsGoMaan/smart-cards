@@ -30,6 +30,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
   const [id, setId] = useState('')
   const [deckName, setDeckName] = useState('')
+  const [deckCover, setDeckCover] = useState<string | null | undefined>('')
   const columns: Column[] = [
     {
       key: 'name',
@@ -54,12 +55,14 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
       sortable: false,
     },
   ]
-  const editHandler = (id: string, name: string) => {
+  const editHandler = (id: string, name: string, cover: string | null | undefined) => {
     setModalOpen(true)
     setId(id)
     setDeckName(name)
+    setDeckCover(cover)
     dispatch(setEditDeckName(name))
   }
+
   const deleteHandler = (id: string, name: string) => {
     setDeleteModalOpen(true)
     setId(id)
@@ -80,9 +83,14 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
             return (
               <TableRow key={deck.id}>
                 <TableData style={{ width: '21%' }}>
-                  <Typography className={s.deckLink} to={packPath} as={Link} variant={'body2'}>
-                    {deck.name}
-                  </Typography>
+                  <Link to={packPath} className={s.tableLinkData}>
+                    {deck.cover && (
+                      <img className={s.packImage} src={deck.cover} alt="pack image" />
+                    )}
+                    <Typography as={'span'} variant={'body2'}>
+                      {deck.name}
+                    </Typography>
+                  </Link>
                 </TableData>
 
                 <TableData style={{ width: '21%' }}>
@@ -108,7 +116,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
 
                     {deck.author.id === authDeckAuthorId && (
                       <>
-                        <button onClick={() => editHandler(deck.id, deck.name)}>
+                        <button onClick={() => editHandler(deck.id, deck.name, deck.cover)}>
                           <img src={editButton} alt={'edit'} />
                         </button>
                         <button onClick={() => deleteHandler(deck.id, deck.name)}>
@@ -126,6 +134,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
       <DeckModal
         id={id}
         deckName={deckName}
+        deckCover={deckCover}
         modalTitle={'Edit Pack'}
         buttonTitle={'Save Changes'}
         isModalOpen={isModalOpen}

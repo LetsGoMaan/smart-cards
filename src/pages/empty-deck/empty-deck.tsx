@@ -50,7 +50,13 @@ export const EmptyDeck = ({
           </Typography>
         </div>
       )}
-      <CardsModal setIsModalOpen={open => onSetOpen(open)} isModalOpen={isOpen} id={id} />
+      <CardsModal
+        title={'Add New Card'}
+        buttonTitle={'Add New Card'}
+        setIsModalOpen={open => onSetOpen(open)}
+        isModalOpen={isOpen}
+        id={id}
+      />
     </div>
   )
 }
