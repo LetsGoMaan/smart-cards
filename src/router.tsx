@@ -10,12 +10,14 @@ import { Layout } from '@/components'
 import {
   CardPage,
   Decks,
+  ForgotPasswordPage,
   FriendsDeckPage,
   MyDeckPage,
   Profile,
   SignInPage,
   SignUpPage,
 } from '@/pages'
+import { CheckEmailPage } from '@/pages/check-email-page/check-email-page.tsx'
 import { useAuthMeQuery } from '@/services'
 
 const publicRoutes: RouteObject[] = [
@@ -26,6 +28,14 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/sign-up',
     element: <SignUpPage />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: '/check-email',
+    element: <CheckEmailPage />,
   },
 ]
 

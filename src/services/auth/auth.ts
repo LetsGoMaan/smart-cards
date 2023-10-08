@@ -2,6 +2,7 @@ import {
   AuthResponse,
   LoginRequestArgs,
   LoginResponse,
+  RecoverPasswordArgs,
   SignUpRequestArgs,
 } from '@/services/auth/types.ts'
 import { baseApi } from '@/services/base-api.ts'
@@ -60,6 +61,11 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
+      recoverPassword: builder.mutation<void, RecoverPasswordArgs>({
+        query: ({ ...args }) => {
+          return { url: `v1/auth/recover-password`, method: 'POST', body: { ...args } }
+        },
+      }),
     }
   },
 })
@@ -70,4 +76,5 @@ export const {
   useAuthMeQuery,
   useSignUpMutation,
   useUpdateMeMutation,
+  useRecoverPasswordMutation,
 } = authApi

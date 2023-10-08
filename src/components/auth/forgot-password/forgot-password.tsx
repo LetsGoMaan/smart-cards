@@ -12,7 +12,7 @@ type ForgotPasswordProps = {
   onSubmit: (data: ForgotPasswordFormSchema) => void
 }
 
-type ForgotPasswordFormSchema = z.infer<typeof ForgotPasswordSchema>
+export type ForgotPasswordFormSchema = z.infer<typeof ForgotPasswordSchema>
 
 const ForgotPasswordSchema = z.object({
   email: z.string().email(),
