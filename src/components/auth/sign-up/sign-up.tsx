@@ -15,6 +15,7 @@ export type SignUpFormSchema = z.infer<typeof signUpSchema>
 
 const signUpSchema = z
   .object({
+    name: z.string().min(3).max(30).optional(),
     email: z.string().email(),
     password: z.string().min(3),
     confirmPassword: z.string().min(3),
@@ -38,6 +39,13 @@ export const SignUp = ({ onSubmit }: SignUpProps) => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
         <DevTool control={control} />
+        <ControlledInput
+          className={s.name}
+          name={'name'}
+          control={control}
+          label={'Name'}
+          errorMessage={errors.name?.message}
+        />
         <ControlledInput
           className={s.email}
           name={'email'}
