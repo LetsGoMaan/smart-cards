@@ -2,21 +2,18 @@
   cursor: pointer;
 }
 
-.tableData {
+.tableLinkData {
   display: flex;
   flex-wrap: wrap;
   gap: 0.625rem;
   align-items: center;
+  text-decoration: none;
+  word-break: break-word;
 
   .packImage {
     width: 7.375rem;
     height: 3rem;
     object-fit: cover;
-  }
-
-  .deckLink {
-    text-decoration: none;
-    word-break: break-word;
   }
 }
 
