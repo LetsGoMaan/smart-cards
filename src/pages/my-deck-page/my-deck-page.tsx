@@ -126,6 +126,7 @@ export const MyDeckPage = () => {
           </Typography>
         </Button>
       </div>
+      {deckData?.cover && <img className={s.packImage} src={deckData.cover} alt="pack image" />}
       <Input
         value={searchValue}
         onChangeValue={value => setSearchValue(value)}
@@ -146,6 +147,7 @@ export const MyDeckPage = () => {
       />
       <CardsModal
         title={'Add New Card'}
+        buttonTitle={'Add New Card'}
         setIsModalOpen={setIsCardModalOpen}
         isModalOpen={isCardModalOpen}
         id={id}

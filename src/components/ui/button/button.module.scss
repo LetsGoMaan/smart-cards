@@ -1,18 +1,9 @@
+@import 'src/styles/mixins';
+
 .primary {
-  cursor: pointer;
-
-  display: inline-flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-
-  padding: 6px 28px;
-
-  color: var(--color-light-100);
+  @include layoutButtons();
 
   background: var(--color-accent-500);
-  border: none;
-  border-radius: 4px;
   box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
 
   &:active {
@@ -33,20 +24,9 @@
 }
 
 .secondary {
-  cursor: pointer;
-
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-
-  padding: 6px 28px;
-
-  color: var(--color-light-100);
+  @include layoutButtons();
 
   background: var(--color-dark-300);
-  border: none;
-  border-radius: 4px;
   box-shadow: 0 2px 10px 0 rgb(109 109 109 / 25%);
 
   &:active {

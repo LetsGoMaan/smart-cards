@@ -23,14 +23,17 @@ export type GetDeckCardsByIdArgs = {
 } & PaginatedRequest
 
 export type CreateDeckArgs = {
-  name: string
-  cover?: string
+  name?: string
+  cover?: File
   isPrivate?: boolean
 }
 
 export type UpdateDeckArgs = {
   id?: string
-} & CreateDeckArgs
+  name: string
+  cover: File
+  isPrivate?: boolean
+}
 
 export type DeleteDeckArgs = {
   id: string

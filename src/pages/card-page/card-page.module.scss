@@ -16,16 +16,27 @@
       text-align: center;
     }
 
-    .textWrapper {
+    .imgAndText {
       display: flex;
-      gap: 0.312rem;
+      flex-direction: column;
 
-      .question {
-        word-break: break-word;
+      .dataImg img {
+        width: 100%;
+        height: 10rem;
+        object-fit: cover;
       }
 
-      .shots {
-        color: var(--color-dark-100);
+      .textWrapper {
+        display: flex;
+        gap: 0.312rem;
+
+        .question {
+          word-break: break-word;
+        }
+
+        .shots {
+          color: var(--color-dark-100);
+        }
       }
     }
 
