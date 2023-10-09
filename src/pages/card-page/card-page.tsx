@@ -62,7 +62,7 @@ export const CardPage = () => {
             {/*</div>*/}
             <div className={s.textWrapper}>
               <Typography as={'p'} className={s.shots} variant={'body2'}>
-                Количество попыток ответов на вопрос:
+                Number of attempts to answer the question:
               </Typography>
               <Typography as={'p'} className={s.shots} variant={'subtitle2'}>
                 {data?.shots}

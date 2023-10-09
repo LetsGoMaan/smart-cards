@@ -21,4 +21,9 @@
   cursor: pointer;
   display: flex;
   gap: 0.625rem;
+
+  .controlIcon:hover {
+    width: 108%;
+    transition: 0.5s;
+  }
 }

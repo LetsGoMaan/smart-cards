@@ -58,9 +58,11 @@ export const DeckModal = ({
 
   const onSubmit: SubmitHandler<PackFormSchema> = data => {
     const formData = new FormData()
+    const isPackPrivate = data.isPackPrivate ? 'true' : 'false'
 
     formData.append('cover', data.cover[0])
     formData.append('name', data.name)
+    formData.append('isPrivate', isPackPrivate)
 
     if (modalTitle === 'Add New Pack') {
       //createDeck({ name: data.packName })
@@ -68,7 +70,7 @@ export const DeckModal = ({
       dispatch(setDeckName(''))
     } else {
       //updateDeck({ id, name: data.name })
-      updateDeck({ id, name: data.name, cover: data.cover[0] })
+      updateDeck({ id, name: data.name, cover: data.cover[0], isPrivate: data.isPackPrivate })
     }
     reset()
     setCoverPreview('')
