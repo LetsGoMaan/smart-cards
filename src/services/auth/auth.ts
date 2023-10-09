@@ -1,7 +1,9 @@
 import {
   AuthResponse,
+  ConfirmPasswordArgs,
   LoginRequestArgs,
   LoginResponse,
+  RecoverPasswordArgs,
   SignUpRequestArgs,
 } from '@/services/auth/types.ts'
 import { baseApi } from '@/services/base-api.ts'
@@ -54,8 +56,32 @@ const authApi = baseApi.injectEndpoints({
           return { url: `v1/auth/sign-up`, method: 'POST', body: { ...args } }
         },
       }),
+      updateMe: builder.mutation<AuthResponse, FormData>({
+        query: args => {
+          return { url: `v1/auth/me`, method: 'PATCH', body: args }
+        },
+        invalidatesTags: ['Me'],
+      }),
+      recoverPassword: builder.mutation<void, RecoverPasswordArgs>({
+        query: ({ ...args }) => {
+          return { url: `v1/auth/recover-password`, method: 'POST', body: { ...args } }
+        },
+      }),
+      confirmPassword: builder.mutation<void, ConfirmPasswordArgs>({
+        query: ({ token, ...args }) => {
+          return { url: `v1/auth/reset-password/${token}`, method: 'POST', body: { ...args } }
+        },
+      }),
     }
   },
 })
 
-export const { useLogoutMutation, useLoginMutation, useAuthMeQuery, useSignUpMutation } = authApi
+export const {
+  useLogoutMutation,
+  useLoginMutation,
+  useAuthMeQuery,
+  useSignUpMutation,
+  useUpdateMeMutation,
+  useRecoverPasswordMutation,
+  useConfirmPasswordMutation,
+} = authApi

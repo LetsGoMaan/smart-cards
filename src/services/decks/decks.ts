@@ -73,9 +73,11 @@ const decksApi = baseApi.injectEndpoints({
       updateDeck: builder.mutation<Deck, UpdateDeckArgs>({
         query: ({ id, ...args }) => {
           const formData = new FormData()
+          const isPackPrivate = args.isPrivate ? 'true' : 'false'
 
           formData.append('name', args.name)
           formData.append('cover', args.cover)
+          formData.append('isPrivate', isPackPrivate)
           //return { url: `v1/decks/${id}`, method: 'PATCH', body: { ...args } }
 
           return { url: `v1/decks/${id}`, method: 'PATCH', body: formData, formData: true }

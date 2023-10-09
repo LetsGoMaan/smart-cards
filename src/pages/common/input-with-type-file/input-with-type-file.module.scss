@@ -13,13 +13,13 @@
   text-align: center;
 
   .inputFile {
-    position: absolute;
     cursor: pointer;
+    position: absolute;
     opacity: 0;
   }
 
   .changeCover {
-    @include layoutButtons();
+    @include layoutButtons;
 
     background: var(--color-dark-300);
     box-shadow: 0 2px 10px 0 rgb(109 109 109 / 25%);

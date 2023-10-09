@@ -8,7 +8,7 @@ import { z } from 'zod'
 import s from './personal-info.module.scss'
 
 import { defaultAvatar, editButton, logOut } from '@/assets'
-import { Avatar, Button, Card, ControlledInput, Typography } from '@/components'
+import { Avatar, Button, Card, Input, Typography } from '@/components'
 
 type PersonalInfoProps = {
   onSubmit?: (data: PersonalInfoFormSchema) => void
@@ -22,7 +22,9 @@ type PersonalInfoProps = {
 export type PersonalInfoFormSchema = z.infer<typeof PersonalInfoSchema>
 
 const PersonalInfoSchema = z.object({
-  nickname: z.string().nonempty(),
+  nickname: z.string().nonempty().min(3).max(30),
+  file: z.any(),
+  email: z.string().email().nonempty(),
 })
 
 export const PersonalInfo = ({
@@ -34,16 +36,25 @@ export const PersonalInfo = ({
   onLogOut,
 }: PersonalInfoProps) => {
   const [editMode, setEditMode] = useState(false)
+  const [editName, setEditName] = useState(name)
+  const [editEmail, setEditEmail] = useState(email)
 
   const {
     handleSubmit,
     control,
+    register,
     formState: { errors },
+    reset,
   } = useForm<PersonalInfoFormSchema>({ resolver: zodResolver(PersonalInfoSchema) })
 
   const onSubmitHandler = (data: PersonalInfoFormSchema) => {
     onSubmit && onSubmit(data)
     setEditMode(false)
+  }
+
+  const onCancelHandler = () => {
+    setEditMode(false)
+    reset()
   }
 
   const onChangeAvatarHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,34 +67,56 @@ export const PersonalInfo = ({
         Personal Information
       </Typography>
       <Avatar avatar={avatar} size={96} className={s.avatar} />
-      <div className={s.inputWrapper}>
-        <input
-          type="file"
-          name="file"
-          id="input-file"
-          className={`${s.inputFile} ${s.input}`}
-          multiple
-          onChange={onChangeAvatarHandler}
-        />
-        <label htmlFor="input-file" className={s.addPhotoBtn}>
-          <img className={s.inputIcon} src={editButton} alt={'choose image'} />
-        </label>
-      </div>
-      {editMode ? (
-        <form onSubmit={handleSubmit(onSubmitHandler)} className={s.formWrapper}>
-          <DevTool control={control} />
-          <ControlledInput
-            className={s.nickname}
-            name={'nickname'}
-            control={control}
-            label={'Nickname'}
-            errorMessage={errors.nickname?.message}
+
+      <form onSubmit={handleSubmit(onSubmitHandler)} className={s.formWrapper}>
+        <div className={s.changeAvatar}>
+          <input
+            type={'file'}
+            {...register('file')}
+            name={'file'}
+            className={s.inputFile}
+            onChange={onChangeAvatarHandler}
           />
-          <Button type={'submit'} className={s.buttonSubmit} fullWidth={true}>
-            Save Changes
-          </Button>
-        </form>
-      ) : (
+          <img className={s.addPhotoBtn} src={editButton} alt={'picture'} />
+        </div>
+
+        <DevTool control={control} />
+        {editMode && (
+          <>
+            <Input
+              className={s.input}
+              {...register('nickname')}
+              name={'nickname'}
+              label={'Nickname'}
+              errorMessage={errors.nickname?.message}
+              value={editName}
+              onChange={e => setEditName(e.currentTarget.value)}
+            />
+            <Input
+              className={s.input}
+              {...register('email')}
+              name={'email'}
+              label={'Email'}
+              errorMessage={errors.email?.message}
+              value={editEmail}
+              onChange={e => setEditEmail(e.currentTarget.value)}
+            />
+            <Button type={'submit'} className={s.buttonSubmit} fullWidth={true}>
+              Save Changes
+            </Button>
+            <Button
+              onClick={onCancelHandler}
+              type={'button'}
+              className={s.buttonSubmit}
+              variant={'secondary'}
+              fullWidth={true}
+            >
+              Cancel
+            </Button>
+          </>
+        )}
+      </form>
+      {!editMode && (
         <div className={s.infoContainer}>
           <div className={s.editNameWrapper}>
             <Typography variant={'h1'} className={s.name}>

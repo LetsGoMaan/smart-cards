@@ -103,7 +103,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
                     {new Date(deck.updated).toLocaleDateString('en-GB')}
                   </Typography>
                 </TableData>
-                <TableData style={{ width: '28%' }}>
+                <TableData style={{ width: '24%' }}>
                   <Typography as={'p'} variant={'body2'}>
                     {deck.author.name}
                   </Typography>
@@ -111,16 +111,16 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
                 <TableData>
                   <div className={s.controlButtons}>
                     <Link to={`/card/${deck.id}`}>
-                      <img src={playIcon} alt={'play'} />
+                      <img className={s.controlIcon} src={playIcon} alt={'play'} />
                     </Link>
 
                     {deck.author.id === authDeckAuthorId && (
                       <>
                         <button onClick={() => editHandler(deck.id, deck.name, deck.cover)}>
-                          <img src={editButton} alt={'edit'} />
+                          <img className={s.controlIcon} src={editButton} alt={'edit'} />
                         </button>
                         <button onClick={() => deleteHandler(deck.id, deck.name)}>
-                          <img src={deleteOutline} alt={'delete'} />
+                          <img className={s.controlIcon} src={deleteOutline} alt={'delete'} />
                         </button>
                       </>
                     )}
