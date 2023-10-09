@@ -9,7 +9,10 @@ import {
 import { Layout } from '@/components'
 import {
   CardPage,
+  CheckEmailPage,
+  CreatePasswordPage,
   Decks,
+  ForgotPasswordPage,
   FriendsDeckPage,
   MyDeckPage,
   Profile,
@@ -26,6 +29,18 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/sign-up',
     element: <SignUpPage />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: '/check-email',
+    element: <CheckEmailPage />,
+  },
+  {
+    path: '/confirm-email/:token',
+    element: <CreatePasswordPage />,
   },
 ]
 

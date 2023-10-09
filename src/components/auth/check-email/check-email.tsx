@@ -15,7 +15,7 @@ export const CheckEmail = () => {
       <Typography as={'p'} className={s.info} variant={'body2'}>
         We’ve sent an Email with instructions to example@mail.com
       </Typography>
-      <Button as={Link} to={'/sign-in-page'} className={s.backButton}>
+      <Button as={Link} to={'/login'} className={s.backButton}>
         Back to Sign In
       </Button>
     </Card>

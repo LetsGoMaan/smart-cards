@@ -26,3 +26,9 @@ export type SignUpRequestArgs = {
   subject?: string
   sendConfirmationEmail?: boolean
 }
+
+export type RecoverPasswordArgs = Pick<SignUpRequestArgs, 'html' | 'email' | 'subject'>
+export type ConfirmPasswordArgs = {
+  token?: string
+  password: string
+}

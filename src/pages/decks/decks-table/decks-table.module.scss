@@ -7,6 +7,7 @@
   flex-wrap: wrap;
   gap: 0.625rem;
   align-items: center;
+
   text-decoration: none;
   word-break: break-word;
 
@@ -21,4 +22,9 @@
   cursor: pointer;
   display: flex;
   gap: 0.625rem;
+
+  .controlIcon:hover {
+    width: 108%;
+    transition: 0.5s;
+  }
 }
