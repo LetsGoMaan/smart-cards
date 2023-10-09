@@ -28,3 +28,7 @@ export type SignUpRequestArgs = {
 }
 
 export type RecoverPasswordArgs = Pick<SignUpRequestArgs, 'html' | 'email' | 'subject'>
+export type ConfirmPasswordArgs = {
+  token?: string
+  password: string
+}

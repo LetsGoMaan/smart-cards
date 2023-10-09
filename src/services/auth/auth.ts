@@ -1,5 +1,6 @@
 import {
   AuthResponse,
+  ConfirmPasswordArgs,
   LoginRequestArgs,
   LoginResponse,
   RecoverPasswordArgs,
@@ -66,6 +67,11 @@ const authApi = baseApi.injectEndpoints({
           return { url: `v1/auth/recover-password`, method: 'POST', body: { ...args } }
         },
       }),
+      confirmPassword: builder.mutation<void, ConfirmPasswordArgs>({
+        query: ({ token, ...args }) => {
+          return { url: `v1/auth/reset-password/${token}`, method: 'POST', body: { ...args } }
+        },
+      }),
     }
   },
 })
@@ -77,4 +83,5 @@ export const {
   useSignUpMutation,
   useUpdateMeMutation,
   useRecoverPasswordMutation,
+  useConfirmPasswordMutation,
 } = authApi

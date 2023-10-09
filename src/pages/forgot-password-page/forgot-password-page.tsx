@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 import s from './forgot-password-page.module.scss'
 
@@ -14,9 +14,7 @@ export const ForgotPasswordPage = () => {
     navigate('/check-email')
   }
 
-  if (data) {
-    return navigate('/')
-  }
+  if (data) return <Navigate to={'/'} />
 
   return (
     <div className={s.forgotWrapper}>

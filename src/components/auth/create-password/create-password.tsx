@@ -11,7 +11,7 @@ type CreatePasswordProps = {
   onSubmit: (data: CreatePasswordFormSchema) => void
 }
 
-type CreatePasswordFormSchema = z.infer<typeof CreatePasswordSchema>
+export type CreatePasswordFormSchema = z.infer<typeof CreatePasswordSchema>
 
 const CreatePasswordSchema = z.object({
   password: z.string().min(3, { message: 'Password must contain at least 3 character(s)' }),
