@@ -2,12 +2,13 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import s from './cards-modal.module.scss'
 
 import { Button, Input, Modal, Typography } from '@/components'
-import { InputWithTypeFile } from '@/pages'
+import { InputWithTypeFile, successOptions } from '@/pages'
 import { useCreateCardMutation } from '@/services'
 import { useUpdateCardMutation } from '@/services/cards/cards-api.ts'
 
@@ -61,22 +62,31 @@ export const CardsModal = ({
   } = useForm<CardFormSchema>({ resolver: zodResolver(cardSchema) })
 
   const onSubmit: SubmitHandler<CardFormSchema> = data => {
-    title === 'Edit Card'
-      ? updateCard({
-          id: cardId,
-          answer: data.answer,
-          question: data.question,
-          answerImg: data.answerImg[0],
-          questionImg: data.questionImg[0],
+    if (title === 'Edit Card') {
+      updateCard({
+        id: cardId,
+        answer: data.answer,
+        question: data.question,
+        answerImg: data.answerImg[0],
+        questionImg: data.questionImg[0],
+      })
+        .unwrap()
+        .then(() => {
+          toast.success(`Your card updated successfully`, successOptions)
         })
-      : createCard({
-          id,
-          answer: data.answer,
-          question: data.question,
-          answerImg: data.answerImg[0],
-          questionImg: data.questionImg[0],
+    } else {
+      createCard({
+        id,
+        answer: data.answer,
+        question: data.question,
+        answerImg: data.answerImg[0],
+        questionImg: data.questionImg[0],
+      })
+        .unwrap()
+        .then(() => {
+          toast.success(`Your card created successfully`, successOptions)
         })
-
+    }
     reset()
     setQuestionPreview('')
     setAnswerPreview('')

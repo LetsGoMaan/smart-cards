@@ -2,12 +2,13 @@ import { ChangeEvent, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import s from './deck-modal.module.scss'
 
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
-import { InputWithTypeFile } from '@/pages'
+import { InputWithTypeFile, successOptions } from '@/pages'
 import {
   setDeckName,
   setEditDeckName,
@@ -67,10 +68,18 @@ export const DeckModal = ({
     if (modalTitle === 'Add New Pack') {
       //createDeck({ name: data.packName })
       createDeck(formData)
+        .unwrap()
+        .then(data => {
+          toast.success(`Pack ${data.name} created successfully`, successOptions)
+        })
       dispatch(setDeckName(''))
     } else {
       //updateDeck({ id, name: data.name })
       updateDeck({ id, name: data.name, cover: data.cover[0], isPrivate: data.isPackPrivate })
+        .unwrap()
+        .then(data => {
+          toast.success(`Pack ${data.name} updated successfully`, successOptions)
+        })
     }
     reset()
     setCoverPreview('')

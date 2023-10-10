@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import s from './delete-item-modal.module.scss'
 
 import { Button, Modal, Typography } from '@/components'
+import { successOptions } from '@/pages'
 import { useDeleteDeckByIdMutation, useDeleteCardMutation } from '@/services'
 
 type Props = {
@@ -30,10 +32,18 @@ export const DeleteItemModal = ({
   const deleteHandler = () => {
     if (title === 'Delete Pack') {
       deleteDeck({ id })
+        .unwrap()
+        .then(data => {
+          toast.success(`Pack ${data.name} deleted successfully`, successOptions)
+        })
       setIsModalOpen(false)
       if (isNavigate) navigate(-1)
     } else {
       deleteCard({ id })
+        .unwrap()
+        .then(() => {
+          toast.success(`Your card deleted successfully`, successOptions)
+        })
       setIsModalOpen(false)
     }
   }
