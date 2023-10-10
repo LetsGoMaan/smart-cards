@@ -1,8 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import s from './create-password-page.module.scss'
 
 import { CreatePassword, CreatePasswordFormSchema } from '@/components'
+import { successOptions } from '@/pages'
 import { useConfirmPasswordMutation } from '@/services'
 
 export const CreatePasswordPage = () => {
@@ -13,6 +15,7 @@ export const CreatePasswordPage = () => {
     confirmPassword({ token, password: data.password })
       .unwrap()
       .then(() => {
+        toast.success('Your password changed successfully. Please Sign In now!', successOptions)
         navigate('/login')
       })
   }

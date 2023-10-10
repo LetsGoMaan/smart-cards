@@ -1,17 +1,24 @@
 import { Link, Outlet } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import s from './layout.module.scss'
 
 import { defaultAvatar, logo, logOut, personOutline } from '@/assets'
 import { Avatar, Button, DropDownItem, DropDownMenu, Header, NameWithAvatar } from '@/components'
+import { successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation } from '@/services'
 
 export const Layout = () => {
   //const authData = { isSignedIn: true, name: '', avatar: '', email: '' } //server-data
   const { data } = useAuthMeQuery() //server-data
   const [logout] = useLogoutMutation()
+  const notification = `Bye-bye, ${data?.name || data?.email}`
   const logOutHandler = () => {
     logout()
+      .unwrap()
+      .then(() => {
+        toast.success(notification, successOptions)
+      })
   }
 
   return (
