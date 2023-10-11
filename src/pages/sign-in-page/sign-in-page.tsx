@@ -22,6 +22,9 @@ export const SignInPage = () => {
         toast.success('Hello, You are welcome!', successOptions)
         navigate('/')
       })
+      .catch(() => {
+        toast.error('Incorrect login or password')
+      })
   }
 
   return (

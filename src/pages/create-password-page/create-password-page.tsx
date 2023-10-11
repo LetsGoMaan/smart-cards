@@ -1,13 +1,14 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import s from './create-password-page.module.scss'
 
 import { CreatePassword, CreatePasswordFormSchema } from '@/components'
 import { successOptions } from '@/pages'
-import { useConfirmPasswordMutation } from '@/services'
+import { useAuthMeQuery, useConfirmPasswordMutation } from '@/services'
 
 export const CreatePasswordPage = () => {
+  const { data, isLoading } = useAuthMeQuery()
   const { token } = useParams()
   const navigate = useNavigate()
   const [confirmPassword] = useConfirmPasswordMutation()
@@ -19,6 +20,9 @@ export const CreatePasswordPage = () => {
         navigate('/login')
       })
   }
+
+  if (isLoading) return <div>loading...</div>
+  if (data) return <Navigate to={'/'} />
 
   return (
     <div className={s.createWrapper}>
