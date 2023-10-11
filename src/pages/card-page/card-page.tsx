@@ -35,7 +35,7 @@ export const CardPage = () => {
     setShowAnswer(false)
   }
 
-  if (isLoading && isDeckLoading) return <div>loading...</div>
+  if (isLoading || isDeckLoading) return <div>loading...</div>
 
   return (
     <div>
@@ -55,7 +55,7 @@ export const CardPage = () => {
               <Typography as={'p'} variant={'subtitle1'}>
                 Question:
               </Typography>
-              <Typography className={s.question} as={'p'} variant={'body1'}>
+              <Typography className={s.dataText} as={'p'} variant={'body1'}>
                 {data?.question}
               </Typography>
             </div>
@@ -89,7 +89,7 @@ export const CardPage = () => {
                   <Typography as={'p'} variant={'subtitle1'}>
                     Answer:
                   </Typography>
-                  <Typography as={'p'} variant={'body1'}>
+                  <Typography className={s.dataText} as={'p'} variant={'body1'}>
                     {data?.answer}
                   </Typography>
                 </div>
