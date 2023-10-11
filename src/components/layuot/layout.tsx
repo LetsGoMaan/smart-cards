@@ -24,7 +24,9 @@ export const Layout = () => {
   return (
     <>
       <Header>
-        <img src={logo} alt={'logo'} />
+        <Link to={'/'}>
+          <img src={logo} alt={'logo'} />
+        </Link>
         {data ? (
           <DropDownMenu
             align={'end'}
@@ -54,7 +56,9 @@ export const Layout = () => {
             </DropDownItem>
           </DropDownMenu>
         ) : (
-          <Button variant={'primary'}>Sign In</Button>
+          <Button className={s.signIn} variant={'primary'} as={Link} to={'/login'}>
+            Sign In
+          </Button>
         )}
       </Header>
       <Outlet />
