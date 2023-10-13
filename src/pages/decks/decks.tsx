@@ -27,7 +27,7 @@ export const Decks = () => {
     return `${sort.key}-${sort.direction}`
   }, [sort])
   const { data: authData } = useAuthMeQuery()
-  const { isLoading, data } = useGetDecksQuery({
+  const { isLoading, error, data } = useGetDecksQuery({
     name: debouncedSearchValue,
     orderBy: sortedString,
     authorId,
@@ -51,6 +51,7 @@ export const Decks = () => {
   const myId = authData?.id // already change!!!
 
   if (isLoading) return <div>loading</div>
+  if (error) return <div>Something went wrong, try again</div>
 
   return (
     <div className={s.generalBlock}>
