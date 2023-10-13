@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import s from './forgot-password-page.module.scss'
 
 import { ForgotPassword, ForgotPasswordFormSchema } from '@/components'
+import { errorOptions } from '@/pages'
 import { useAuthMeQuery, useRecoverPasswordMutation } from '@/services'
 
 export const ForgotPasswordPage = () => {
@@ -20,7 +21,7 @@ export const ForgotPasswordPage = () => {
         navigate('/check-email')
       })
       .catch(e => {
-        toast.error(e.data.message)
+        toast.error(e.data.message, errorOptions)
       })
   }
 

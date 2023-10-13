@@ -6,13 +6,13 @@ import { useDebounce } from '@/common'
 import { Pagination, Sort } from '@/components'
 import { DecksMenu, DecksTable } from '@/pages/decks'
 import {
-  useGetDecksQuery,
-  useAppSelector,
-  useAuthMeQuery,
   setCurrentPage,
   setItemsPerPage,
-  useAppDispatch,
   setOrderBy,
+  useAppDispatch,
+  useAppSelector,
+  useAuthMeQuery,
+  useGetDecksQuery,
 } from '@/services'
 
 export const Decks = () => {
