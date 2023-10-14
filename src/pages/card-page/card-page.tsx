@@ -17,7 +17,7 @@ export const CardPage = () => {
   const { data, isLoading } = useGetRandomCardQuery({
     id,
   })
-  const [saveRating, {}] = useSaveCardRatingMutation()
+  const [saveRating, { isLoading: isRatingLoading, error }] = useSaveCardRatingMutation()
   const optionsForRadio = [
     { id: 1, value: 'Did not know' },
     { id: 2, value: 'Forgot' },
@@ -35,7 +35,9 @@ export const CardPage = () => {
     setShowAnswer(false)
   }
 
-  if (isLoading || isDeckLoading) return <div>loading...</div>
+  if (isLoading || isDeckLoading || isRatingLoading) return <div>loading...</div>
+  //if (error) return <div>{error?.data?.errorMessages[0].message}</div>
+  if (error) return <div>Something went wrong, try again</div>
 
   return (
     <div>

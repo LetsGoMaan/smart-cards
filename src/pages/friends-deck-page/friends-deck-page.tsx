@@ -54,7 +54,12 @@ export const FriendsDeckPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
 
-  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
+  const {
+    data,
+    isLoading: gettingCardsLoading,
+    error,
+    isFetching,
+  } = useGetDeckCardsByIdQuery({
     id,
     orderBy: sortedString,
     question: debouncedSearchValue,
@@ -67,14 +72,18 @@ export const FriendsDeckPage = () => {
   }, [])
   const totalPages = data?.pagination.totalPages || 1
 
-  if (cardsArray?.length === 0) return <EmptyDeck deckName={deckData?.name} isMyDeck={false} />
+  if (cardsArray?.length === 0) {
+    return <EmptyDeck deckName={deckData?.name || 'Pack'} isMyDeck={false} />
+  }
+  if (error) return <div>Something went wrong, try again</div>
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
+  if (isFetching) return <div>fetching...</div>
 
   return (
     <div className={s.deckWrapper}>
       <BackButton />
       <div className={s.titleAndButton}>
-        <Typography variant={'large'}>{deckData?.name}</Typography>
+        <Typography variant={'large'}>{deckData?.name || 'Pack'}</Typography>
         <Button className={s.learnPackButton} as={Link} to={`/card/${id}`}>
           <Typography variant={'subtitle2'} as={'h4'}>
             Learn to Pack

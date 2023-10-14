@@ -44,7 +44,12 @@ export const MyDeckPage = () => {
   }, [sort])
   const { id } = useParams()
 
-  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
+  const {
+    data,
+    isLoading: gettingCardsLoading,
+    error,
+    isFetching,
+  } = useGetDeckCardsByIdQuery({
     id,
     orderBy: sortedString,
     question: debouncedSearchValue,
@@ -70,7 +75,9 @@ export const MyDeckPage = () => {
     setIsDeckDeleteModalOpen(true)
   }
 
+  if (error) return <div>Something went wrong, try again</div>
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
+  if (isFetching) return <div>fetching...</div>
   if (cardsArray?.length === 0)
     return (
       <EmptyDeck
