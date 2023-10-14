@@ -2,7 +2,7 @@ import { toast } from 'react-toastify'
 
 import { defaultAvatar } from '@/assets'
 import { PersonalInfo, PersonalInfoFormSchema } from '@/components'
-import { successOptions } from '@/pages'
+import { errorOptions, successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation, useUpdateMeMutation } from '@/services'
 
 export const Profile = () => {
@@ -22,6 +22,9 @@ export const Profile = () => {
       .then(() => {
         toast.success('Your avatar updated successfully', successOptions)
       })
+      .catch(() => {
+        toast.error('User not found', errorOptions)
+      })
   }
   const submitChanges = (data: PersonalInfoFormSchema) => {
     const formData = new FormData()
@@ -32,6 +35,9 @@ export const Profile = () => {
       .unwrap()
       .then(() => {
         toast.success('Your profile updated successfully', successOptions)
+      })
+      .catch(() => {
+        toast.error('User not found', errorOptions)
       })
   }
 

@@ -8,7 +8,7 @@ import { z } from 'zod'
 import s from './cards-modal.module.scss'
 
 import { Button, Input, Modal, Typography } from '@/components'
-import { InputWithTypeFile, successOptions } from '@/pages'
+import { errorOptions, InputWithTypeFile, successOptions } from '@/pages'
 import { useCreateCardMutation } from '@/services'
 import { useUpdateCardMutation } from '@/services/cards/cards-api.ts'
 
@@ -74,6 +74,9 @@ export const CardsModal = ({
         .then(() => {
           toast.success(`Your card updated successfully`, successOptions)
         })
+        .catch(e => {
+          toast.error(e.data.message, errorOptions)
+        })
     } else {
       createCard({
         id,
@@ -85,6 +88,9 @@ export const CardsModal = ({
         .unwrap()
         .then(() => {
           toast.success(`Your card created successfully`, successOptions)
+        })
+        .catch(() => {
+          toast.error('Something went wrong, try again', errorOptions)
         })
     }
     reset()

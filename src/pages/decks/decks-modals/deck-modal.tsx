@@ -8,7 +8,7 @@ import { z } from 'zod'
 import s from './deck-modal.module.scss'
 
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
-import { InputWithTypeFile, successOptions } from '@/pages'
+import { errorOptions, InputWithTypeFile, successOptions } from '@/pages'
 import {
   setDeckName,
   setEditDeckName,
@@ -72,13 +72,24 @@ export const DeckModal = ({
         .then(data => {
           toast.success(`Pack ${data.name} created successfully`, successOptions)
         })
+        .catch(() => {
+          toast.error('Something went wrong, try again', errorOptions)
+        })
       dispatch(setDeckName(''))
     } else {
       //updateDeck({ id, name: data.name })
-      updateDeck({ id, name: data.name, cover: data.cover[0], isPrivate: data.isPackPrivate })
+      updateDeck({
+        id,
+        name: data.name,
+        cover: data.cover[0],
+        isPrivate: data.isPackPrivate,
+      })
         .unwrap()
         .then(data => {
           toast.success(`Pack ${data.name} updated successfully`, successOptions)
+        })
+        .catch(e => {
+          toast.error(e.data.message, errorOptions)
         })
     }
     reset()

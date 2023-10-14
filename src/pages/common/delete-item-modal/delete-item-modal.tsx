@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import s from './delete-item-modal.module.scss'
 
 import { Button, Modal, Typography } from '@/components'
-import { successOptions } from '@/pages'
+import { errorOptions, successOptions } from '@/pages'
 import { useDeleteDeckByIdMutation, useDeleteCardMutation } from '@/services'
 
 type Props = {
@@ -36,6 +36,9 @@ export const DeleteItemModal = ({
         .then(data => {
           toast.success(`Pack ${data.name} deleted successfully`, successOptions)
         })
+        .catch(() => {
+          toast.error('Pack not found', errorOptions)
+        })
       setIsModalOpen(false)
       if (isNavigate) navigate(-1)
     } else {
@@ -43,6 +46,9 @@ export const DeleteItemModal = ({
         .unwrap()
         .then(() => {
           toast.success(`Your card deleted successfully`, successOptions)
+        })
+        .catch(() => {
+          toast.error('Card not found', errorOptions)
         })
       setIsModalOpen(false)
     }
