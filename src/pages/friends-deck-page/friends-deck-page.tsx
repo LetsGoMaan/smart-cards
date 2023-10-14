@@ -18,7 +18,7 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { BackButton, EmptyDeck, Grade } from '@/pages'
+import { BackButton, EmptyDeck, Grade, SomethingWrong } from '@/pages'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 
 const columns: Column[] = [
@@ -75,7 +75,7 @@ export const FriendsDeckPage = () => {
   if (cardsArray?.length === 0) {
     return <EmptyDeck deckName={deckData?.name || 'Pack'} isMyDeck={false} />
   }
-  if (error) return <div>Something went wrong, try again</div>
+  if (error) return <SomethingWrong />
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
   if (isFetching) return <div>fetching...</div>
 

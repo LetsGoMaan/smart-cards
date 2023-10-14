@@ -4,6 +4,7 @@ import s from './decks.module.scss'
 
 import { useDebounce } from '@/common'
 import { Pagination, Sort } from '@/components'
+import { SomethingWrong } from '@/pages'
 import { DecksMenu, DecksTable } from '@/pages/decks'
 import {
   setCurrentPage,
@@ -52,7 +53,7 @@ export const Decks = () => {
 
   if (isLoading) return <div>loading...</div>
   if (isFetching) return <div>fetching...</div>
-  if (error) return <div>Something went wrong, try again</div>
+  if (error) return <SomethingWrong />
 
   return (
     <div className={s.generalBlock}>

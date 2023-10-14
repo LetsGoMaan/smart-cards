@@ -8,7 +8,7 @@ import { Button, Typography } from '@/components'
 export const ErrorPage = () => {
   return (
     <div className={s.errorContainer}>
-      <img className={s.errorImg} src={errorImg} alt={'error image'} />
+      <img className={s.errorImg} src={errorImg} alt={'something-wrong image'} />
       <Typography className={s.errorText} as={'div'} variant={'body1'}>
         Sorry! Page not found!
       </Typography>
