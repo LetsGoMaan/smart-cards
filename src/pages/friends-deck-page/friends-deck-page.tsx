@@ -18,7 +18,14 @@ import {
   TableRow,
   Typography,
 } from '@/components'
-import { BackButton, EmptyDeck, Grade, SomethingWrong } from '@/pages'
+import {
+  BackButton,
+  EmptyDeck,
+  FetchingSpinner,
+  Grade,
+  LoadingSpinner,
+  SomethingWrong,
+} from '@/pages'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services'
 
 const columns: Column[] = [
@@ -56,7 +63,7 @@ export const FriendsDeckPage = () => {
 
   const {
     data,
-    isLoading: gettingCardsLoading,
+    isLoading: isGettingCardsLoading,
     error,
     isFetching,
   } = useGetDeckCardsByIdQuery({
@@ -76,11 +83,11 @@ export const FriendsDeckPage = () => {
     return <EmptyDeck deckName={deckData?.name || 'Pack'} isMyDeck={false} />
   }
   if (error) return <SomethingWrong />
-  if (isLoading || gettingCardsLoading) return <div>loading...</div>
-  if (isFetching) return <div>fetching...</div>
+  if (isLoading || isGettingCardsLoading) return <LoadingSpinner />
 
   return (
     <div className={s.deckWrapper}>
+      <FetchingSpinner loading={isFetching} />
       <BackButton />
       <div className={s.titleAndButton}>
         <Typography variant={'large'}>{deckData?.name || 'Pack'}</Typography>

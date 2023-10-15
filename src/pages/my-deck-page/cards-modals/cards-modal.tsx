@@ -9,8 +9,7 @@ import s from './cards-modal.module.scss'
 
 import { Button, Input, Modal, Typography } from '@/components'
 import { errorOptions, InputWithTypeFile, successOptions } from '@/pages'
-import { useCreateCardMutation } from '@/services'
-import { useUpdateCardMutation } from '@/services/cards/cards-api.ts'
+import { useCreateCardMutation, useUpdateCardMutation } from '@/services'
 
 type Props = {
   isModalOpen: boolean

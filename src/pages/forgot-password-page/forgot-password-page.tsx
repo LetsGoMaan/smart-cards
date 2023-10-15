@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import s from './forgot-password-page.module.scss'
 
 import { ForgotPassword, ForgotPasswordFormSchema } from '@/components'
-import { errorOptions } from '@/pages'
+import { errorOptions, LoadingSpinner } from '@/pages'
 import { useAuthMeQuery, useRecoverPasswordMutation } from '@/services'
 
 export const ForgotPasswordPage = () => {
@@ -26,7 +26,7 @@ export const ForgotPasswordPage = () => {
       })
   }
 
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <LoadingSpinner />
   if (data) return <Navigate to={'/'} />
 
   return (

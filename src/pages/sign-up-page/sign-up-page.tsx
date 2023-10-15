@@ -4,12 +4,12 @@ import { toast } from 'react-toastify'
 import s from './sign-up-page.module.scss'
 
 import { SignUp, SignUpFormSchema } from '@/components'
-import { errorOptions } from '@/pages'
+import { errorOptions, LoadingSpinner } from '@/pages'
 import { useAuthMeQuery, useSignUpMutation } from '@/services'
 
 export const SignUpPage = () => {
   const { data, isLoading } = useAuthMeQuery()
-  const [signUp] = useSignUpMutation()
+  const [signUp, { isLoading: isSigningUp }] = useSignUpMutation()
   const navigate = useNavigate()
   const signUpHandler = (signUpData: SignUpFormSchema) => {
     signUp({ name: signUpData.name, password: signUpData.password, email: signUpData.email })
@@ -20,7 +20,7 @@ export const SignUpPage = () => {
       })
   }
 
-  if (isLoading) return <div>loading...</div>
+  if (isLoading || isSigningUp) return <LoadingSpinner />
   if (data) return <Navigate to={'/'} />
 
   return (

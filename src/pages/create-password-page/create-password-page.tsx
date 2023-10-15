@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import s from './create-password-page.module.scss'
 
 import { CreatePassword, CreatePasswordFormSchema } from '@/components'
-import { errorOptions, successOptions } from '@/pages'
+import { errorOptions, LoadingSpinner, successOptions } from '@/pages'
 import { useAuthMeQuery, useConfirmPasswordMutation } from '@/services'
 
 export const CreatePasswordPage = () => {
@@ -24,7 +24,7 @@ export const CreatePasswordPage = () => {
       })
   }
 
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <LoadingSpinner />
   if (data) return <Navigate to={'/'} />
 
   return (
