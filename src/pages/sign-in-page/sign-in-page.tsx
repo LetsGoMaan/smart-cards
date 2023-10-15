@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import s from './sign-in-page.module.scss'
 
 import { SignIn, SignInFormSchema } from '@/components'
-import { errorOptions, successOptions } from '@/pages'
+import { errorOptions, LoadingSpinner, successOptions } from '@/pages'
 import { useAuthMeQuery, useLoginMutation } from '@/services'
 
 export const SignInPage = () => {
@@ -12,7 +12,7 @@ export const SignInPage = () => {
   const { data, isLoading } = useAuthMeQuery()
   const navigate = useNavigate()
 
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <LoadingSpinner />
   if (data) return <Navigate to={'/'} />
 
   const loginHandler = (loginData: SignInFormSchema) => {

@@ -21,6 +21,8 @@ import {
   DeckModal,
   DeleteItemModal,
   EmptyDeck,
+  FetchingSpinner,
+  LoadingSpinner,
   MyDeckTable,
   SomethingWrong,
 } from '@/pages'
@@ -54,7 +56,7 @@ export const MyDeckPage = () => {
 
   const {
     data,
-    isLoading: gettingCardsLoading,
+    isLoading: isGettingCardsLoading,
     error,
     isFetching,
   } = useGetDeckCardsByIdQuery({
@@ -84,8 +86,8 @@ export const MyDeckPage = () => {
   }
 
   if (error) return <SomethingWrong />
-  if (isLoading || gettingCardsLoading) return <div>loading...</div>
-  if (isFetching) return <div>fetching...</div>
+  if (isLoading || isGettingCardsLoading) return <LoadingSpinner />
+  if (isFetching) return <FetchingSpinner />
   if (cardsArray?.length === 0)
     return (
       <EmptyDeck

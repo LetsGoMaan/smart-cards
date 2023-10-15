@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { PulseLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
@@ -47,8 +48,8 @@ export const DeckModal = ({
   const dispatch = useAppDispatch()
   const [coverPreview, setCoverPreview] = useState('')
 
-  const [createDeck] = useCreateDeckMutation()
-  const [updateDeck] = useUpdateDeckMutation()
+  const [createDeck, { isLoading: isCreating }] = useCreateDeckMutation()
+  const [updateDeck, { isLoading: isUpdating }] = useUpdateDeckMutation()
   const {
     register,
     handleSubmit,
@@ -116,6 +117,8 @@ export const DeckModal = ({
   }
 
   const imgSrc = coverPreview || deckCover
+
+  if (isCreating || isUpdating) return <PulseLoader color={'#8c61ff'} />
 
   return (
     <Modal

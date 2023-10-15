@@ -6,7 +6,7 @@ import s from './card-page.module.scss'
 
 import { Button, Card, Typography } from '@/components'
 import { Radio } from '@/components/ui/radioGroup'
-import { BackButton, SomethingWrong } from '@/pages'
+import { BackButton, LoadingSpinner, SomethingWrong } from '@/pages'
 import { useGetDeckByIdQuery, useGetRandomCardQuery, useSaveCardRatingMutation } from '@/services'
 
 export const CardPage = () => {
@@ -35,7 +35,7 @@ export const CardPage = () => {
     setShowAnswer(false)
   }
 
-  if (isLoading || isDeckLoading || isRatingLoading) return <div>loading...</div>
+  if (isLoading || isDeckLoading || isRatingLoading) return <LoadingSpinner />
   //if (something-wrong) return <div>{something-wrong?.data?.errorMessages[0].message}</div>
   if (error) return <SomethingWrong />
 

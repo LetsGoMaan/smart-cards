@@ -2,7 +2,7 @@ import { toast } from 'react-toastify'
 
 import { defaultAvatar } from '@/assets'
 import { PersonalInfo, PersonalInfoFormSchema } from '@/components'
-import { errorOptions, successOptions } from '@/pages'
+import { errorOptions, LoadingSpinner, successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation, useUpdateMeMutation } from '@/services'
 
 export const Profile = () => {
@@ -10,8 +10,8 @@ export const Profile = () => {
   const name = data?.name || 'Yolo'
   const email = data?.email || 'yolo@superyolo.com'
   const avatar = data?.avatar || defaultAvatar
-  const [logOut] = useLogoutMutation()
-  const [updateMe] = useUpdateMeMutation()
+  const [logOut, { isLoading: isLogouting }] = useLogoutMutation()
+  const [updateMe, { isLoading: isUpdating }] = useUpdateMeMutation()
 
   const changeAvatar = (avatar: Blob) => {
     const formData = new FormData()
@@ -40,6 +40,8 @@ export const Profile = () => {
         toast.error('User not found', errorOptions)
       })
   }
+
+  if (isLogouting || isUpdating) return <LoadingSpinner />
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>

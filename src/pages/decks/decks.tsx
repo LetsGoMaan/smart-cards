@@ -4,7 +4,7 @@ import s from './decks.module.scss'
 
 import { useDebounce } from '@/common'
 import { Pagination, Sort } from '@/components'
-import { SomethingWrong } from '@/pages'
+import { FetchingSpinner, LoadingSpinner, SomethingWrong } from '@/pages'
 import { DecksMenu, DecksTable } from '@/pages/decks'
 import {
   setCurrentPage,
@@ -51,8 +51,8 @@ export const Decks = () => {
   const totalPages = data?.pagination.totalPages || 1
   const myId = authData?.id // already change!!!
 
-  if (isLoading) return <div>loading...</div>
-  if (isFetching) return <div>fetching...</div>
+  if (isLoading) return <LoadingSpinner />
+  if (isFetching) return <FetchingSpinner />
   if (error) return <SomethingWrong />
 
   return (
