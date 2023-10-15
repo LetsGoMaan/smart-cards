@@ -1,8 +1,7 @@
 import s from './empty-deck.module.scss'
 
 import { Button, Typography } from '@/components'
-import { BackButton } from '@/pages'
-import { CardsModal } from '@/pages/my-deck-page/cards-modals/cards-modal.tsx'
+import { BackButton, CardsModal } from '@/pages'
 
 type EmptyDeckProps = {
   deckName: string | undefined

@@ -6,7 +6,7 @@ import s from './card-page.module.scss'
 
 import { Button, Card, Typography } from '@/components'
 import { Radio } from '@/components/ui/radioGroup'
-import { BackButton } from '@/pages'
+import { BackButton, SomethingWrong } from '@/pages'
 import { useGetDeckByIdQuery, useGetRandomCardQuery, useSaveCardRatingMutation } from '@/services'
 
 export const CardPage = () => {
@@ -17,7 +17,7 @@ export const CardPage = () => {
   const { data, isLoading } = useGetRandomCardQuery({
     id,
   })
-  const [saveRating, {}] = useSaveCardRatingMutation()
+  const [saveRating, { isLoading: isRatingLoading, error }] = useSaveCardRatingMutation()
   const optionsForRadio = [
     { id: 1, value: 'Did not know' },
     { id: 2, value: 'Forgot' },
@@ -35,7 +35,9 @@ export const CardPage = () => {
     setShowAnswer(false)
   }
 
-  if (isLoading && isDeckLoading) return <div>loading...</div>
+  if (isLoading || isDeckLoading || isRatingLoading) return <div>loading...</div>
+  //if (something-wrong) return <div>{something-wrong?.data?.errorMessages[0].message}</div>
+  if (error) return <SomethingWrong />
 
   return (
     <div>
@@ -55,7 +57,7 @@ export const CardPage = () => {
               <Typography as={'p'} variant={'subtitle1'}>
                 Question:
               </Typography>
-              <Typography className={s.question} as={'p'} variant={'body1'}>
+              <Typography className={s.dataText} as={'p'} variant={'body1'}>
                 {data?.question}
               </Typography>
             </div>
@@ -89,7 +91,7 @@ export const CardPage = () => {
                   <Typography as={'p'} variant={'subtitle1'}>
                     Answer:
                   </Typography>
-                  <Typography as={'p'} variant={'body1'}>
+                  <Typography className={s.dataText} as={'p'} variant={'body1'}>
                     {data?.answer}
                   </Typography>
                 </div>

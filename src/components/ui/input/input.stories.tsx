@@ -26,7 +26,7 @@ export const InputStory: Story = {
 export const InputStoryWithError: Story = {
   args: {
     label: 'Input',
-    placeholder: 'Input with error',
+    placeholder: 'Input with something-wrong',
     errorMessage: 'Error',
     type: 'text',
   },

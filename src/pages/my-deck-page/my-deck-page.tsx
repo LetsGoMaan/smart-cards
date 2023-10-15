@@ -15,7 +15,15 @@ import {
   Sort,
   Typography,
 } from '@/components'
-import { BackButton, CardsModal, DeckModal, DeleteItemModal, EmptyDeck, MyDeckTable } from '@/pages'
+import {
+  BackButton,
+  CardsModal,
+  DeckModal,
+  DeleteItemModal,
+  EmptyDeck,
+  MyDeckTable,
+  SomethingWrong,
+} from '@/pages'
 import {
   setCurrentPageMyDeck,
   setItemsPerPageMyDeck,
@@ -44,7 +52,12 @@ export const MyDeckPage = () => {
   }, [sort])
   const { id } = useParams()
 
-  const { data, isLoading: gettingCardsLoading } = useGetDeckCardsByIdQuery({
+  const {
+    data,
+    isLoading: gettingCardsLoading,
+    error,
+    isFetching,
+  } = useGetDeckCardsByIdQuery({
     id,
     orderBy: sortedString,
     question: debouncedSearchValue,
@@ -70,7 +83,9 @@ export const MyDeckPage = () => {
     setIsDeckDeleteModalOpen(true)
   }
 
+  if (error) return <SomethingWrong />
   if (isLoading || gettingCardsLoading) return <div>loading...</div>
+  if (isFetching) return <div>fetching...</div>
   if (cardsArray?.length === 0)
     return (
       <EmptyDeck

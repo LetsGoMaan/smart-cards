@@ -12,6 +12,7 @@ import {
   CheckEmailPage,
   CreatePasswordPage,
   Decks,
+  ErrorPage,
   ForgotPasswordPage,
   FriendsDeckPage,
   MyDeckPage,
@@ -70,7 +71,14 @@ const privateRoutes: RouteObject[] = [
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    children: [...publicRoutes, { element: <PrivateRoutes />, children: privateRoutes }],
+    children: [
+      ...publicRoutes,
+      { element: <PrivateRoutes />, children: privateRoutes },
+      {
+        path: '*',
+        element: <ErrorPage />,
+      },
+    ],
   },
 ])
 

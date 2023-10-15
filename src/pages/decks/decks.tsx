@@ -4,15 +4,16 @@ import s from './decks.module.scss'
 
 import { useDebounce } from '@/common'
 import { Pagination, Sort } from '@/components'
+import { SomethingWrong } from '@/pages'
 import { DecksMenu, DecksTable } from '@/pages/decks'
 import {
-  useGetDecksQuery,
-  useAppSelector,
-  useAuthMeQuery,
   setCurrentPage,
   setItemsPerPage,
-  useAppDispatch,
   setOrderBy,
+  useAppDispatch,
+  useAppSelector,
+  useAuthMeQuery,
+  useGetDecksQuery,
 } from '@/services'
 
 export const Decks = () => {
@@ -27,7 +28,7 @@ export const Decks = () => {
     return `${sort.key}-${sort.direction}`
   }, [sort])
   const { data: authData } = useAuthMeQuery()
-  const { isLoading, data } = useGetDecksQuery({
+  const { isLoading, isFetching, error, data } = useGetDecksQuery({
     name: debouncedSearchValue,
     orderBy: sortedString,
     authorId,
@@ -50,7 +51,9 @@ export const Decks = () => {
   const totalPages = data?.pagination.totalPages || 1
   const myId = authData?.id // already change!!!
 
-  if (isLoading) return <div>loading</div>
+  if (isLoading) return <div>loading...</div>
+  if (isFetching) return <div>fetching...</div>
+  if (error) return <SomethingWrong />
 
   return (
     <div className={s.generalBlock}>
