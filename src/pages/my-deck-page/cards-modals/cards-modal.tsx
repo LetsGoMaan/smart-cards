@@ -2,7 +2,6 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { PulseLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
@@ -51,8 +50,8 @@ export const CardsModal = ({
 }: Props) => {
   const [questionPreview, setQuestionPreview] = useState('')
   const [answerPreview, setAnswerPreview] = useState('')
-  const [createCard, { isLoading: isCreating }] = useCreateCardMutation()
-  const [updateCard, { isLoading: isUpdating }] = useUpdateCardMutation()
+  const [createCard] = useCreateCardMutation()
+  const [updateCard] = useUpdateCardMutation()
 
   const {
     register,
@@ -124,8 +123,6 @@ export const CardsModal = ({
 
   const questionSrc = questionPreview || questionImg
   const answerSrc = answerPreview || answerImg
-
-  if (isCreating || isUpdating) return <PulseLoader color={'#8c61ff'} />
 
   return (
     <Modal

@@ -84,10 +84,10 @@ export const FriendsDeckPage = () => {
   }
   if (error) return <SomethingWrong />
   if (isLoading || isGettingCardsLoading) return <LoadingSpinner />
-  if (isFetching) return <FetchingSpinner />
 
   return (
     <div className={s.deckWrapper}>
+      <FetchingSpinner loading={isFetching} />
       <BackButton />
       <div className={s.titleAndButton}>
         <Typography variant={'large'}>{deckData?.name || 'Pack'}</Typography>

@@ -52,11 +52,11 @@ export const Decks = () => {
   const myId = authData?.id // already change!!!
 
   if (isLoading) return <LoadingSpinner />
-  if (isFetching) return <FetchingSpinner />
   if (error) return <SomethingWrong />
 
   return (
     <div className={s.generalBlock}>
+      <FetchingSpinner loading={isFetching} isMain={true} />
       <DecksMenu />
       <DecksTable decks={data?.items} sort={sort} setSort={onSetSort} authDeckAuthorId={myId} />
       <Pagination

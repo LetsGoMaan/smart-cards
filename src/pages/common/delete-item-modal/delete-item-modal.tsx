@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { PulseLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
 
 import s from './delete-item-modal.module.scss'
@@ -28,8 +27,8 @@ export const DeleteItemModal = ({
   isNavigate,
 }: Props) => {
   const navigate = useNavigate()
-  const [deleteCard, { isLoading: isDeletingCard }] = useDeleteCardMutation()
-  const [deleteDeck, { isLoading: isDeletingDeck }] = useDeleteDeckByIdMutation()
+  const [deleteCard] = useDeleteCardMutation()
+  const [deleteDeck] = useDeleteDeckByIdMutation()
   const deleteHandler = () => {
     if (title === 'Delete Pack') {
       deleteDeck({ id })
@@ -55,8 +54,6 @@ export const DeleteItemModal = ({
     }
   }
   const isDeck = title === 'Delete Pack'
-
-  if (isDeletingCard || isDeletingDeck) return <PulseLoader color={'#8c61ff'} />
 
   return (
     <Modal

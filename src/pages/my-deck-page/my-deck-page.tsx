@@ -87,7 +87,6 @@ export const MyDeckPage = () => {
 
   if (error) return <SomethingWrong />
   if (isLoading || isGettingCardsLoading) return <LoadingSpinner />
-  if (isFetching) return <FetchingSpinner />
   if (cardsArray?.length === 0)
     return (
       <EmptyDeck
@@ -101,6 +100,7 @@ export const MyDeckPage = () => {
 
   return (
     <div className={s.myDeckWrapper}>
+      <FetchingSpinner loading={isFetching} />
       <BackButton />
       <div className={s.titleAndButton}>
         <div className={s.titleAndDrop}>
