@@ -50,6 +50,8 @@ export const CardsModal = ({
 }: Props) => {
   const [questionPreview, setQuestionPreview] = useState('')
   const [answerPreview, setAnswerPreview] = useState('')
+  const [answerImgError, setAnswerImgError] = useState('')
+  const [questionImgError, setQuestionImgError] = useState('')
   const [createCard] = useCreateCardMutation()
   const [updateCard] = useUpdateCardMutation()
 
@@ -60,14 +62,23 @@ export const CardsModal = ({
     formState: { errors },
   } = useForm<CardFormSchema>({ resolver: zodResolver(cardSchema) })
 
+  const onCloseHandler = () => {
+    reset()
+    setQuestionPreview('')
+    setAnswerPreview('')
+    setQuestionImgError('')
+    setAnswerImgError('')
+    setIsModalOpen(false)
+  }
+
   const onSubmit: SubmitHandler<CardFormSchema> = data => {
     if (title === 'Edit Card') {
       updateCard({
         id: cardId,
         answer: data.answer,
         question: data.question,
-        answerImg: data.answerImg[0],
-        questionImg: data.questionImg[0],
+        answerImg: !answerImgError && data.answerImg[0],
+        questionImg: !questionImgError && data.questionImg[0],
       })
         .unwrap()
         .then(() => {
@@ -81,8 +92,8 @@ export const CardsModal = ({
         id,
         answer: data.answer,
         question: data.question,
-        answerImg: data.answerImg[0],
-        questionImg: data.questionImg[0],
+        answerImg: !answerImgError && data.answerImg[0],
+        questionImg: !questionImgError && data.questionImg[0],
       })
         .unwrap()
         .then(() => {
@@ -92,10 +103,7 @@ export const CardsModal = ({
           toast.error('Something went wrong, try again', errorOptions)
         })
     }
-    reset()
-    setQuestionPreview('')
-    setAnswerPreview('')
-    setIsModalOpen(false)
+    onCloseHandler()
   }
 
   const answerHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,19 +114,36 @@ export const CardsModal = ({
     setValueQuestion && setValueQuestion(e.currentTarget.value)
   }
 
-  const handleQuestionFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const question = event.currentTarget.name === 'questionImg'
+    const answer = event.currentTarget.name === 'answerImg'
+    const file = event.target.files?.[0]
 
-    if (files && files.length > 0) {
-      setQuestionPreview(URL.createObjectURL(files[0]))
+    if (!file) {
+      return
     }
-  }
-  const handleAnswerFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
 
-    if (files && files.length > 0) {
-      setAnswerPreview(URL.createObjectURL(files[0]))
+    const allowedTypes = ['image/jpeg', 'image/png']
+
+    if (!allowedTypes.includes(file.type)) {
+      question && setQuestionImgError('Only JPEG and PNG images are allowed.')
+      answer && setAnswerImgError('Only JPEG and PNG images are allowed.')
+
+      return
     }
+    const maxSizeInBytes = 1024 * 1024
+
+    if (file.size > maxSizeInBytes) {
+      question && setQuestionImgError('The image size should not exceed 1MB.')
+      answer && setAnswerImgError('The image size should not exceed 1MB.')
+
+      return
+    }
+
+    question && setQuestionPreview(URL.createObjectURL(file))
+    answer && setAnswerPreview(URL.createObjectURL(file))
+    setQuestionImgError('')
+    setAnswerImgError('')
   }
 
   const questionSrc = questionPreview || questionImg
@@ -127,19 +152,18 @@ export const CardsModal = ({
   return (
     <Modal
       isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
+      //onClose={() => setIsModalOpen(false)}
+      onClose={onCloseHandler}
       showCloseButton={true}
       title={title}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.inputs}>
-          {/*{questionPreview && (
-            <img className={s.coverPreview} src={questionPreview} alt={'image'} />
-          )}*/}
           <InputWithTypeFile
             name={'questionImg'}
             imageSrc={questionSrc}
-            handleFileChange={handleQuestionFileChange}
+            handleFileChange={handleImageChange}
+            errorMessage={questionImgError}
             register={register}
           />
           <Input
@@ -151,11 +175,11 @@ export const CardsModal = ({
             onChange={questionHandler}
           />
 
-          {/*{answerPreview && <img className={s.coverPreview} src={answerPreview} alt={'image'} />}*/}
           <InputWithTypeFile
             name={'answerImg'}
             imageSrc={answerSrc}
-            handleFileChange={handleAnswerFileChange}
+            handleFileChange={handleImageChange}
+            errorMessage={answerImgError}
             register={register}
           />
           <Input
@@ -168,7 +192,7 @@ export const CardsModal = ({
           />
         </div>
         <div className={s.buttons}>
-          <Button type={'button'} onClick={() => setIsModalOpen(false)} variant={'secondary'}>
+          <Button type={'button'} onClick={onCloseHandler} variant={'secondary'}>
             <Typography as={'h4'} variant={'subtitle2'}>
               Cancel
             </Typography>
