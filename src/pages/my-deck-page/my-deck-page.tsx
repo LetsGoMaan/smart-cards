@@ -68,9 +68,6 @@ export const MyDeckPage = () => {
   })
 
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
-  const cardsArray = useMemo(() => {
-    return data?.items
-  }, [])
 
   const count = data?.pagination.totalPages || 0
   const setCurrentPage = (page: number) => {
@@ -87,7 +84,7 @@ export const MyDeckPage = () => {
 
   if (error) return <SomethingWrong />
   if (isLoading || isGettingCardsLoading) return <LoadingSpinner />
-  if (cardsArray?.length === 0)
+  if (deckData?.cardsCount === 0)
     return (
       <EmptyDeck
         deckName={deckData?.name}
