@@ -6,7 +6,7 @@ import s from './card-page.module.scss'
 
 import { Button, Card, Typography } from '@/components'
 import { Radio } from '@/components/ui/radioGroup'
-import { BackButton, LoadingSpinner, SomethingWrong } from '@/pages'
+import { BackButton, EmptyDeck, LoadingSpinner, SomethingWrong } from '@/pages'
 import { useGetDeckByIdQuery, useGetRandomCardQuery, useSaveCardRatingMutation } from '@/services'
 
 export const CardPage = () => {
@@ -14,7 +14,11 @@ export const CardPage = () => {
   const [showAnswer, setShowAnswer] = useState(false)
   const [rating, setRating] = useState(0)
   const { data: deckData, isLoading: isDeckLoading } = useGetDeckByIdQuery({ id })
-  const { data, isLoading } = useGetRandomCardQuery({
+  const {
+    data,
+    isLoading,
+    //error: learnError,
+  } = useGetRandomCardQuery({
     id,
   })
   const [saveRating, { isLoading: isRatingLoading, error }] = useSaveCardRatingMutation()
@@ -36,7 +40,10 @@ export const CardPage = () => {
   }
 
   if (isLoading || isDeckLoading || isRatingLoading) return <LoadingSpinner />
-  //if (something-wrong) return <div>{something-wrong?.data?.errorMessages[0].message}</div>
+  if (deckData?.cardsCount === 0) {
+    return <EmptyDeck deckName={deckData?.name || 'Pack'} isMyDeck={false} isLearn={true} />
+  }
+  //if (error) return <div>{error?.data?.errorMessages[0].message}</div>
   if (error) return <SomethingWrong />
 
   return (
