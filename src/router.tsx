@@ -15,6 +15,7 @@ import {
   ErrorPage,
   ForgotPasswordPage,
   FriendsDeckPage,
+  LoadingSpinner,
   MyDeckPage,
   Profile,
   SignInPage,
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
 function PrivateRoutes() {
   const { data, isLoading } = useAuthMeQuery()
 
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <LoadingSpinner />
   const isLoggedIn = !!data
 
   return isLoggedIn ? <Outlet /> : <Navigate to={'/login'} />
