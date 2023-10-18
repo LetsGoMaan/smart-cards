@@ -12,7 +12,7 @@ import { Avatar, Button, Card, Input, Typography } from '@/components'
 
 type PersonalInfoProps = {
   onSubmit?: (data: PersonalInfoFormSchema) => void
-  onChangeAvatar?: (avatar: File) => void
+  onChangeAvatar?: (avatar: Blob) => void
   onLogOut?: () => void
   avatar?: string
   name: string
@@ -38,6 +38,7 @@ export const PersonalInfo = ({
   const [editMode, setEditMode] = useState(false)
   const [editName, setEditName] = useState(name)
   const [editEmail, setEditEmail] = useState(email)
+  const [avatarError, setAvatarError] = useState('')
 
   const {
     handleSubmit,
@@ -58,7 +59,28 @@ export const PersonalInfo = ({
   }
 
   const onChangeAvatarHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.files?.length && onChangeAvatar?.(e.target.files[0])
+    const file = e.target.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/png']
+
+    if (!allowedTypes.includes(file.type)) {
+      setAvatarError('Only JPEG and PNG images are allowed.')
+
+      return
+    }
+    const maxSizeInBytes = 1024 * 1024
+
+    if (file.size > maxSizeInBytes) {
+      setAvatarError('The image size should not exceed 1MB.')
+
+      return
+    }
+    onChangeAvatar?.(file)
+    setAvatarError('')
   }
 
   return (
@@ -79,6 +101,7 @@ export const PersonalInfo = ({
           />
           <img className={s.addPhotoBtn} src={editButton} alt={'picture'} />
         </div>
+        <div className={s.errorMessage}>{avatarError}</div>
 
         <DevTool control={control} />
         {editMode && (
@@ -122,7 +145,6 @@ export const PersonalInfo = ({
             <Typography variant={'h1'} className={s.name}>
               {name}
             </Typography>
-            {/*<input type="file" />*/}
             <button onClick={() => setEditMode(true)} className={s.editNameButton}>
               <img src={editButton} alt="editButton" />
             </button>
