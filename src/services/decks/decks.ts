@@ -1,4 +1,4 @@
-import { current } from '@reduxjs/toolkit'
+//import { current } from '@reduxjs/toolkit'
 
 import {
   //CreateDeckArgs,
@@ -34,7 +34,6 @@ const decksApi = baseApi.injectEndpoints({
           return { url: `v1/decks`, method: 'POST', body: args }
         },
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
-          console.log('hey create')
           const state = getState() as RootState
 
           const {
@@ -50,8 +49,6 @@ const decksApi = baseApi.injectEndpoints({
           try {
             const res = await queryFulfilled
 
-            console.log('try create', res)
-
             dispatch(
               decksApi.util.updateQueryData(
                 'getDecks',
@@ -65,11 +62,9 @@ const decksApi = baseApi.injectEndpoints({
                   maxCardsCount,
                 },
                 draft => {
-                  console.log('bef', current(draft))
                   draft.items.pop()
                   draft.items.unshift(res.data)
                   //draft.items = [res.data, ...draft.items]
-                  console.log(current(draft))
                 }
               )
             )
@@ -135,7 +130,6 @@ const decksApi = baseApi.injectEndpoints({
           return { url: `v1/decks/${id}`, method: 'PATCH', body: formData, formData: true }
         },
         async onQueryStarted({ id, ...args }, { dispatch, getState, queryFulfilled }) {
-          console.log('upd')
           const state = getState() as RootState
           const {
             orderBy,
@@ -159,12 +153,13 @@ const decksApi = baseApi.injectEndpoints({
                 maxCardsCount,
               },
               draft => {
+                console.log(args)
                 const ind = draft.items.findIndex(item => item.id === id)
 
                 draft.items[ind] = {
                   ...draft.items[ind],
                   name: args.name,
-                  cover: args.cover,
+                  //cover: args.cover,
                   isPrivate: args.isPrivate,
                 }
               }

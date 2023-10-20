@@ -50,7 +50,7 @@ export interface Deck {
   name: string
   isPrivate?: boolean
   shots: number
-  cover?: File | null
+  cover?: string | null
   rating: number
   isDeleted?: boolean | null
   isBlocked?: boolean | null
