@@ -74,12 +74,9 @@ export const FriendsDeckPage = () => {
     itemsPerPage,
   })
   const { data: deckData, isLoading } = useGetDeckByIdQuery({ id })
-  const cardsArray = useMemo(() => {
-    return data?.items
-  }, [])
   const totalPages = data?.pagination.totalPages || 1
 
-  if (cardsArray?.length === 0) {
+  if (deckData?.cardsCount === 0) {
     return <EmptyDeck deckName={deckData?.name || 'Pack'} isMyDeck={false} />
   }
   if (error) return <SomethingWrong />

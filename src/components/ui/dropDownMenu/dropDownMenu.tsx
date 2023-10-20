@@ -32,9 +32,15 @@ const motionItem = {
   },
 }
 
-export const DropDownMenu = ({ trigger, children, align }: DropDownMenuProps) => {
+export const DropDownMenu = ({
+  trigger,
+  children,
+  align,
+  isMenuOpen,
+  onChange,
+}: DropDownMenuProps) => {
   return (
-    <DropdownRadix.Root>
+    <DropdownRadix.Root onOpenChange={onChange} open={isMenuOpen}>
       <DropdownRadix.Trigger asChild>
         <button className={s.buttonTrigger} aria-label="Customise options">
           {trigger}

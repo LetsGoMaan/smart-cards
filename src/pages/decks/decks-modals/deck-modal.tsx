@@ -10,6 +10,7 @@ import s from './deck-modal.module.scss'
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
 import { errorOptions, InputWithTypeFile, successOptions } from '@/pages'
 import {
+  setCurrentPage,
   setDeckName,
   setEditDeckName,
   useAppDispatch,
@@ -46,6 +47,7 @@ export const DeckModal = ({
   const { editDeckName, addDeckName } = useAppSelector(state => state.decks)
   const dispatch = useAppDispatch()
   const [coverPreview, setCoverPreview] = useState('')
+  const [coverError, setCoverError] = useState('')
 
   const [createDeck] = useCreateDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
@@ -57,31 +59,37 @@ export const DeckModal = ({
     formState: { errors },
   } = useForm<PackFormSchema>({ resolver: zodResolver(packSchema) })
 
+  const onCloseHandler = () => {
+    reset()
+    setCoverPreview('')
+    setCoverError('')
+    setModalOpen(false)
+  }
+
   const onSubmit: SubmitHandler<PackFormSchema> = data => {
     const formData = new FormData()
     const isPackPrivate = data.isPackPrivate ? 'true' : 'false'
 
-    formData.append('cover', data.cover[0])
+    !coverError && formData.append('cover', data.cover[0])
     formData.append('name', data.name)
     formData.append('isPrivate', isPackPrivate)
 
     if (modalTitle === 'Add New Pack') {
-      //createDeck({ name: data.packName })
       createDeck(formData)
         .unwrap()
         .then(data => {
           toast.success(`Pack ${data.name} created successfully`, successOptions)
+          dispatch(setCurrentPage(1))
         })
         .catch(() => {
           toast.error('Something went wrong, try again', errorOptions)
         })
       dispatch(setDeckName(''))
     } else {
-      //updateDeck({ id, name: data.name })
       updateDeck({
         id,
         name: data.name,
-        cover: data.cover[0],
+        cover: !coverError && data.cover[0],
         isPrivate: data.isPackPrivate,
       })
         .unwrap()
@@ -92,9 +100,7 @@ export const DeckModal = ({
           toast.error(e.data.message, errorOptions)
         })
     }
-    reset()
-    setCoverPreview('')
-    setModalOpen(false)
+    onCloseHandler()
   }
 
   const inputValue = modalTitle === 'Add New Pack' ? addDeckName : editDeckName
@@ -107,29 +113,44 @@ export const DeckModal = ({
     }
   }
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
 
-    if (files && files.length > 0) {
-      setCoverPreview(URL.createObjectURL(files[0]))
+    if (!file) {
+      return
     }
+
+    const allowedTypes = ['image/jpeg', 'image/png']
+
+    if (!allowedTypes.includes(file.type)) {
+      setCoverError('Only JPEG and PNG images are allowed.')
+
+      return
+    }
+    const maxSizeInBytes = 1024 * 1024
+
+    if (file.size > maxSizeInBytes) {
+      setCoverError('The image size should not exceed 1MB.')
+
+      return
+    }
+
+    setCoverPreview(URL.createObjectURL(file))
+    setCoverError('')
   }
 
   const imgSrc = coverPreview || deckCover
 
   return (
-    <Modal
-      title={modalTitle}
-      showCloseButton={true}
-      onClose={() => setModalOpen(false)}
-      isOpen={isModalOpen}
-    >
+    <Modal title={modalTitle} showCloseButton={true} onClose={onCloseHandler} isOpen={isModalOpen}>
       <form className={s.modalForm} onSubmit={handleSubmit(onSubmit)}>
         <InputWithTypeFile
           name={'cover'}
-          handleFileChange={handleFileChange}
+          //handleFileChange={handleFileChange}
+          handleFileChange={handleImageChange}
           imageSrc={imgSrc}
           register={register}
+          errorMessage={coverError}
         />
 
         <Input
@@ -145,7 +166,7 @@ export const DeckModal = ({
         <ControlledCheckbox name={'isPackPrivate'} control={control} label={'Private pack'} />
 
         <div className={s.modalButtons}>
-          <Button type={'button'} onClick={() => setModalOpen(false)} variant={'secondary'}>
+          <Button type={'button'} onClick={onCloseHandler} variant={'secondary'}>
             <Typography as={'h4'} variant={'subtitle2'}>
               Cancel
             </Typography>

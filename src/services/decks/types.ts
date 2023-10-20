@@ -48,7 +48,7 @@ export interface Deck {
   id: string
   userId: string
   name: string
-  isPrivate: boolean
+  isPrivate?: boolean
   shots: number
   cover?: string | null
   rating: number

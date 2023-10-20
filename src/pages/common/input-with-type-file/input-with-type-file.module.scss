@@ -42,3 +42,11 @@
     }
   }
 }
+
+.errorMessage {
+  text-align: start;
+  margin-top: 5px;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  color: var(--color-danger-300);
+}

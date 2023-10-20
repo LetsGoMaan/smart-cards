@@ -2,11 +2,11 @@ import { toast } from 'react-toastify'
 
 import { defaultAvatar } from '@/assets'
 import { PersonalInfo, PersonalInfoFormSchema } from '@/components'
-import { errorOptions, LoadingSpinner, successOptions } from '@/pages'
+import { errorOptions, FetchingSpinner, successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation, useUpdateMeMutation } from '@/services'
 
 export const Profile = () => {
-  const { data } = useAuthMeQuery() //change all data
+  const { data } = useAuthMeQuery()
   const name = data?.name || 'Yolo'
   const email = data?.email || 'yolo@superyolo.com'
   const avatar = data?.avatar || defaultAvatar
@@ -41,10 +41,9 @@ export const Profile = () => {
       })
   }
 
-  if (isLogouting || isUpdating) return <LoadingSpinner />
-
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
+      <FetchingSpinner loading={isUpdating || isLogouting} isProfile={true} />
       <PersonalInfo
         onSubmit={submitChanges}
         onLogOut={logOut}

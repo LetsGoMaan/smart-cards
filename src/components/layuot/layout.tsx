@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Link, Outlet } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -20,6 +22,15 @@ export const Layout = () => {
         toast.success(notification, successOptions)
       })
   }
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const handleMenuChange = (open: boolean) => {
+    setMenuOpen(open)
+  }
+
+  const handleLinkClick = () => {
+    setMenuOpen(false)
+  }
 
   return (
     <>
@@ -29,6 +40,8 @@ export const Layout = () => {
         </Link>
         {data ? (
           <DropDownMenu
+            onChange={handleMenuChange}
+            isMenuOpen={menuOpen}
             align={'end'}
             trigger={
               <NameWithAvatar name={data.name || 'Yolo'} avatar={data.avatar || defaultAvatar} />
@@ -42,7 +55,7 @@ export const Layout = () => {
               </div>
             </DropDownItem>
             <DropDownItem>
-              <Link className={s.link} to={'/my-profile'}>
+              <Link onClick={handleLinkClick} className={s.link} to={'/my-profile'}>
                 {/* Из-за линка не закрывается дропдаун при переходе на новую страницу   */}
                 <img src={personOutline} alt={'icon'} />
                 <span>My profile</span>

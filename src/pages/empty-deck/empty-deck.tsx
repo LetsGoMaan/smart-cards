@@ -6,6 +6,7 @@ import { BackButton, CardsModal } from '@/pages'
 type EmptyDeckProps = {
   deckName: string | undefined
   isMyDeck: boolean
+  isLearn?: boolean
   isModalOpen?: boolean
   setIsModalOpen?: (open: boolean) => void
   id?: string
@@ -13,6 +14,7 @@ type EmptyDeckProps = {
 export const EmptyDeck = ({
   deckName,
   isMyDeck,
+  isLearn,
   setIsModalOpen,
   isModalOpen,
   id,
@@ -47,6 +49,11 @@ export const EmptyDeck = ({
           <Typography className={s.textWarning} variant={'body1'} as={'p'}>
             This pack is empty.
           </Typography>
+          {isLearn && (
+            <Typography className={s.textWarning} as={'p'} variant={'body1'}>
+              There is nothing to learn
+            </Typography>
+          )}
         </div>
       )}
       <CardsModal
