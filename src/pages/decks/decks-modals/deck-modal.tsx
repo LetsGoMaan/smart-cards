@@ -10,6 +10,7 @@ import s from './deck-modal.module.scss'
 import { Button, ControlledCheckbox, Input, Modal, Typography } from '@/components'
 import { errorOptions, InputWithTypeFile, successOptions } from '@/pages'
 import {
+  setCurrentPage,
   setDeckName,
   setEditDeckName,
   useAppDispatch,
@@ -78,6 +79,7 @@ export const DeckModal = ({
         .unwrap()
         .then(data => {
           toast.success(`Pack ${data.name} created successfully`, successOptions)
+          dispatch(setCurrentPage(1))
         })
         .catch(() => {
           toast.error('Something went wrong, try again', errorOptions)
