@@ -21,14 +21,21 @@ export const Decks = () => {
   const { searchByName, authorId, minCardsCount, maxCardsCount, currentPage, itemsPerPage } =
     useAppSelector(state => state.decks)
   const debouncedSearchValue = useDebounce(searchByName, 500)
-  const [sort, setSort] = useState<Sort>(null)
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
+
   const sortedString = useMemo(() => {
     if (!sort) return null
 
     return `${sort.key}-${sort.direction}`
   }, [sort])
   const { data: authData } = useAuthMeQuery()
-  const { isLoading, isFetching, error, data } = useGetDecksQuery({
+  const {
+    isLoading,
+    isFetching,
+    error,
+    currentData: data,
+    //data,
+  } = useGetDecksQuery({
     name: debouncedSearchValue,
     orderBy: sortedString,
     authorId,

@@ -48,9 +48,9 @@ export interface Deck {
   id: string
   userId: string
   name: string
-  isPrivate: boolean
+  isPrivate?: boolean
   shots: number
-  cover?: string | null
+  cover?: File | null
   rating: number
   isDeleted?: boolean | null
   isBlocked?: boolean | null
