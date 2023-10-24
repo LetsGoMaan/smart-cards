@@ -5,6 +5,7 @@ import s from './my-deck-page.module.scss'
 import { deleteOutline, editButton } from '@/assets'
 import {
   Column,
+  ReadMore,
   Sort,
   Table,
   TableBody,
@@ -90,7 +91,7 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
                     <img className={s.cardImage} src={card.questionImg} alt="pack image" />
                   )}
                   <Typography className={s.tableText} as={'p'} variant={'body2'}>
-                    {card.question}
+                    <ReadMore text={card.question} />
                   </Typography>
                 </div>
               </TableData>
@@ -100,7 +101,7 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
                     <img className={s.cardImage} src={card.answerImg} alt="pack image" />
                   )}
                   <Typography className={s.tableText} as={'p'} variant={'body2'}>
-                    {card.answer}
+                    <ReadMore text={card.answer} />
                   </Typography>
                 </div>
               </TableData>

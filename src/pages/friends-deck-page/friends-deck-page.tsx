@@ -10,6 +10,7 @@ import {
   Column,
   Input,
   Pagination,
+  ReadMore,
   Sort,
   Table,
   TableBody,
@@ -114,7 +115,7 @@ export const FriendsDeckPage = () => {
                       <img className={s.cardImage} src={card.questionImg} alt={'question image'} />
                     )}
                     <Typography className={s.text} as={'p'} variant={'body2'}>
-                      {card.question}
+                      <ReadMore text={card.question} />
                     </Typography>
                   </div>
                 </TableData>
@@ -124,7 +125,7 @@ export const FriendsDeckPage = () => {
                       <img className={s.cardImage} src={card.answerImg} alt={'answer image'} />
                     )}
                     <Typography className={s.text} as={'p'} variant={'body2'}>
-                      {card.answer}
+                      <ReadMore text={card.answer} />
                     </Typography>
                   </div>
                 </TableData>
