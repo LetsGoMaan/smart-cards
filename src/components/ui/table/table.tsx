@@ -1,5 +1,7 @@
 import { ComponentProps, ComponentPropsWithoutRef } from 'react'
 
+import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
+
 import s from './table.module.scss'
 
 type TableProps = ComponentProps<'table'>
@@ -68,8 +70,15 @@ export const TableHeader = ({
       <TableRow>
         {columns.map(({ title, key, sortable = true }) => (
           <TableHeaderData key={key} onClick={handleSort(key, sortable)}>
-            {title}
-            {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
+            <span className={s.sortTitle}>
+              {title}
+              {/*{sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}*/}
+              {sort && sort.key === key && (
+                <span className={s.arrows}>
+                  {sort.direction === 'asc' ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                </span>
+              )}
+            </span>
           </TableHeaderData>
         ))}
       </TableRow>
