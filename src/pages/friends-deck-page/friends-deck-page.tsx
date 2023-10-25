@@ -110,24 +110,24 @@ export const FriendsDeckPage = () => {
             return (
               <TableRow key={card.id}>
                 <TableData style={{ width: '30%' }}>
-                  <div className={s.dataWithImage}>
+                  <span className={s.dataWithImage}>
                     {card.questionImg && (
                       <img className={s.cardImage} src={card.questionImg} alt={'question image'} />
                     )}
-                    <Typography className={s.text} as={'p'} variant={'body2'}>
+                    <Typography className={s.text} as={'span'} variant={'body2'}>
                       <ReadMore text={card.question} />
                     </Typography>
-                  </div>
+                  </span>
                 </TableData>
                 <TableData style={{ width: '30%' }}>
-                  <div className={s.dataWithImage}>
+                  <span className={s.dataWithImage}>
                     {card.answerImg && (
                       <img className={s.cardImage} src={card.answerImg} alt={'answer image'} />
                     )}
-                    <Typography className={s.text} as={'p'} variant={'body2'}>
+                    <Typography className={s.text} as={'span'} variant={'body2'}>
                       <ReadMore text={card.answer} />
                     </Typography>
-                  </div>
+                  </span>
                 </TableData>
                 <TableData style={{ width: '20%' }}>
                   <Typography as={'p'} variant={'body2'}>

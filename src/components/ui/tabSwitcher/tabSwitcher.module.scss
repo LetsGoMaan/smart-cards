@@ -22,7 +22,10 @@
       justify-content: center;
 
       min-width: 3.056rem;
+      height: 2.25rem;
       padding: 6px 24px;
+      white-space: nowrap;
+      box-sizing: border-box;
 
       line-height: var(--line-height-m);
       color: var(--color-light-100);

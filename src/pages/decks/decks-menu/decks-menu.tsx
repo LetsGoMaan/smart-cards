@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 import s from './decks-menu.module.scss'
 
@@ -37,24 +37,18 @@ export const DecksMenu = () => {
 
   const onSetSearchByName = (search: string) => dispatch(setSearchByName(search))
 
-  const onSetCardsByAuthor = useCallback(
-    (tabValue: string) => {
-      if (tabValue === 'myCards') {
-        dispatch(setCurrentPage(1))
-        dispatch(setCardsByAuthor({ authorId, tabValue: 'myCards' }))
-      } else {
-        dispatch(setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
-      }
-    },
-    [tabValue]
-  )
-  const setMinMaxValue = useCallback(
-    (value: number[]) => {
+  const onSetCardsByAuthor = (tabValue: string) => {
+    if (tabValue === 'myCards') {
       dispatch(setCurrentPage(1))
-      dispatch(setMinMaxCardsCount(value))
-    },
-    [minCardsCount, maxCardsCount]
-  )
+      dispatch(setCardsByAuthor({ authorId, tabValue: 'myCards' }))
+    } else {
+      dispatch(setCardsByAuthor({ authorId: '', tabValue: 'allCards' }))
+    }
+  }
+  const setMinMaxValue = (value: number[]) => {
+    dispatch(setCurrentPage(1))
+    dispatch(setMinMaxCardsCount(value))
+  }
 
   const setDefaultValues = () => {
     dispatch(setSearchByName(''))
