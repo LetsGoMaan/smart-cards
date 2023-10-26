@@ -1,4 +1,4 @@
-//import { current } from '@reduxjs/toolkit'
+import { current } from '@reduxjs/toolkit'
 
 import {
   //CreateDeckArgs,
@@ -62,9 +62,11 @@ const decksApi = baseApi.injectEndpoints({
                   maxCardsCount,
                 },
                 draft => {
+                  console.log('create recipe', current(draft))
                   draft.items.pop()
                   draft.items.unshift(res.data)
                   //draft.items = [res.data, ...draft.items]
+                  console.log('after', current(draft))
                 }
               )
             )
@@ -153,13 +155,12 @@ const decksApi = baseApi.injectEndpoints({
                 maxCardsCount,
               },
               draft => {
-                console.log(args)
                 const ind = draft.items.findIndex(item => item.id === id)
 
                 draft.items[ind] = {
                   ...draft.items[ind],
                   name: args.name,
-                  //cover: args.cover,
+                  cover: args.cover ? URL.createObjectURL(args.cover) : null,
                   isPrivate: args.isPrivate,
                 }
               }
