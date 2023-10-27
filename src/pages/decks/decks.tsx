@@ -21,6 +21,8 @@ export const Decks = () => {
   const { searchByName, authorId, minCardsCount, maxCardsCount, currentPage, itemsPerPage } =
     useAppSelector(state => state.decks)
   const debouncedSearchValue = useDebounce(searchByName, 500)
+  const debouncedMinCardsCountValue = useDebounce(minCardsCount, 500)
+  const debouncedMaxCardsCountValue = useDebounce(maxCardsCount, 500)
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
 
   const sortedString = useMemo(() => {
@@ -39,8 +41,8 @@ export const Decks = () => {
     name: debouncedSearchValue,
     orderBy: sortedString,
     authorId,
-    minCardsCount,
-    maxCardsCount,
+    minCardsCount: debouncedMinCardsCountValue,
+    maxCardsCount: debouncedMaxCardsCountValue,
     currentPage,
     itemsPerPage,
   })
